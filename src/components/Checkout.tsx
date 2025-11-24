@@ -7,6 +7,7 @@ import { ArrowLeft } from '@phosphor-icons/react'
 import { PuzzleType, ShippingInfo } from '@/lib/types'
 import { PRICING } from '@/lib/constants'
 import { toast } from 'sonner'
+import { EditionComparisonModal } from './EditionComparisonModal'
 
 interface CheckoutProps {
   type: PuzzleType
@@ -17,6 +18,7 @@ interface CheckoutProps {
 export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
   const [formData, setFormData] = useState<Partial<ShippingInfo>>({})
   const [keepsakeUpgrade, setKeepsakeUpgrade] = useState(false)
+  const [showComparison, setShowComparison] = useState(false)
 
   const basePrice = PRICING[type]
   const upgradePrice = 74
@@ -189,7 +191,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
             {/* Keepsake Edition Upsell */}
             <Card className={`border-2 shadow-xl transition-all ${keepsakeUpgrade ? 'border-terracotta bg-terracotta/5' : 'border-stone'}`}>
               <CardContent className="p-8">
-                <div className="flex items-start justify-between mb-6">
+                <div className="flex items-start justify-between mb-4">
                   <div>
                     <h3 className="text-2xl font-bold text-charcoal mb-2" style={{ fontFamily: 'var(--font-fraunces)' }}>
                       Upgrade to Keepsake Edition
@@ -197,6 +199,13 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                     <p className="text-lg text-charcoal/80">
                       +${upgradePrice} <span className="text-sm text-charcoal/60">(${basePrice + upgradePrice} total)</span>
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => setShowComparison(true)}
+                      className="text-sm text-terracotta hover:text-terracotta/80 underline mt-2"
+                    >
+                      Compare Standard vs Keepsake →
+                    </button>
                   </div>
                   <Button
                     type="button"
@@ -269,6 +278,14 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
           </form>
         </div>
       </div>
+
+      {/* Edition Comparison Modal */}
+      <EditionComparisonModal
+        open={showComparison}
+        onOpenChange={setShowComparison}
+        basePrice={basePrice}
+        upgradePrice={upgradePrice}
+      />
     </div>
   )
 }
