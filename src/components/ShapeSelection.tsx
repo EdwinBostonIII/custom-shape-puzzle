@@ -2,7 +2,10 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Check, ArrowLeft, Link as LinkIcon } from '@phosphor-icons/react'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
+import { Check, ArrowLeft, Link as LinkIcon, X } from '@phosphor-icons/react'
 import { ShapeIcon } from './ShapeIcon'
 import { PuzzleType, ShapeType } from '@/lib/types'
 import { PUZZLE_SHAPES } from '@/lib/constants'
@@ -13,7 +16,8 @@ interface ShapeSelectionProps {
   type: PuzzleType
   sessionId: string
   selectedShapes: ShapeType[]
-  onShapesSelected: (shapes: ShapeType[]) => void
+  shapeMeanings?: Partial<Record<ShapeType, string>>
+  onShapesSelected: (shapes: ShapeType[], meanings?: Partial<Record<ShapeType, string>>) => void
   onBack: () => void
   onContinue: () => void
   isPartnerMode?: boolean
@@ -23,34 +27,73 @@ export function ShapeSelection({
   type,
   sessionId,
   selectedShapes,
+  shapeMeanings = {},
   onShapesSelected,
   onBack,
   onContinue,
   isPartnerMode = false,
 }: ShapeSelectionProps) {
   const [selected, setSelected] = useState<ShapeType[]>(selectedShapes)
+  const [meanings, setMeanings] = useState<Partial<Record<ShapeType, string>>>(shapeMeanings)
+  const [meaningDialogOpen, setMeaningDialogOpen] = useState(false)
+  const [currentShape, setCurrentShape] = useState<ShapeType | null>(null)
+  const [currentMeaning, setCurrentMeaning] = useState('')
   
   const requiredCount = type === 'couple' && !isPartnerMode ? 5 : 10
   const availableShapes = PUZZLE_SHAPES.filter(shape => shape.availableFor.includes(type))
   
   const handleShapeClick = (shapeId: ShapeType) => {
     if (selected.includes(shapeId)) {
+      // Remove shape from selection
       setSelected(selected.filter(id => id !== shapeId))
+      // Also remove meaning
+      const newMeanings = { ...meanings }
+      delete newMeanings[shapeId]
+      setMeanings(newMeanings)
     } else if (selected.length < requiredCount) {
-      setSelected([...selected, shapeId])
+      // Open dialog to get meaning
+      setCurrentShape(shapeId)
+      setCurrentMeaning(meanings[shapeId] || '')
+      setMeaningDialogOpen(true)
     }
+  }
+
+  const handleSaveMeaning = () => {
+    if (currentShape) {
+      setSelected([...selected, currentShape])
+      setMeanings({ ...meanings, [currentShape]: currentMeaning })
+      setMeaningDialogOpen(false)
+      setCurrentShape(null)
+      setCurrentMeaning('')
+    }
+  }
+
+  const handleSkipMeaning = () => {
+    if (currentShape) {
+      setSelected([...selected, currentShape])
+      setMeaningDialogOpen(false)
+      setCurrentShape(null)
+      setCurrentMeaning('')
+    }
+  }
+
+  const handleRemoveFromTray = (shapeId: ShapeType) => {
+    setSelected(selected.filter(id => id !== shapeId))
+    const newMeanings = { ...meanings }
+    delete newMeanings[shapeId]
+    setMeanings(newMeanings)
   }
 
   const handleContinue = () => {
     if (selected.length === requiredCount) {
-      onShapesSelected(selected)
+      onShapesSelected(selected, meanings)
       onContinue()
     }
   }
 
   const handleGenerateLink = () => {
     if (selected.length === 5) {
-      onShapesSelected(selected)
+      onShapesSelected(selected, meanings)
       const partnerUrl = `${window.location.origin}?partner=${sessionId}`
       navigator.clipboard.writeText(partnerUrl)
       toast.success('Link copied to clipboard! Share it with your partner.')
@@ -66,7 +109,7 @@ export function ShapeSelection({
   }, {} as Record<string, typeof availableShapes>)
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-32">
       <div className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 flex items-center justify-between">
@@ -74,9 +117,6 @@ export function ShapeSelection({
               <ArrowLeft className="mr-2" size={20} />
               Back
             </Button>
-            <Badge variant="secondary" className="text-base">
-              {selected.length} / {requiredCount} selected
-            </Badge>
           </div>
 
           <div className="mb-12 text-center">
@@ -140,9 +180,56 @@ export function ShapeSelection({
               </div>
             )
           })}
+        </div>
+      </div>
 
-          <div className="sticky bottom-6 mt-12 flex justify-center">
-            <div className="rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-2xl">
+      {/* Inventory Tray - Fixed at bottom */}
+      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background to-background/95 backdrop-blur-sm border-t-2 border-border shadow-2xl z-50">
+        <div className="px-6 py-6 md:px-12">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-outfit)' }}>
+                Your Tray
+              </h3>
+              <Badge variant="secondary" className="text-sm">
+                {selected.length} / {requiredCount} filled
+              </Badge>
+            </div>
+            
+            {/* Tray slots */}
+            <div className="grid grid-cols-5 md:grid-cols-10 gap-3 mb-4">
+              {Array.from({ length: requiredCount }).map((_, index) => {
+                const shape = selected[index]
+                return (
+                  <div
+                    key={index}
+                    className={cn(
+                      "aspect-square rounded-xl border-2 border-dashed flex items-center justify-center relative transition-all",
+                      shape 
+                        ? "bg-accent/10 border-accent shadow-md" 
+                        : "bg-muted/30 border-muted-foreground/30"
+                    )}
+                  >
+                    {shape ? (
+                      <>
+                        <ShapeIcon shape={shape} className="h-8 w-8 md:h-12 md:w-12" />
+                        <button
+                          onClick={() => handleRemoveFromTray(shape)}
+                          className="absolute -top-2 -right-2 rounded-full bg-destructive p-1 shadow-lg hover:scale-110 transition-transform"
+                        >
+                          <X size={12} weight="bold" className="text-destructive-foreground" />
+                        </button>
+                      </>
+                    ) : (
+                      <span className="text-muted-foreground/40 text-xs md:text-sm">{index + 1}</span>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex justify-center">
               {type === 'couple' && !isPartnerMode ? (
                 <Button
                   size="lg"
@@ -167,6 +254,42 @@ export function ShapeSelection({
           </div>
         </div>
       </div>
+
+      {/* Meaning Dialog */}
+      <Dialog open={meaningDialogOpen} onOpenChange={setMeaningDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Why this shape?</DialogTitle>
+            <DialogDescription>
+              Write a short note about this memory. We will include these notes on the 'Story Card' inside the box.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="meaning">Your Note (optional, max 140 characters)</Label>
+              <Textarea
+                id="meaning"
+                value={currentMeaning}
+                onChange={(e) => setCurrentMeaning(e.target.value.slice(0, 140))}
+                placeholder="E.g., 'The beach where we first met...'"
+                className="min-h-[100px]"
+                maxLength={140}
+              />
+              <p className="text-xs text-muted-foreground text-right">
+                {currentMeaning.length} / 140
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3 justify-end">
+            <Button variant="outline" onClick={handleSkipMeaning}>
+              Skip
+            </Button>
+            <Button onClick={handleSaveMeaning}>
+              Add to Tray
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
