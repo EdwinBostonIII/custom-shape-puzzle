@@ -8,6 +8,8 @@ interface OrderConfirmationProps {
 }
 
 export function OrderConfirmation({ orderNumber, onCreateAnother }: OrderConfirmationProps) {
+  const isPartnerComplete = orderNumber === 'PARTNER-COMPLETE'
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-cream px-6">
       <Card className="w-full max-w-2xl border-2 border-stone shadow-2xl">
@@ -20,19 +22,23 @@ export function OrderConfirmation({ orderNumber, onCreateAnother }: OrderConfirm
 
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              Your Puzzle Awaits
+              {isPartnerComplete ? 'Your Shapes Are In!' : 'Your Puzzle Awaits'}
             </h1>
             <p className="text-xl text-charcoal/70 font-light leading-relaxed">
-              Thank you for creating with Interlock
+              {isPartnerComplete
+                ? 'Thank you! Your partner will complete the puzzle and place the order.'
+                : 'Thank you for creating with Interlock'}
             </p>
           </div>
 
-          <Card className="border-2 border-stone bg-sage/5 shadow-lg">
-            <CardContent className="p-8">
-              <p className="mb-3 text-sm font-medium text-charcoal/60 uppercase tracking-wider">Order Number</p>
-              <p className="text-3xl font-bold tracking-wider text-terracotta">{orderNumber}</p>
-            </CardContent>
-          </Card>
+          {!isPartnerComplete && (
+            <Card className="border-2 border-stone bg-sage/5 shadow-lg">
+              <CardContent className="p-8">
+                <p className="mb-3 text-sm font-medium text-charcoal/60 uppercase tracking-wider">Order Number</p>
+                <p className="text-3xl font-bold tracking-wider text-terracotta">{orderNumber}</p>
+              </CardContent>
+            </Card>
+          )}
 
           <div className="space-y-4">
             <p className="text-base text-charcoal/70 font-light leading-relaxed max-w-lg mx-auto">

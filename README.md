@@ -14,6 +14,7 @@ This application features a warm **Digital Scrapbook** aesthetic with:
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
+
 - **Node.js** v18.0 or higher ([Download](https://nodejs.org/))
 - **npm** v9.0 or higher (comes with Node.js)
 - **Git** ([Download](https://git-scm.com/))
@@ -28,12 +29,14 @@ git --version
 ## 🚀 Quick Start
 
 ### 1. Clone the Repository
+
 ```bash
 git clone <repository-url>
 cd custom-shape-puzzle
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 npm install
 ```
@@ -47,6 +50,7 @@ This will install all required packages including:
 - Framer Motion
 
 ### 3. Start Development Server
+
 ```bash
 npm run dev
 ```
@@ -71,23 +75,28 @@ Open your browser and navigate to the local development URL. You'll see:
 ## 🏗️ Building for Production
 
 ### Create Production Build
+
 ```bash
 npm run build
 ```
+
 This command:
 1. Type-checks your TypeScript code
 2. Optimizes and bundles assets with Vite
 3. Outputs production files to the `dist/` directory
 
 ### Preview Production Build Locally
+
 ```bash
 npm run preview
 ```
+
 Access the production build at **http://localhost:4173**
 
 ## 🚢 Deployment Options
 
 ### Option 1: Vercel (Recommended)
+
 **Why Vercel?**
 - Zero-config deployment for Vite apps
 - Automatic HTTPS and CDN
@@ -95,19 +104,24 @@ Access the production build at **http://localhost:4173**
 - Preview deployments for branches
 
 **Steps:**
+
 1. Install Vercel CLI:
 ```bash
 npm install -g vercel
 ```
+
 2. Deploy:
 ```bash
 vercel
 ```
+
 3. Follow the prompts to link your project
+
 4. For production deployment:
 ```bash
 vercel --prod
 ```
+
 **Using Vercel Dashboard:**
 1. Visit [vercel.com](https://vercel.com)
 2. Import your Git repository
@@ -118,19 +132,24 @@ vercel --prod
 4. Click "Deploy"
 
 ### Option 2: Netlify
+
 **Steps:**
+
 1. Install Netlify CLI:
 ```bash
 npm install -g netlify-cli
 ```
+
 2. Build the project:
 ```bash
 npm run build
 ```
+
 3. Deploy:
 ```bash
 netlify deploy --prod --dir=dist
 ```
+
 **Using Netlify Dashboard:**
 1. Visit [netlify.com](https://netlify.com)
 2. Drag and drop the `dist/` folder
@@ -139,10 +158,12 @@ netlify deploy --prod --dir=dist
    - **Publish Directory:** `dist`
 
 ### Option 3: GitHub Pages
+
 1. Install gh-pages:
 ```bash
 npm install --save-dev gh-pages
 ```
+
 2. Add to `package.json`:
 ```json
 {
@@ -152,6 +173,7 @@ npm install --save-dev gh-pages
   }
 }
 ```
+
 3. Update `vite.config.ts` with your repository name:
 ```typescript
 export default defineConfig({
@@ -159,47 +181,59 @@ export default defineConfig({
   // ... rest of config
 })
 ```
+
 4. Deploy:
 ```bash
 npm run deploy
 ```
 
 ### Option 4: AWS S3 + CloudFront
+
 1. Build the project:
 ```bash
 npm run build
 ```
+
 2. Install AWS CLI and configure credentials
+
 3. Create S3 bucket and enable static website hosting
+
 4. Upload files:
 ```bash
 aws s3 sync dist/ s3://your-bucket-name --delete
 ```
+
 5. (Optional) Set up CloudFront distribution for CDN and HTTPS
 
 ## 📁 Project Structure
+
 ```
 custom-shape-puzzle/
 ├── public/              # Static assets
 ├── src/
 │   ├── components/
 │   │   ├── ui/         # Reusable UI primitives (Button, Card, Input)
-│   │   ├── HomePage.tsx
-│   │   ├── ShapeSelection.tsx
-│   │   ├── DesignChoice.tsx
-│   │   ├── BoxDesign.tsx
-│   │   ├── Checkout.tsx
-│   │   ├── OrderConfirmation.tsx
-│   │   ├── PartnerWaiting.tsx
-│   │   ├── PuzzlePiece.tsx
-│   │   ├── ShapeIcon.tsx
-│   │   └── TemplatePreview.tsx
+│   │   ├── HomePage.tsx              # Landing page with product options
+│   │   ├── FAQSection.tsx            # Accordion FAQ component
+│   │   ├── ShapeSelection.tsx        # Shape picker with tray and notes
+│   │   ├── ProgressIndicator.tsx     # Breadcrumb navigation
+│   │   ├── ModeSelectScreen.tsx      # Couch vs remote mode fork
+│   │   ├── PartnerHandoffScreen.tsx  # Privacy screen between partners
+│   │   ├── PartnerWaiting.tsx        # Remote partner waiting room
+│   │   ├── DesignChoice.tsx          # Photo/color customization
+│   │   ├── BoxDesign.tsx             # Box personalization
+│   │   ├── Checkout.tsx              # Payment and shipping form
+│   │   ├── EditionComparisonModal.tsx # Standard vs Keepsake comparison
+│   │   ├── OrderConfirmation.tsx     # Success screen with referral
+│   │   ├── TemplatePreview.tsx       # Puzzle layout preview
+│   │   ├── PuzzlePiece.tsx           # Individual piece component
+│   │   └── ShapeIcon.tsx             # SVG shape renderer
 │   ├── lib/
 │   │   ├── constants.ts   # Shape library (100+ shapes), pricing
 │   │   ├── types.ts       # TypeScript definitions
-│   │   └── utils.ts       # Utility functions
-│   ├── App.tsx            # Main app component with routing logic
-│   ├── index.css          # Global styles, design system tokens
+│   │   └── utils.ts       # Utility functions (cn helper)
+│   ├── App.tsx            # Main app with routing & state management
+│   ├── index.css          # Global styles, animations, design tokens
 │   └── main.tsx           # App entry point
 ├── index.html             # HTML entry, Google Fonts
 ├── tailwind.config.js     # Tailwind customization
@@ -209,6 +243,7 @@ custom-shape-puzzle/
 ```
 
 ## 🛠️ Technology Stack
+
 ### Core Framework
 - **React 19** - Latest React with improved performance
 - **TypeScript** - Type-safe development
@@ -232,6 +267,7 @@ custom-shape-puzzle/
 - **TypeScript Compiler** - Type checking
 
 ## 🎨 Design System
+
 ### Color Palette
 - **Cream** (#F9F7F2) - Primary background
 - **Charcoal** (#3C3633) - Text color
@@ -250,18 +286,68 @@ custom-shape-puzzle/
 - **Borders:** 2px Stone borders, rounded corners
 - **Buttons:** Stamp-press effect with translateY animation
 
+## ✨ UX Powerhouse Features
+
+### Conversion Optimization
+- **Progress Indicator** - Visual breadcrumb showing user's journey (Start → Shapes → Design → Box → Checkout → Complete)
+- **Confetti Celebration** - Delightful animation when tray is full using brand colors
+- **Edition Comparison Modal** - Side-by-side Standard vs Keepsake feature comparison with checkmarks
+- **Wood Reality Filter** - Shows actual laser-engraved appearance on hover and in photo preview
+- **Smart Prompts** - Tappable suggestion pills to eliminate writer's block in customization
+- **Pass the Device Mode** - Couch collaboration for couples creating together
+
+### Friction Reduction
+- **Shop First, Write Later** - Quick tap-to-fill tray, then batch note-writing in dedicated phase
+- **Sticky Category Navigation** - Horizontal scrollable pills for instant category jumping
+- **Auto-save** - LocalStorage backup every change, restores if < 24hrs old
+- **Undo/Redo** - Full history stack (50 actions) with Ctrl+Z / Ctrl+Shift+Z
+
+### Power User Features
+- **Keyboard Navigation:**
+  - Esc to go back
+  - Enter to proceed when ready
+  - 1-6 keys to jump to categories
+  - Ctrl+Z / Cmd+Z for undo
+  - Ctrl+Shift+Z / Cmd+Shift+Z for redo
+  - Tab navigation with focus-visible outlines
+- **Accessibility:**
+  - ARIA labels on all interactive elements
+  - Semantic HTML (nav, main, section, aside)
+  - Keyboard support on shape cards (Enter/Space to select)
+  - Screen reader friendly with live regions
+  - Reduced motion support for users who prefer it
+
+### Information Architecture
+- **FAQ Section** - 12 common questions with accordion expansion
+- **Photo Brightness Analysis** - Canvas-based histogram warns if photo too dark for wood
+- **Live Puzzle Assembly** - Pieces snap into tray with bounce animation
+- **Selection Color** - Branded Terracotta text selection throughout
+
+### Polish & Performance
+- **Focus-visible Styles** - 3px Terracotta outline for keyboard users only
+- **Print Optimization** - Clean print layouts for completed puzzles
+- **Smooth Scroll** - Animated scrolling to categories
+- **Fade-in Transitions** - Subtle page entrance animations
+- **Responsive Design** - Mobile-first with breakpoints for all screen sizes
+
 ## 🐛 Troubleshooting
+
 ### Port Already in Use
+
 If port 5173 is occupied:
 ```bash
 npm run dev -- --port 3000
 ```
+
 ### Build Fails with Type Errors
+
 Run type checking separately:
 ```bash
 npx tsc --noEmit
 ```
+
 ### Fonts Not Loading
+
 1. Check `index.html` for Google Fonts link
 2. Verify CSS variables in `src/index.css`:
 ```css
@@ -269,16 +355,21 @@ npx tsc --noEmit
 --font-quicksand: 'Quicksand', sans-serif;
 --font-caveat: 'Caveat', cursive;
 ```
+
 ### Tailwind Classes Not Working
+
 1. Clear Tailwind cache:
 ```bash
 rm -rf node_modules/.cache
 ```
+
 2. Restart dev server:
 ```bash
 npm run dev
 ```
+
 ### Module Not Found Errors
+
 Reinstall dependencies:
 ```bash
 rm -rf node_modules package-lock.json
@@ -286,19 +377,23 @@ npm install
 ```
 
 ## 🔧 Environment Variables
+
 This project currently runs entirely client-side with no backend. For future payment processing or API integration:
+
 1. Create `.env` file in project root
 2. Add variables (never commit sensitive keys):
 ```env
 VITE_API_URL=your_api_url
 VITE_STRIPE_KEY=your_stripe_public_key
 ```
+
 3. Access in code:
 ```typescript
 const apiUrl = import.meta.env.VITE_API_URL
 ```
 
 ## ⚡ Performance Optimization
+
 - **Code Splitting:** React.lazy() for route-based splitting
 - **Image Optimization:** Use WebP format, lazy loading
 - **Bundle Analysis:** Run `npm run build -- --mode analyze`
@@ -306,18 +401,21 @@ const apiUrl = import.meta.env.VITE_API_URL
 - **Caching:** Configure cache headers for static assets
 
 ## 📦 Available Scripts
+
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build locally
 - `npm run lint` - Run ESLint
 
 ## 🚀 Ready to Launch?
+
 1. ✅ Run `npm run build` to create production build
 2. ✅ Test with `npm run preview` locally
 3. ✅ Choose deployment platform (Vercel recommended)
 4. ✅ Deploy and share your custom puzzle creator!
 
 ## 📝 Product Overview
+
 ### Two Paths at $65
 - **Together:** Collaborative puzzle where two people each choose 5 meaningful shapes
 - **For Someone Special:** Solo design with 10 pieces capturing private moments
@@ -338,4 +436,5 @@ const apiUrl = import.meta.env.VITE_API_URL
 - Handcrafted with love
 
 ---
+
 Built with ❤️ using React, TypeScript, and Tailwind CSS
