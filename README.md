@@ -6,7 +6,7 @@ Transform your favorite memories into handcrafted wooden puzzles. Choose from tw
 
 This application features a warm **Digital Scrapbook** aesthetic with:
 - Handcrafted feel with paper textures and organic shapes
-- Warm color palette: Cream, Terra Cotta, Sage, and Stone
+- Warm color palette: Cream, Terracotta, Sage, and Stone
 - Serif typography (Fraunces) for headings, rounded sans-serif (Quicksand) for body text
 - Polaroid-style previews and washi tape effects
 - Tactile interactions with stamp-press buttons
@@ -218,7 +218,11 @@ custom-shape-puzzle/
 │   │   ├── DesignChoice.tsx
 │   │   ├── BoxDesign.tsx
 │   │   ├── Checkout.tsx
-│   │   └── OrderConfirmation.tsx
+│   │   ├── OrderConfirmation.tsx
+│   │   ├── PartnerWaiting.tsx
+│   │   ├── PuzzlePiece.tsx
+│   │   ├── ShapeIcon.tsx
+│   │   └── TemplatePreview.tsx
 │   ├── lib/
 │   │   ├── constants.ts   # Shape library (100+ shapes), pricing
 │   │   ├── types.ts       # TypeScript definitions
@@ -262,7 +266,7 @@ custom-shape-puzzle/
 ### Color Palette
 - **Cream** (#F9F7F2) - Primary background
 - **Charcoal** (#3C3633) - Text color
-- **Terra Cotta** (#E07A5F) - Primary accent
+- **Terracotta** (#E07A5F) - Primary accent
 - **Sage** (#81B29A) - Secondary accent
 - **Stone** (#E8E3DC) - Borders and subtle backgrounds
 
@@ -273,8 +277,8 @@ custom-shape-puzzle/
 
 ### Texture & Effects
 - **Paper Texture:** 3% opacity SVG noise overlay
-- **Shadows:** Colored shadows using terra cotta and sage
-- **Borders:** 2px stone borders, rounded corners
+- **Shadows:** Colored shadows using Terracotta and Sage
+- **Borders:** 2px Stone borders, rounded corners
 - **Buttons:** Stamp-press effect with translateY animation
 
 ## 🐛 Troubleshooting
