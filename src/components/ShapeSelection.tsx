@@ -195,9 +195,8 @@ export function ShapeSelection({
     // Keep history limited to last 50 actions
     if (newHistory.length > 50) {
       newHistory.shift()
-    } else {
-      setHistoryIndex(historyIndex + 1)
     }
+    setHistoryIndex(newHistory.length - 1)
     setHistory(newHistory)
   }
 
@@ -256,7 +255,9 @@ export function ShapeSelection({
   }
 
   const handleUpdateMeaning = (shapeId: ShapeType, meaning: string) => {
-    setMeanings({ ...meanings, [shapeId]: meaning })
+    const newMeanings = { ...meanings, [shapeId]: meaning }
+    setMeanings(newMeanings)
+    addToHistory(selected, newMeanings)
   }
 
   const handleRemoveFromTray = (shapeId: ShapeType) => {
