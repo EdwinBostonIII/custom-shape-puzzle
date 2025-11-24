@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { PuzzleType } from '@/lib/types'
 import { PRICING } from '@/lib/constants'
+import { FAQSection } from './FAQSection'
 
 interface HomePageProps {
   onSelectType: (type: PuzzleType) => void
@@ -196,10 +197,15 @@ export function HomePage({ onSelectType }: HomePageProps) {
             </div>
           </div>
 
-          <div className="mt-20 text-center text-base text-charcoal/60">
-            <p className="font-light">Handcrafted with care · Ships within 2 weeks · Free shipping in the US</p>
-          </div>
         </div>
+      </div>
+
+      {/* FAQ Section */}
+      <FAQSection />
+
+      {/* Footer */}
+      <div className="py-12 text-center text-base text-charcoal/60 bg-cream">
+        <p className="font-light">Handcrafted with care · Ships within 2 weeks · Free shipping in the US</p>
       </div>
     </div>
   )
