@@ -175,10 +175,10 @@ export function HomePage({ onSelectType }: HomePageProps) {
               <Card className="border-2 border-sage/30 bg-sage/5 shadow-sage">
                 <CardContent className="p-8 md:p-10 text-center">
                   <p className="text-lg md:text-xl text-charcoal/80 leading-relaxed mb-4 italic" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                    "We gave this to my parents for their 50th anniversary. They cried when they saw the shapes we chose. It's hanging on their wall now—best gift we've ever given."
+                    "We gave this to my parents for their 50th anniversary. They cried when they saw the shapes we chose. It's hanging on their wall now&mdash;best gift we've ever given."
                   </p>
                   <p className="text-sm text-charcoal/50 font-medium" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.1rem' }}>
-                    — Sarah & Michael, Boston MA
+                    &mdash; Sarah & Michael, Boston MA
                   </p>
                 </CardContent>
               </Card>

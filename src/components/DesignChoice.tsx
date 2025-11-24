@@ -207,7 +207,7 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
                       </div>
 
                       <p className="text-xs text-center text-charcoal/50 leading-relaxed">
-                        Toggle "Wood Preview" to see how your photo will look on basswood
+                        Toggle "Wood Preview" to see how your photo will look on maple or walnut
                       </p>
                     </div>
                   )}

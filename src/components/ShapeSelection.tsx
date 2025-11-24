@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -43,6 +43,21 @@ export function ShapeSelection({
     { selected: selectedShapes, meanings: shapeMeanings }
   ])
   const [historyIndex, setHistoryIndex] = useState(0)
+
+  // Refs to store stable references for callbacks used in useEffect
+  const onBackRef = useRef(onBack)
+  const historyRef = useRef(history)
+  const historyIndexRef = useRef(historyIndex)
+
+  // Keep refs in sync with latest values
+  useEffect(() => {
+    onBackRef.current = onBack
+  }, [onBack])
+
+  useEffect(() => {
+    historyRef.current = history
+    historyIndexRef.current = historyIndex
+  }, [history, historyIndex])
 
   const requiredCount = type === 'couple' && !isPartnerMode ? 5 : 10
   const availableShapes = PUZZLE_SHAPES.filter(shape => shape.availableFor.includes(type))
@@ -110,7 +125,7 @@ export function ShapeSelection({
         if (showNotesPhase) {
           setShowNotesPhase(false)
         } else {
-          onBack()
+          onBackRef.current()
         }
       }
 
@@ -134,7 +149,7 @@ export function ShapeSelection({
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [showNotesPhase, selected.length, requiredCount, onBack, groupedByCategory, historyIndex, history])
+  }, [showNotesPhase, selected.length, requiredCount, groupedByCategory, undo, redo])
 
   // Celebrate when tray is complete!
   useEffect(() => {
@@ -186,30 +201,34 @@ export function ShapeSelection({
   }
 
   // Undo function
-  const undo = () => {
-    if (historyIndex > 0) {
-      const newIndex = historyIndex - 1
+  const undo = useCallback(() => {
+    const currentHistoryIndex = historyIndexRef.current
+    const currentHistory = historyRef.current
+    if (currentHistoryIndex > 0) {
+      const newIndex = currentHistoryIndex - 1
       setHistoryIndex(newIndex)
-      const previousState = history[newIndex]
+      const previousState = currentHistory[newIndex]
       setSelected(previousState.selected)
       setMeanings(previousState.meanings)
       hasTriggeredConfetti.current = false
       toast.success('Undid last action')
     }
-  }
+  }, [])
 
   // Redo function
-  const redo = () => {
-    if (historyIndex < history.length - 1) {
-      const newIndex = historyIndex + 1
+  const redo = useCallback(() => {
+    const currentHistoryIndex = historyIndexRef.current
+    const currentHistory = historyRef.current
+    if (currentHistoryIndex < currentHistory.length - 1) {
+      const newIndex = currentHistoryIndex + 1
       setHistoryIndex(newIndex)
-      const nextState = history[newIndex]
+      const nextState = currentHistory[newIndex]
       setSelected(nextState.selected)
       setMeanings(nextState.meanings)
       hasTriggeredConfetti.current = false
       toast.success('Redid action')
     }
-  }
+  }, [])
 
   // Shop First, Write Later: Quick selection without interruption
   const handleShapeClick = (shapeId: ShapeType) => {
@@ -236,7 +255,9 @@ export function ShapeSelection({
   }
 
   const handleUpdateMeaning = (shapeId: ShapeType, meaning: string) => {
-    setMeanings({ ...meanings, [shapeId]: meaning })
+    const newMeanings = { ...meanings, [shapeId]: meaning }
+    setMeanings(newMeanings)
+    addToHistory(selected, newMeanings)
   }
 
   const handleRemoveFromTray = (shapeId: ShapeType) => {
@@ -269,13 +290,13 @@ export function ShapeSelection({
     }
   }
 
-  const groupedByCategory = availableShapes.reduce((acc, shape) => {
+  const groupedByCategory = useMemo(() => availableShapes.reduce((acc, shape) => {
     if (!acc[shape.category]) {
       acc[shape.category] = []
     }
     acc[shape.category].push(shape)
     return acc
-  }, {} as Record<string, typeof availableShapes>)
+  }, {} as Record<string, typeof availableShapes>), [availableShapes])
 
   const categoryTitles: Record<string, string> = {
     'flora': 'Flowers & Plants',
