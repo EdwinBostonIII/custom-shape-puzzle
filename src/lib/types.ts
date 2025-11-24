@@ -36,9 +36,16 @@ export interface PuzzleSession {
   selectedShapes: ShapeType[]
   partnerShapes?: ShapeType[]
   isPartnerComplete?: boolean
+  shapeMeanings?: Partial<Record<ShapeType, string>>
+  partnerShapeMeanings?: Partial<Record<ShapeType, string>>
   designType?: 'photo' | 'colors'
   photoData?: string
   colorMap?: Partial<Record<ShapeType, string>>
+  boxDesign?: 'standard' | 'mystery'
+  boxTitle?: string
+  boxHint1?: string
+  boxHint2?: string
+  boxHiddenMessage?: string
   shippingInfo?: ShippingInfo
   orderComplete?: boolean
 }

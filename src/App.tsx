@@ -47,13 +47,14 @@ function App() {
     setStep('shapes')
   }
 
-  const handleShapesSelected = (shapes: ShapeType[]) => {
+  const handleShapesSelected = (shapes: ShapeType[], meanings?: Partial<Record<ShapeType, string>>) => {
     if (isPartnerMode) {
       setSession(prev => {
         if (!prev || !prev.id) return prev!
         return {
           ...prev,
           partnerShapes: shapes,
+          partnerShapeMeanings: meanings,
           isPartnerComplete: true,
         }
       })
@@ -63,6 +64,7 @@ function App() {
         return {
           ...prev,
           selectedShapes: shapes,
+          shapeMeanings: meanings,
         }
       })
     }
@@ -146,6 +148,7 @@ function App() {
           type={session.type}
           sessionId={sessionId}
           selectedShapes={isPartnerMode ? session.partnerShapes || [] : session.selectedShapes}
+          shapeMeanings={isPartnerMode ? session.partnerShapeMeanings : session.shapeMeanings}
           onShapesSelected={handleShapesSelected}
           onBack={handleCreateAnother}
           onContinue={() => {
