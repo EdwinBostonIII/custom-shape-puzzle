@@ -32,10 +32,10 @@ type Step = 'home' | 'mode-select' | 'shapes' | 'partner-handoff' | 'waiting' | 
 
 function generateId() {
   // Use crypto.getRandomValues for better randomness
-  const array = new Uint32Array(2);
-  window.crypto.getRandomValues(array);
-  const randomPart = Array.from(array).map(n => n.toString(36)).join('');
-  return Date.now().toString(36) + randomPart;
+  const array = new Uint32Array(2)
+  window.crypto.getRandomValues(array)
+  const randomPart = Array.from(array).map(n => n.toString(36)).join('')
+  return Date.now().toString(36) + randomPart
 }
 
 function App() {
