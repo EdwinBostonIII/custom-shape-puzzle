@@ -47,6 +47,15 @@ export function ShapeSelection({
   const requiredCount = type === 'couple' && !isPartnerMode ? 5 : 10
   const availableShapes = PUZZLE_SHAPES.filter(shape => shape.availableFor.includes(type))
 
+  // Group shapes by category for display and keyboard navigation
+  const groupedByCategory = availableShapes.reduce((acc, shape) => {
+    if (!acc[shape.category]) {
+      acc[shape.category] = []
+    }
+    acc[shape.category].push(shape)
+    return acc
+  }, {} as Record<string, typeof availableShapes>)
+
   // Auto-save to localStorage as user works (safety net for accidental tab close)
   useEffect(() => {
     if (sessionId) {
@@ -270,14 +279,6 @@ export function ShapeSelection({
       toast.success('Link copied to clipboard! Share it with your partner.')
     }
   }
-
-  const groupedByCategory = availableShapes.reduce((acc, shape) => {
-    if (!acc[shape.category]) {
-      acc[shape.category] = []
-    }
-    acc[shape.category].push(shape)
-    return acc
-  }, {} as Record<string, typeof availableShapes>)
 
   const categoryTitles: Record<string, string> = {
     'flora': 'Flowers & Plants',
