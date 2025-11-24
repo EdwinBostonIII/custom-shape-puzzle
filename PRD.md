@@ -1,6 +1,6 @@
 # Planning Guide
 
-A custom puzzle creation platform where users design personalized jigsaw puzzles by selecting unique piece shapes, uploading photos or choosing colors, and ordering physical products delivered to their door.
+A sophisticated custom puzzle creation platform where users craft heirloom-quality jigsaw puzzles by selecting from an extensive library of beautifully rendered shapes, uploading cherished photos or designing with colors, and ordering premium physical products delivered to their door.
 
 **Experience Qualities**: 
 1. **Delightful** - The process of creating a puzzle should feel magical and personal, with smooth transitions and satisfying interactions that build excitement.

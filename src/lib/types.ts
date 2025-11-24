@@ -7,11 +7,25 @@ export type ShapeType =
   | 'circle' | 'hexagon' | 'triangle' | 'square'
   | 'car' | 'train' | 'airplane' | 'boat' | 'rocket'
   | 'cat' | 'dog' | 'bear' | 'elephant' | 'giraffe'
+  | 'rose' | 'tulip' | 'lily' | 'lotus' | 'sunflower' | 'daisy'
+  | 'maple-leaf' | 'oak-leaf' | 'pine' | 'palm' | 'cactus' | 'mushroom'
+  | 'whale' | 'octopus' | 'fish' | 'seahorse' | 'starfish' | 'shell'
+  | 'owl' | 'eagle' | 'hummingbird' | 'peacock' | 'swan' | 'penguin'
+  | 'fox' | 'rabbit' | 'deer' | 'hedgehog' | 'squirrel' | 'koala'
+  | 'crescent' | 'lightning' | 'snowflake' | 'flame' | 'raindrop' | 'wind'
+  | 'guitar' | 'piano' | 'music-note' | 'microphone' | 'headphones'
+  | 'book' | 'pencil' | 'palette' | 'camera' | 'telescope'
+  | 'coffee' | 'cupcake' | 'ice-cream' | 'pizza' | 'cookie'
+  | 'house' | 'castle' | 'lighthouse' | 'tent' | 'windmill'
+  | 'anchor' | 'compass' | 'hot-air-balloon' | 'bicycle' | 'skateboard'
+  | 'crown' | 'gem' | 'ring' | 'key' | 'lock' | 'hourglass'
+  | 'infinity' | 'clover' | 'feather' | 'paw' | 'leaf-simple'
 
 export interface Shape {
   id: ShapeType
   name: string
-  category: 'nature' | 'geometric' | 'transport' | 'animals'
+  category: 'flora' | 'fauna-sea' | 'fauna-land' | 'fauna-sky' | 'geometric' 
+    | 'celestial' | 'creative' | 'culinary' | 'structures' | 'adventure' | 'treasures' | 'symbols'
   availableFor: PuzzleType[]
 }
 

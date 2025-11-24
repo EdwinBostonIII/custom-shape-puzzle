@@ -90,36 +90,53 @@ export function ShapeSelection({
             </p>
           </div>
 
-          {Object.entries(groupedByCategory).map(([category, shapes]) => (
-            <div key={category} className="mb-12">
-              <h2 className="mb-6 text-2xl font-semibold capitalize">{category}</h2>
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
-                {shapes.map(shape => (
-                  <Card
-                    key={shape.id}
-                    className={cn(
-                      "group relative cursor-pointer overflow-hidden transition-all duration-300 hover:scale-105",
-                      selected.includes(shape.id)
-                        ? "border-2 border-accent shadow-lg"
-                        : "border-2 border-transparent hover:border-secondary",
-                      selected.length >= requiredCount && !selected.includes(shape.id) && "cursor-not-allowed opacity-50"
-                    )}
-                    onClick={() => handleShapeClick(shape.id)}
-                  >
-                    <div className="flex aspect-square flex-col items-center justify-center p-6">
-                      <ShapeIcon shape={shape.id} className="mb-2 h-16 w-16 transition-colors duration-300" />
-                      <p className="text-center text-sm font-medium">{shape.name}</p>
-                    </div>
-                    {selected.includes(shape.id) && (
-                      <div className="absolute right-2 top-2 rounded-full bg-accent p-1">
-                        <Check size={16} weight="bold" className="text-accent-foreground" />
+          {Object.entries(groupedByCategory).map(([category, shapes]) => {
+            const categoryTitles: Record<string, string> = {
+              'flora': 'Flowers & Plants',
+              'fauna-sea': 'Ocean Life',
+              'fauna-sky': 'Birds & Wings',
+              'fauna-land': 'Land Animals',
+              'geometric': 'Geometric Shapes',
+              'celestial': 'Nature & Sky',
+              'creative': 'Arts & Music',
+              'culinary': 'Food & Treats',
+              'structures': 'Buildings',
+              'adventure': 'Travel & Adventure',
+              'treasures': 'Treasures',
+              'symbols': 'Symbols',
+            }
+            
+            return (
+              <div key={category} className="mb-12">
+                <h2 className="mb-6 text-2xl font-semibold">{categoryTitles[category] || category}</h2>
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+                  {shapes.map(shape => (
+                    <Card
+                      key={shape.id}
+                      className={cn(
+                        "group relative cursor-pointer overflow-hidden transition-all duration-300 hover:scale-105",
+                        selected.includes(shape.id)
+                          ? "border-2 border-accent shadow-lg"
+                          : "border-2 border-transparent hover:border-secondary",
+                        selected.length >= requiredCount && !selected.includes(shape.id) && "cursor-not-allowed opacity-50"
+                      )}
+                      onClick={() => handleShapeClick(shape.id)}
+                    >
+                      <div className="flex aspect-square flex-col items-center justify-center p-6">
+                        <ShapeIcon shape={shape.id} className="mb-2 h-16 w-16 transition-colors duration-300" />
+                        <p className="text-center text-sm font-medium">{shape.name}</p>
                       </div>
-                    )}
-                  </Card>
-                ))}
+                      {selected.includes(shape.id) && (
+                        <div className="absolute right-2 top-2 rounded-full bg-accent p-1">
+                          <Check size={16} weight="bold" className="text-accent-foreground" />
+                        </div>
+                      )}
+                    </Card>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
 
           <div className="sticky bottom-6 mt-12 flex justify-center">
             <div className="rounded-lg border-2 border-border bg-card p-4 shadow-xl">

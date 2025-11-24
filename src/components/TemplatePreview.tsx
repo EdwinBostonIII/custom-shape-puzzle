@@ -24,21 +24,21 @@ export function TemplatePreview({ shapes, onBack, onContinue }: TemplatePreviewP
 
           <div className="mb-12 text-center">
             <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl" style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              Your Puzzle Template
+              Your Puzzle Preview
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Here's a preview of your custom puzzle piece shapes
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light">
+              A glimpse of your custom piece shapes
             </p>
           </div>
 
-          <Card className="mx-auto mb-12 max-w-4xl p-8">
-            <div className="grid grid-cols-5 gap-4">
+          <Card className="mx-auto mb-12 max-w-4xl overflow-hidden border-2 p-8 md:p-12">
+            <div className="grid grid-cols-5 gap-6">
               {shapes.map((shape, index) => (
                 <div
                   key={`${shape}-${index}`}
-                  className="flex aspect-square items-center justify-center rounded-lg border-2 border-border bg-muted/30 p-4 transition-all hover:scale-105"
+                  className="flex aspect-square items-center justify-center rounded-xl border-2 border-border bg-gradient-to-br from-muted/50 to-muted/20 p-4 transition-all hover:scale-110 hover:border-primary hover:shadow-lg"
                 >
-                  <ShapeIcon shape={shape} className="h-full w-full" />
+                  <ShapeIcon shape={shape} className="h-full w-full text-primary" />
                 </div>
               ))}
             </div>

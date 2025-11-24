@@ -15,11 +15,14 @@ export function HomePage({ onSelectType }: HomePageProps) {
       <div className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-16 text-center md:mb-24">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              Create Your Perfect Puzzle
-            </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground md:text-xl">
-              Design a one-of-a-kind jigsaw puzzle with custom shapes that tell your story
+            <div className="mb-6 inline-block">
+              <h1 className="text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl" style={{ letterSpacing: '-0.03em', lineHeight: '1' }}>
+                Interlock
+              </h1>
+              <div className="mt-2 h-1 w-full bg-gradient-to-r from-primary via-accent to-secondary rounded-full" />
+            </div>
+            <p className="mx-auto max-w-2xl text-xl text-muted-foreground md:text-2xl font-light" style={{ lineHeight: '1.5' }}>
+              Heirloom puzzles crafted from shapes that matter to you
             </p>
           </div>
 
@@ -131,7 +134,7 @@ export function HomePage({ onSelectType }: HomePageProps) {
           </div>
 
           <div className="mt-16 text-center text-sm text-muted-foreground">
-            <p>All puzzles are custom-made with premium materials and shipped directly to you</p>
+            <p className="font-light">Premium quality pieces · Custom design · Delivered to your door</p>
           </div>
         </div>
       </div>

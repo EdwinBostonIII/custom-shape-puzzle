@@ -20,23 +20,23 @@ export function OrderConfirmation({ orderNumber, onCreateAnother }: OrderConfirm
 
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl" style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              Order Confirmed!
+              Your Puzzle Awaits
             </h1>
-            <p className="text-lg text-muted-foreground">
-              Your custom puzzle is on its way
+            <p className="text-lg text-muted-foreground font-light">
+              Thank you for creating with Interlock
             </p>
           </div>
 
-          <Card className="border-2 bg-muted/30">
+          <Card className="border-2 bg-gradient-to-br from-primary/5 to-accent/5">
             <CardContent className="p-6">
-              <p className="mb-2 text-sm text-muted-foreground">Order Number</p>
-              <p className="text-2xl font-bold tracking-wider">{orderNumber}</p>
+              <p className="mb-2 text-sm font-medium text-muted-foreground">Order Number</p>
+              <p className="text-2xl font-bold tracking-wider text-primary">{orderNumber}</p>
             </CardContent>
           </Card>
 
           <div className="space-y-4">
-            <p className="text-muted-foreground">
-              We've sent a confirmation email with tracking information. Your custom puzzle will be crafted with care and shipped within 5-7 business days.
+            <p className="text-muted-foreground font-light leading-relaxed">
+              A confirmation email with tracking details is on its way. Your heirloom puzzle will be handcrafted with care and arrive within 5-7 business days.
             </p>
           </div>
 

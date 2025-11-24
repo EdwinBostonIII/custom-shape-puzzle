@@ -80,8 +80,8 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
             <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl" style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}>
               Design Your Puzzle
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Choose between uploading a photo or selecting colors for each piece
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light">
+              Choose between a treasured photo or custom colors for each piece
             </p>
           </div>
 
