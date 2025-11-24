@@ -19,7 +19,37 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
   const [designType, setDesignType] = useState<'photo' | 'colors'>('photo')
   const [photoData, setPhotoData] = useState<string>('')
   const [colorMap, setColorMap] = useState<Partial<Record<ShapeType, string>>>({})
+  const [showWoodPreview, setShowWoodPreview] = useState(true)
+  const [photoIsDark, setPhotoIsDark] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const analyzeImageBrightness = (imageData: string) => {
+    const img = new Image()
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width = img.width
+      canvas.height = img.height
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
+
+      ctx.drawImage(img, 0, 0)
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      const data = imageData.data
+
+      let totalBrightness = 0
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i]
+        const g = data[i + 1]
+        const b = data[i + 2]
+        const brightness = (r * 0.299 + g * 0.587 + b * 0.114) / 255
+        totalBrightness += brightness
+      }
+
+      const avgBrightness = totalBrightness / (data.length / 4)
+      setPhotoIsDark(avgBrightness < 0.4) // Dark if average brightness below 40%
+    }
+    img.src = imageData
+  }
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -37,6 +67,7 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
       reader.onload = (e) => {
         const result = e.target?.result as string
         setPhotoData(result)
+        analyzeImageBrightness(result)
         toast.success('Photo uploaded successfully!')
       }
       reader.readAsDataURL(file)
@@ -124,8 +155,60 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
                   </div>
 
                   {photoData && (
-                    <div className="mx-auto max-w-md overflow-hidden rounded-2xl border-2 border-border shadow-xl">
-                      <img src={photoData} alt="Uploaded preview" className="h-auto w-full" />
+                    <div className="mx-auto max-w-md space-y-4">
+                      {/* Wood Reality Filter Warning */}
+                      {photoIsDark && (
+                        <div className="bg-amber-50 border-2 border-amber-200 rounded-xl p-4 text-left">
+                          <div className="flex items-start gap-3">
+                            <span className="text-amber-600 text-2xl">⚠️</span>
+                            <div>
+                              <p className="font-semibold text-amber-900 mb-1">Heads up: This photo is quite dark</p>
+                              <p className="text-sm text-amber-800 leading-relaxed">
+                                Wood absorbs ink, which can make dark shadows look like solid black shapes. We recommend brightening this image by 20% or choosing a photo with natural daylight for best results.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Preview Container with Wood Filter */}
+                      <div className="overflow-hidden rounded-2xl border-2 border-border shadow-xl relative">
+                        <div className="relative">
+                          <img
+                            src={photoData}
+                            alt="Uploaded preview"
+                            className={cn(
+                              "h-auto w-full transition-all duration-300",
+                              showWoodPreview && "brightness-95 contrast-90 sepia-[0.15]"
+                            )}
+                          />
+                          {showWoodPreview && (
+                            <div
+                              className="absolute inset-0 pointer-events-none"
+                              style={{
+                                backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='wood'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04,0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0.6 0 0 0 0.3, 0.3 0.3 0 0 0.2, 0.2 0.2 0.2 0 0.1, 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23wood)'/%3E%3C/svg%3E")`,
+                                backgroundSize: 'cover',
+                                mixBlendMode: 'multiply',
+                                opacity: 0.15
+                              }}
+                            />
+                          )}
+                        </div>
+
+                        {/* Wood Preview Toggle */}
+                        <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                          <button
+                            onClick={() => setShowWoodPreview(!showWoodPreview)}
+                            className="px-4 py-2 rounded-full text-sm font-medium bg-white/95 backdrop-blur-sm border-2 border-stone shadow-lg hover:bg-white transition-all"
+                          >
+                            {showWoodPreview ? '✓ Wood Preview' : 'Show Wood Preview'}
+                          </button>
+                        </div>
+                      </div>
+
+                      <p className="text-xs text-center text-charcoal/50 leading-relaxed">
+                        Toggle "Wood Preview" to see how your photo will look on basswood
+                      </p>
                     </div>
                   )}
                 </div>
