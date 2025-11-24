@@ -180,9 +180,8 @@ export function ShapeSelection({
     // Keep history limited to last 50 actions
     if (newHistory.length > 50) {
       newHistory.shift()
-    } else {
-      setHistoryIndex(historyIndex + 1)
     }
+    setHistoryIndex(newHistory.length - 1)
     setHistory(newHistory)
   }
 
