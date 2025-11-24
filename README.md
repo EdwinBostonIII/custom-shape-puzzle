@@ -213,22 +213,27 @@ custom-shape-puzzle/
 ├── src/
 │   ├── components/
 │   │   ├── ui/         # Reusable UI primitives (Button, Card, Input)
-│   │   ├── HomePage.tsx
-│   │   ├── ShapeSelection.tsx
-│   │   ├── DesignChoice.tsx
-│   │   ├── BoxDesign.tsx
-│   │   ├── Checkout.tsx
-│   │   ├── OrderConfirmation.tsx
-│   │   ├── PartnerWaiting.tsx
-│   │   ├── PuzzlePiece.tsx
-│   │   ├── ShapeIcon.tsx
-│   │   └── TemplatePreview.tsx
+│   │   ├── HomePage.tsx              # Landing page with product options
+│   │   ├── FAQSection.tsx            # Accordion FAQ component
+│   │   ├── ShapeSelection.tsx        # Shape picker with tray and notes
+│   │   ├── ProgressIndicator.tsx     # Breadcrumb navigation
+│   │   ├── ModeSelectScreen.tsx      # Couch vs remote mode fork
+│   │   ├── PartnerHandoffScreen.tsx  # Privacy screen between partners
+│   │   ├── PartnerWaiting.tsx        # Remote partner waiting room
+│   │   ├── DesignChoice.tsx          # Photo/color customization
+│   │   ├── BoxDesign.tsx             # Box personalization
+│   │   ├── Checkout.tsx              # Payment and shipping form
+│   │   ├── EditionComparisonModal.tsx # Standard vs Keepsake comparison
+│   │   ├── OrderConfirmation.tsx     # Success screen with referral
+│   │   ├── TemplatePreview.tsx       # Puzzle layout preview
+│   │   ├── PuzzlePiece.tsx           # Individual piece component
+│   │   └── ShapeIcon.tsx             # SVG shape renderer
 │   ├── lib/
 │   │   ├── constants.ts   # Shape library (100+ shapes), pricing
 │   │   ├── types.ts       # TypeScript definitions
-│   │   └── utils.ts       # Utility functions
-│   ├── App.tsx            # Main app component with routing logic
-│   ├── index.css          # Global styles, design system tokens
+│   │   └── utils.ts       # Utility functions (cn helper)
+│   ├── App.tsx            # Main app with routing & state management
+│   ├── index.css          # Global styles, animations, design tokens
 │   └── main.tsx           # App entry point
 ├── index.html             # HTML entry, Google Fonts
 ├── tailwind.config.js     # Tailwind customization
@@ -280,6 +285,50 @@ custom-shape-puzzle/
 - **Shadows:** Colored shadows using Terracotta and Sage
 - **Borders:** 2px Stone borders, rounded corners
 - **Buttons:** Stamp-press effect with translateY animation
+
+## ✨ UX Powerhouse Features
+
+### Conversion Optimization
+- **Progress Indicator** - Visual breadcrumb showing user's journey (Start → Shapes → Design → Box → Checkout → Complete)
+- **Confetti Celebration** - Delightful animation when tray is full using brand colors
+- **Edition Comparison Modal** - Side-by-side Standard vs Keepsake feature comparison with checkmarks
+- **Wood Reality Filter** - Shows actual laser-engraved appearance on hover and in photo preview
+- **Smart Prompts** - Tappable suggestion pills to eliminate writer's block in customization
+- **Pass the Device Mode** - Couch collaboration for couples creating together
+
+### Friction Reduction
+- **Shop First, Write Later** - Quick tap-to-fill tray, then batch note-writing in dedicated phase
+- **Sticky Category Navigation** - Horizontal scrollable pills for instant category jumping
+- **Auto-save** - LocalStorage backup every change, restores if < 24hrs old
+- **Undo/Redo** - Full history stack (50 actions) with Ctrl+Z / Ctrl+Shift+Z
+
+### Power User Features
+- **Keyboard Navigation:**
+  - Esc to go back
+  - Enter to proceed when ready
+  - 1-6 keys to jump to categories
+  - Ctrl+Z / Cmd+Z for undo
+  - Ctrl+Shift+Z / Cmd+Shift+Z for redo
+  - Tab navigation with focus-visible outlines
+- **Accessibility:**
+  - ARIA labels on all interactive elements
+  - Semantic HTML (nav, main, section, aside)
+  - Keyboard support on shape cards (Enter/Space to select)
+  - Screen reader friendly with live regions
+  - Reduced motion support for users who prefer it
+
+### Information Architecture
+- **FAQ Section** - 12 common questions with accordion expansion
+- **Photo Brightness Analysis** - Canvas-based histogram warns if photo too dark for wood
+- **Live Puzzle Assembly** - Pieces snap into tray with bounce animation
+- **Selection Color** - Branded Terracotta text selection throughout
+
+### Polish & Performance
+- **Focus-visible Styles** - 3px Terracotta outline for keyboard users only
+- **Print Optimization** - Clean print layouts for completed puzzles
+- **Smooth Scroll** - Animated scrolling to categories
+- **Fade-in Transitions** - Subtle page entrance animations
+- **Responsive Design** - Mobile-first with breakpoints for all screen sizes
 
 ## 🐛 Troubleshooting
 

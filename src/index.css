@@ -232,4 +232,103 @@ html {
       opacity: 1;
     }
   }
+
+  /* Fade-in animation for page transitions */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.4s ease-out;
+  }
+}
+
+/* Enhanced focus styles for keyboard navigation */
+*:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 4px;
+}
+
+/* Remove default focus ring but keep for keyboard users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Print styles - optimize for printing completed puzzles */
+@media print {
+  body::before {
+    display: none;
+  }
+
+  nav,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  * {
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .puzzle-piece-slot {
+    break-inside: avoid;
+  }
+
+  @page {
+    margin: 1cm;
+  }
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Loading spinner utility */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+/* Selection color customization */
+::selection {
+  background-color: var(--terracotta);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--terracotta);
+  color: white;
 }
