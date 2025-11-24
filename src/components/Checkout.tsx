@@ -16,8 +16,11 @@ interface CheckoutProps {
 
 export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
   const [formData, setFormData] = useState<Partial<ShippingInfo>>({})
+  const [keepsakeUpgrade, setKeepsakeUpgrade] = useState(false)
 
-  const price = PRICING[type]
+  const basePrice = PRICING[type]
+  const upgradePrice = 74
+  const price = keepsakeUpgrade ? basePrice + upgradePrice : basePrice
 
   const handleInputChange = (field: keyof ShippingInfo, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -53,10 +56,10 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
           </div>
 
           <div className="mb-12 text-center">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
               Almost There
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
+            <p className="mx-auto max-w-2xl text-lg text-charcoal/70 font-light leading-relaxed">
               Your custom puzzle will be handcrafted with care and shipped to you within two weeks.
             </p>
           </div>
@@ -183,20 +186,77 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
               </CardContent>
             </Card>
 
-            <Card className="border-2 shadow-lg bg-gradient-to-br from-primary/5 to-accent/5">
+            {/* Keepsake Edition Upsell */}
+            <Card className={`border-2 shadow-xl transition-all ${keepsakeUpgrade ? 'border-terracotta bg-terracotta/5' : 'border-stone'}`}>
+              <CardContent className="p-8">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-charcoal mb-2" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                      Upgrade to Keepsake Edition
+                    </h3>
+                    <p className="text-lg text-charcoal/80">
+                      +${upgradePrice} <span className="text-sm text-charcoal/60">(${basePrice + upgradePrice} total)</span>
+                    </p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant={keepsakeUpgrade ? "default" : "outline"}
+                    onClick={() => setKeepsakeUpgrade(!keepsakeUpgrade)}
+                    className="min-w-[140px]"
+                  >
+                    {keepsakeUpgrade ? 'Added ✓' : 'Upgrade Now'}
+                  </Button>
+                </div>
+
+                <div className="grid md:grid-cols-[200px_1fr] gap-6 items-center">
+                  {/* Placeholder for walnut box image */}
+                  <div className="bg-stone/30 rounded-xl aspect-square flex items-center justify-center border-2 border-stone">
+                    <p className="text-xs text-charcoal/50 text-center px-4">Walnut Box<br/>Illustration</p>
+                  </div>
+
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <span className="text-terracotta mt-0.5">✓</span>
+                      <span className="text-charcoal/80">Solid walnut storage box with your custom dedication engraved inside the lid</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-terracotta mt-0.5">✓</span>
+                      <span className="text-charcoal/80">Printed linen "Our Story" card explaining the meaning of all ten pieces</span>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="text-terracotta mt-0.5">✓</span>
+                      <span className="text-charcoal/80">Premium gift wrapping + handwritten note</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-xs text-center text-charcoal/50 mt-6" style={{ fontFamily: 'var(--font-caveat)', fontSize: '0.95rem' }}>
+                  Chosen by 68% of anniversary couples
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="border-2 shadow-lg bg-sage/5">
               <CardHeader>
-                <CardTitle style={{ fontFamily: 'var(--font-outfit)' }}>Order Summary</CardTitle>
+                <CardTitle className="text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>Order Summary</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="flex justify-between text-lg">
-                    <span>Custom Puzzle ({type === 'couple' ? 'Partners' : 'Solo'})</span>
-                    <span className="font-semibold">${price}</span>
+                  <div className="flex justify-between text-lg text-charcoal">
+                    <span>Custom Puzzle ({type === 'couple' ? 'Together' : 'For Someone Special'})</span>
+                    <span className="font-semibold">${basePrice}</span>
                   </div>
-                  <div className="flex justify-between border-t pt-3 text-2xl font-bold">
+                  {keepsakeUpgrade && (
+                    <div className="flex justify-between text-lg text-charcoal">
+                      <span>Keepsake Edition Upgrade</span>
+                      <span className="font-semibold">+${upgradePrice}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between border-t border-stone pt-3 text-2xl font-bold text-charcoal">
                     <span>Total</span>
                     <span>${price}</span>
                   </div>
+                  <p className="text-xs text-charcoal/60 pt-2">Free shipping included</p>
                 </div>
               </CardContent>
             </Card>
