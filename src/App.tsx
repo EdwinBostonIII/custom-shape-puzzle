@@ -1,18 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import { Toaster } from 'sonner'
 import { useKV } from '@github/spark/hooks'
 import { HomePage } from '@/components/HomePage'
-import { ModeSelectScreen } from '@/components/ModeSelectScreen'
-import { ShapeSelection } from '@/components/ShapeSelection'
-import { PartnerHandoffScreen } from '@/components/PartnerHandoffScreen'
-import { PartnerWaiting } from '@/components/PartnerWaiting'
-import { TemplatePreview } from '@/components/TemplatePreview'
-import { DesignChoice } from '@/components/DesignChoice'
-import { BoxDesign } from '@/components/BoxDesign'
-import { Checkout } from '@/components/Checkout'
-import { OrderConfirmation } from '@/components/OrderConfirmation'
 import { ProgressIndicator } from '@/components/ProgressIndicator'
 import { PuzzleSession, PuzzleType, ShapeType, ShippingInfo } from '@/lib/types'
+
+// Lazy load heavy components for better initial load performance
+const ModeSelectScreen = lazy(() => import('@/components/ModeSelectScreen').then(m => ({ default: m.ModeSelectScreen })))
+const ShapeSelection = lazy(() => import('@/components/ShapeSelection').then(m => ({ default: m.ShapeSelection })))
+const PartnerHandoffScreen = lazy(() => import('@/components/PartnerHandoffScreen').then(m => ({ default: m.PartnerHandoffScreen })))
+const PartnerWaiting = lazy(() => import('@/components/PartnerWaiting').then(m => ({ default: m.PartnerWaiting })))
+const TemplatePreview = lazy(() => import('@/components/TemplatePreview').then(m => ({ default: m.TemplatePreview })))
+const DesignChoice = lazy(() => import('@/components/DesignChoice').then(m => ({ default: m.DesignChoice })))
+const BoxDesign = lazy(() => import('@/components/BoxDesign').then(m => ({ default: m.BoxDesign })))
+const Checkout = lazy(() => import('@/components/Checkout').then(m => ({ default: m.Checkout })))
+const OrderConfirmation = lazy(() => import('@/components/OrderConfirmation').then(m => ({ default: m.OrderConfirmation })))
+
+// Loading fallback component
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-cream flex items-center justify-center">
+      <div className="text-center space-y-4">
+        <div className="spinner" style={{ width: '48px', height: '48px', borderWidth: '4px', color: 'var(--terracotta)' }} />
+        <p className="text-charcoal/60 font-light">Loading...</p>
+      </div>
+    </div>
+  )
+}
 
 type Step = 'home' | 'mode-select' | 'shapes' | 'partner-handoff' | 'waiting' | 'template' | 'design' | 'boxdesign' | 'checkout' | 'confirmation'
 
@@ -199,16 +213,17 @@ function App() {
         <ProgressIndicator currentStep={step} />
       )}
 
-      {step === 'home' && (
-        <HomePage onSelectType={handleSelectType} />
-      )}
+      <Suspense fallback={<LoadingFallback />}>
+        {step === 'home' && (
+          <HomePage onSelectType={handleSelectType} />
+        )}
 
-      {step === 'mode-select' && (
-        <ModeSelectScreen
-          onSelect={handleModeSelect}
-          onBack={handleCreateAnother}
-        />
-      )}
+        {step === 'mode-select' && (
+          <ModeSelectScreen
+            onSelect={handleModeSelect}
+            onBack={handleCreateAnother}
+          />
+        )}
 
       {step === 'shapes' && session && (
         <ShapeSelection
@@ -298,12 +313,13 @@ function App() {
         />
       )}
 
-      {step === 'confirmation' && (
-        <OrderConfirmation
-          orderNumber={orderNumber}
-          onCreateAnother={handleCreateAnother}
-        />
-      )}
+        {step === 'confirmation' && (
+          <OrderConfirmation
+            orderNumber={orderNumber}
+            onCreateAnother={handleCreateAnother}
+          />
+        )}
+      </Suspense>
     </>
   )
 }
