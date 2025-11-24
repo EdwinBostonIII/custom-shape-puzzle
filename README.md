@@ -273,8 +273,8 @@ custom-shape-puzzle/
 
 ### Texture & Effects
 - **Paper Texture:** 3% opacity SVG noise overlay
-- **Shadows:** Colored shadows using terracotta and sage
-- **Borders:** 2px stone borders, rounded corners
+- **Shadows:** Colored shadows using Terracotta and Sage
+- **Borders:** 2px Stone borders, rounded corners
 - **Buttons:** Stamp-press effect with translateY animation
 
 ## 🐛 Troubleshooting
