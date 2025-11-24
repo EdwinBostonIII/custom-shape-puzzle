@@ -6,11 +6,12 @@ import { ShapeSelection } from '@/components/ShapeSelection'
 import { PartnerWaiting } from '@/components/PartnerWaiting'
 import { TemplatePreview } from '@/components/TemplatePreview'
 import { DesignChoice } from '@/components/DesignChoice'
+import { BoxDesign } from '@/components/BoxDesign'
 import { Checkout } from '@/components/Checkout'
 import { OrderConfirmation } from '@/components/OrderConfirmation'
 import { PuzzleSession, PuzzleType, ShapeType, ShippingInfo } from '@/lib/types'
 
-type Step = 'home' | 'shapes' | 'waiting' | 'template' | 'design' | 'checkout' | 'confirmation'
+type Step = 'home' | 'shapes' | 'waiting' | 'template' | 'design' | 'boxdesign' | 'checkout' | 'confirmation'
 
 function generateId() {
   return Date.now().toString(36) + Math.random().toString(36).substr(2)
@@ -105,6 +106,26 @@ function App() {
         }
       })
     }
+    setStep('boxdesign')
+  }
+
+  const handleBoxDesignComplete = (boxDesign: 'standard' | 'mystery', boxData?: {
+    boxTitle?: string
+    boxHint1?: string
+    boxHint2?: string
+    boxHiddenMessage?: string
+  }) => {
+    setSession(prev => {
+      if (!prev || !prev.id) return prev!
+      return {
+        ...prev,
+        boxDesign,
+        boxTitle: boxData?.boxTitle,
+        boxHint1: boxData?.boxHint1,
+        boxHint2: boxData?.boxHint2,
+        boxHiddenMessage: boxData?.boxHiddenMessage,
+      }
+    })
     setStep('checkout')
   }
 
@@ -175,6 +196,7 @@ function App() {
       {step === 'template' && (
         <TemplatePreview
           shapes={allShapes}
+          photoData={session?.photoData}
           onBack={() => setStep('shapes')}
           onContinue={() => setStep('design')}
         />
@@ -188,10 +210,18 @@ function App() {
         />
       )}
 
+      {step === 'boxdesign' && session && (
+        <BoxDesign
+          photoData={session.photoData}
+          onBack={() => setStep('design')}
+          onContinue={handleBoxDesignComplete}
+        />
+      )}
+
       {step === 'checkout' && session && (
         <Checkout
           type={session.type}
-          onBack={() => setStep('design')}
+          onBack={() => setStep('boxdesign')}
           onComplete={handleCheckoutComplete}
         />
       )}
