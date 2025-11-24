@@ -5,6 +5,12 @@ interface PuzzlePieceProps {
   shape: ShapeType
   className?: string
   color?: string
+  edges?: {
+    top?: 'tab' | 'blank' | 'flat'
+    right?: 'tab' | 'blank' | 'flat'
+    bottom?: 'tab' | 'blank' | 'flat'
+    left?: 'tab' | 'blank' | 'flat'
+  }
 }
 
 const PASTEL_COLORS = [
@@ -23,37 +29,134 @@ function getShapeColor(shape: ShapeType): string {
   return PASTEL_COLORS[index]
 }
 
-function getPuzzleVariant(shape: ShapeType): number {
-  return shape.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 4
+function generatePuzzlePiecePath(edges: {
+  top?: 'tab' | 'blank' | 'flat'
+  right?: 'tab' | 'blank' | 'flat'
+  bottom?: 'tab' | 'blank' | 'flat'
+  left?: 'tab' | 'blank' | 'flat'
+}): string {
+  const baseSize = 100
+  const cornerRadius = 8
+  const tabSize = 15
+  const tabNeckWidth = 8
+  
+  const paths: string[] = []
+  
+  paths.push(`M ${cornerRadius} 0`)
+  
+  if (edges.top === 'tab') {
+    paths.push(`L ${baseSize * 0.5 - tabNeckWidth} 0`)
+    paths.push(`C ${baseSize * 0.5 - tabNeckWidth + 2} 0, ${baseSize * 0.5 - tabNeckWidth + 2} -2, ${baseSize * 0.5 - tabSize} -${tabSize * 0.6}`)
+    paths.push(`C ${baseSize * 0.5 - tabSize - 2} -${tabSize}, ${baseSize * 0.5 - tabSize - 2} -${tabSize}, ${baseSize * 0.5} -${tabSize}`)
+    paths.push(`C ${baseSize * 0.5 + tabSize + 2} -${tabSize}, ${baseSize * 0.5 + tabSize + 2} -${tabSize}, ${baseSize * 0.5 + tabSize} -${tabSize * 0.6}`)
+    paths.push(`C ${baseSize * 0.5 + tabNeckWidth - 2} -2, ${baseSize * 0.5 + tabNeckWidth - 2} 0, ${baseSize * 0.5 + tabNeckWidth} 0`)
+  } else if (edges.top === 'blank') {
+    paths.push(`L ${baseSize * 0.5 - tabNeckWidth} 0`)
+    paths.push(`C ${baseSize * 0.5 - tabNeckWidth - 2} 0, ${baseSize * 0.5 - tabNeckWidth - 2} 2, ${baseSize * 0.5 - tabSize} ${tabSize * 0.6}`)
+    paths.push(`C ${baseSize * 0.5 - tabSize - 2} ${tabSize}, ${baseSize * 0.5 - tabSize - 2} ${tabSize}, ${baseSize * 0.5} ${tabSize}`)
+    paths.push(`C ${baseSize * 0.5 + tabSize + 2} ${tabSize}, ${baseSize * 0.5 + tabSize + 2} ${tabSize}, ${baseSize * 0.5 + tabSize} ${tabSize * 0.6}`)
+    paths.push(`C ${baseSize * 0.5 + tabNeckWidth + 2} 2, ${baseSize * 0.5 + tabNeckWidth + 2} 0, ${baseSize * 0.5 + tabNeckWidth} 0`)
+  }
+  
+  paths.push(`L ${baseSize - cornerRadius} 0`)
+  paths.push(`Q ${baseSize} 0 ${baseSize} ${cornerRadius}`)
+  
+  if (edges.right === 'tab') {
+    paths.push(`L ${baseSize} ${baseSize * 0.5 - tabNeckWidth}`)
+    paths.push(`C ${baseSize} ${baseSize * 0.5 - tabNeckWidth + 2}, ${baseSize + 2} ${baseSize * 0.5 - tabNeckWidth + 2}, ${baseSize + tabSize * 0.6} ${baseSize * 0.5 - tabSize}`)
+    paths.push(`C ${baseSize + tabSize} ${baseSize * 0.5 - tabSize - 2}, ${baseSize + tabSize} ${baseSize * 0.5 - tabSize - 2}, ${baseSize + tabSize} ${baseSize * 0.5}`)
+    paths.push(`C ${baseSize + tabSize} ${baseSize * 0.5 + tabSize + 2}, ${baseSize + tabSize} ${baseSize * 0.5 + tabSize + 2}, ${baseSize + tabSize * 0.6} ${baseSize * 0.5 + tabSize}`)
+    paths.push(`C ${baseSize + 2} ${baseSize * 0.5 + tabNeckWidth - 2}, ${baseSize} ${baseSize * 0.5 + tabNeckWidth - 2}, ${baseSize} ${baseSize * 0.5 + tabNeckWidth}`)
+  } else if (edges.right === 'blank') {
+    paths.push(`L ${baseSize} ${baseSize * 0.5 - tabNeckWidth}`)
+    paths.push(`C ${baseSize} ${baseSize * 0.5 - tabNeckWidth - 2}, ${baseSize - 2} ${baseSize * 0.5 - tabNeckWidth - 2}, ${baseSize - tabSize * 0.6} ${baseSize * 0.5 - tabSize}`)
+    paths.push(`C ${baseSize - tabSize} ${baseSize * 0.5 - tabSize - 2}, ${baseSize - tabSize} ${baseSize * 0.5 - tabSize - 2}, ${baseSize - tabSize} ${baseSize * 0.5}`)
+    paths.push(`C ${baseSize - tabSize} ${baseSize * 0.5 + tabSize + 2}, ${baseSize - tabSize} ${baseSize * 0.5 + tabSize + 2}, ${baseSize - tabSize * 0.6} ${baseSize * 0.5 + tabSize}`)
+    paths.push(`C ${baseSize - 2} ${baseSize * 0.5 + tabNeckWidth + 2}, ${baseSize} ${baseSize * 0.5 + tabNeckWidth + 2}, ${baseSize} ${baseSize * 0.5 + tabNeckWidth}`)
+  }
+  
+  paths.push(`L ${baseSize} ${baseSize - cornerRadius}`)
+  paths.push(`Q ${baseSize} ${baseSize} ${baseSize - cornerRadius} ${baseSize}`)
+  
+  if (edges.bottom === 'tab') {
+    paths.push(`L ${baseSize * 0.5 + tabNeckWidth} ${baseSize}`)
+    paths.push(`C ${baseSize * 0.5 + tabNeckWidth - 2} ${baseSize}, ${baseSize * 0.5 + tabNeckWidth - 2} ${baseSize + 2}, ${baseSize * 0.5 + tabSize} ${baseSize + tabSize * 0.6}`)
+    paths.push(`C ${baseSize * 0.5 + tabSize + 2} ${baseSize + tabSize}, ${baseSize * 0.5 + tabSize + 2} ${baseSize + tabSize}, ${baseSize * 0.5} ${baseSize + tabSize}`)
+    paths.push(`C ${baseSize * 0.5 - tabSize - 2} ${baseSize + tabSize}, ${baseSize * 0.5 - tabSize - 2} ${baseSize + tabSize}, ${baseSize * 0.5 - tabSize} ${baseSize + tabSize * 0.6}`)
+    paths.push(`C ${baseSize * 0.5 - tabNeckWidth + 2} ${baseSize + 2}, ${baseSize * 0.5 - tabNeckWidth + 2} ${baseSize}, ${baseSize * 0.5 - tabNeckWidth} ${baseSize}`)
+  } else if (edges.bottom === 'blank') {
+    paths.push(`L ${baseSize * 0.5 + tabNeckWidth} ${baseSize}`)
+    paths.push(`C ${baseSize * 0.5 + tabNeckWidth + 2} ${baseSize}, ${baseSize * 0.5 + tabNeckWidth + 2} ${baseSize - 2}, ${baseSize * 0.5 + tabSize} ${baseSize - tabSize * 0.6}`)
+    paths.push(`C ${baseSize * 0.5 + tabSize + 2} ${baseSize - tabSize}, ${baseSize * 0.5 + tabSize + 2} ${baseSize - tabSize}, ${baseSize * 0.5} ${baseSize - tabSize}`)
+    paths.push(`C ${baseSize * 0.5 - tabSize - 2} ${baseSize - tabSize}, ${baseSize * 0.5 - tabSize - 2} ${baseSize - tabSize}, ${baseSize * 0.5 - tabSize} ${baseSize - tabSize * 0.6}`)
+    paths.push(`C ${baseSize * 0.5 - tabNeckWidth - 2} ${baseSize - 2}, ${baseSize * 0.5 - tabNeckWidth - 2} ${baseSize}, ${baseSize * 0.5 - tabNeckWidth} ${baseSize}`)
+  }
+  
+  paths.push(`L ${cornerRadius} ${baseSize}`)
+  paths.push(`Q 0 ${baseSize} 0 ${baseSize - cornerRadius}`)
+  
+  if (edges.left === 'tab') {
+    paths.push(`L 0 ${baseSize * 0.5 + tabNeckWidth}`)
+    paths.push(`C 0 ${baseSize * 0.5 + tabNeckWidth - 2}, -2 ${baseSize * 0.5 + tabNeckWidth - 2}, -${tabSize * 0.6} ${baseSize * 0.5 + tabSize}`)
+    paths.push(`C -${tabSize} ${baseSize * 0.5 + tabSize + 2}, -${tabSize} ${baseSize * 0.5 + tabSize + 2}, -${tabSize} ${baseSize * 0.5}`)
+    paths.push(`C -${tabSize} ${baseSize * 0.5 - tabSize - 2}, -${tabSize} ${baseSize * 0.5 - tabSize - 2}, -${tabSize * 0.6} ${baseSize * 0.5 - tabSize}`)
+    paths.push(`C -2 ${baseSize * 0.5 - tabNeckWidth + 2}, 0 ${baseSize * 0.5 - tabNeckWidth + 2}, 0 ${baseSize * 0.5 - tabNeckWidth}`)
+  } else if (edges.left === 'blank') {
+    paths.push(`L 0 ${baseSize * 0.5 + tabNeckWidth}`)
+    paths.push(`C 0 ${baseSize * 0.5 + tabNeckWidth + 2}, 2 ${baseSize * 0.5 + tabNeckWidth + 2}, ${tabSize * 0.6} ${baseSize * 0.5 + tabSize}`)
+    paths.push(`C ${tabSize} ${baseSize * 0.5 + tabSize + 2}, ${tabSize} ${baseSize * 0.5 + tabSize + 2}, ${tabSize} ${baseSize * 0.5}`)
+    paths.push(`C ${tabSize} ${baseSize * 0.5 - tabSize - 2}, ${tabSize} ${baseSize * 0.5 - tabSize - 2}, ${tabSize * 0.6} ${baseSize * 0.5 - tabSize}`)
+    paths.push(`C 2 ${baseSize * 0.5 - tabNeckWidth - 2}, 0 ${baseSize * 0.5 - tabNeckWidth - 2}, 0 ${baseSize * 0.5 - tabNeckWidth}`)
+  }
+  
+  paths.push(`L 0 ${cornerRadius}`)
+  paths.push(`Q 0 0 ${cornerRadius} 0`)
+  paths.push('Z')
+  
+  return paths.join(' ')
 }
 
-export function PuzzlePiece({ shape, className = "w-16 h-16", color }: PuzzlePieceProps) {
-  const shapeColor = color || getShapeColor(shape)
-  const variant = getPuzzleVariant(shape)
+function getEdgeConfiguration(shape: ShapeType): {
+  top?: 'tab' | 'blank' | 'flat'
+  right?: 'tab' | 'blank' | 'flat'
+  bottom?: 'tab' | 'blank' | 'flat'
+  left?: 'tab' | 'blank' | 'flat'
+} {
+  const hash = shape.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
   
-  let piecePath = ""
-  switch(variant) {
-    case 0:
-      piecePath = "M10,0 L45,0 Q47,0 47,3 Q47,7 50,7 Q53,7 53,3 Q53,0 55,0 L90,0 Q100,0 100,10 L100,90 Q100,100 90,100 L55,100 Q53,100 53,97 Q53,93 50,93 Q47,93 47,97 Q47,100 45,100 L10,100 Q0,100 0,90 L0,10 Q0,0 10,0 Z"
-      break
-    case 1:
-      piecePath = "M10,0 L90,0 Q100,0 100,10 L100,45 Q100,47 97,47 Q93,47 93,50 Q93,53 97,53 Q100,53 100,55 L100,90 Q100,100 90,100 L10,100 Q0,100 0,90 L0,10 Q0,0 10,0 Z"
-      break
-    case 2:
-      piecePath = "M10,0 L90,0 Q100,0 100,10 L100,45 Q100,47 103,47 Q107,47 107,50 Q107,53 103,53 Q100,53 100,55 L100,90 Q100,100 90,100 L55,100 Q53,100 53,103 Q53,107 50,107 Q47,107 47,103 Q47,100 45,100 L10,100 Q0,100 0,90 L0,10 Q0,0 10,0 Z"
-      break
-    default:
-      piecePath = "M10,0 L45,0 Q47,0 47,3 Q47,7 50,7 Q53,7 53,3 Q53,0 55,0 L90,0 Q100,0 100,10 L100,45 Q100,47 103,47 Q107,47 107,50 Q107,53 103,53 Q100,53 100,55 L100,90 Q100,100 90,100 L10,100 Q0,100 0,90 L0,55 Q0,53 -3,53 Q-7,53 -7,50 Q-7,47 -3,47 Q0,47 0,45 L0,10 Q0,0 10,0 Z"
+  return {
+    top: hash % 3 === 0 ? 'tab' : hash % 3 === 1 ? 'blank' : 'flat',
+    right: (hash + 1) % 3 === 0 ? 'tab' : (hash + 1) % 3 === 1 ? 'blank' : 'flat',
+    bottom: (hash + 2) % 3 === 0 ? 'tab' : (hash + 2) % 3 === 1 ? 'blank' : 'flat',
+    left: (hash + 3) % 3 === 0 ? 'tab' : (hash + 3) % 3 === 1 ? 'blank' : 'flat',
   }
+}
+
+export function PuzzlePiece({ shape, className = "w-16 h-16", color, edges }: PuzzlePieceProps) {
+  const shapeColor = color || getShapeColor(shape)
+  const edgeConfig = edges || getEdgeConfiguration(shape)
+  const piecePath = generatePuzzlePiecePath(edgeConfig)
 
   return (
     <svg
-      viewBox="-10 -10 120 120"
+      viewBox="-20 -20 140 140"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
       style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.15))' }}
     >
-      <path d={piecePath} fill={shapeColor} stroke="none" />
+      <defs>
+        <linearGradient id={`grad-${shape}`} x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: shapeColor, stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: shapeColor, stopOpacity: 0.85 }} />
+        </linearGradient>
+      </defs>
+      <path 
+        d={piecePath} 
+        fill={`url(#grad-${shape})`} 
+        stroke="oklch(0.3 0.01 0)" 
+        strokeWidth="0.5"
+        strokeOpacity="0.3"
+      />
       <g transform="translate(50, 50) scale(0.5) translate(-12, -12)">
         <ShapeIcon shape={shape} className="w-6 h-6" color="oklch(0.98 0.01 0)" />
       </g>
