@@ -14,7 +14,11 @@ import { PuzzleSession, PuzzleType, ShapeType, ShippingInfo } from '@/lib/types'
 type Step = 'home' | 'shapes' | 'waiting' | 'template' | 'design' | 'boxdesign' | 'checkout' | 'confirmation'
 
 function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2)
+  // Use crypto.getRandomValues to generate a cryptographically secure random component
+  const array = new Uint32Array(2);
+  window.crypto.getRandomValues(array);
+  const randomPart = Array.from(array).map(n => n.toString(36)).join('');
+  return Date.now().toString(36) + randomPart;
 }
 
 function App() {
