@@ -37,23 +37,29 @@ export function HomePage({ onSelectType }: HomePageProps) {
               </svg>
             </div>
 
-            <div className="mb-8 relative z-10">
+            <div className="mb-6 relative z-10">
               <h1
-                className="text-5xl md:text-6xl lg:text-7xl text-charcoal mb-6"
-                style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', lineHeight: '1.1', fontWeight: '600' }}
+                className="text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6 leading-tight"
+                style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', fontWeight: '600' }}
               >
-                Piece Together Your{' '}
-                <span className="underline-brush text-sage">Story</span>
+                Turn your favorite memories into a wooden puzzle you'll keep forever.
               </h1>
             </div>
-            <p className="mx-auto max-w-3xl text-xl md:text-2xl text-charcoal/80 leading-relaxed mb-6" style={{ fontFamily: 'var(--font-quicksand)' }}>
-              Heirloom wooden puzzles, crafted from your most cherished memories.
+            <p className="mx-auto max-w-2xl text-lg md:text-xl text-charcoal/80 leading-relaxed mb-3" style={{ fontFamily: 'var(--font-quicksand)' }}>
+              Ten custom pieces. Handcrafted with love. Ships free in two weeks.
             </p>
+
+            {/* Limited pre-orders badge */}
+            <div className="mt-8">
+              <Badge className="text-sm px-4 py-2 bg-terracotta/10 text-terracotta border border-terracotta/30" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.05rem' }}>
+                Limited pre-orders ship December 20th
+              </Badge>
+            </div>
           </div>
 
           {/* Product Cards with Scrapbook Styling */}
-          <div className="grid gap-12 md:grid-cols-2 max-w-5xl mx-auto">
-            {/* Partners Puzzle Card */}
+          <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+            {/* Together Card */}
             <Card className="washi-tape group relative overflow-visible shadow-lg hover:shadow-xl transition-all duration-300 pt-8">
               {/* Handwritten badge */}
               <div className="absolute -top-3 -right-3 z-10">
@@ -69,33 +75,15 @@ export function HomePage({ onSelectType }: HomePageProps) {
                   </div>
                 </div>
                 <CardTitle className="text-center text-3xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                  The Partners Puzzle
+                  Together
                 </CardTitle>
-                <CardDescription className="text-center text-base leading-relaxed text-muted-foreground mt-2">
-                  A collaborative game
+                <CardDescription className="text-center text-base leading-relaxed text-charcoal/70 mt-3 px-2">
+                  You each pick five pieces that mean something only to you
                 </CardDescription>
               </CardHeader>
               <CardContent className="relative space-y-6">
-                <ul className="space-y-3 text-sm text-charcoal/70 leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-terracotta mt-0.5">•</span>
-                    <span>You pick 5 shapes, they pick 5</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-terracotta mt-0.5">•</span>
-                    <span>Neither sees the full picture until it arrives</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-terracotta mt-0.5">•</span>
-                    <span>Add your photo or choose colors</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-terracotta mt-0.5">•</span>
-                    <span>Handcrafted wooden pieces</span>
-                  </li>
-                </ul>
                 <div className="flex items-center justify-center pt-2">
-                  <Badge variant="secondary" className="text-lg font-semibold px-5 py-2 bg-stone text-charcoal">
+                  <Badge variant="secondary" className="text-2xl font-bold px-6 py-2 bg-stone text-charcoal">
                     ${PRICING.couple}
                   </Badge>
                 </div>
@@ -104,12 +92,15 @@ export function HomePage({ onSelectType }: HomePageProps) {
                   size="lg"
                   onClick={() => onSelectType('couple')}
                 >
-                  Create Together
+                  Start Creating
                 </Button>
+                <p className="text-xs text-center text-charcoal/50 leading-relaxed pt-2" style={{ fontFamily: 'var(--font-quicksand)' }}>
+                  Perfect for couples, best friends, siblings, parent + adult child
+                </p>
               </CardContent>
             </Card>
 
-            {/* Solo Puzzle Card */}
+            {/* For Someone Special Card */}
             <Card className="washi-tape group relative overflow-visible shadow-lg hover:shadow-xl transition-all duration-300 pt-8">
               <CardHeader className="relative pb-4">
                 <div className="mb-6 flex items-center justify-center">
@@ -118,33 +109,15 @@ export function HomePage({ onSelectType }: HomePageProps) {
                   </div>
                 </div>
                 <CardTitle className="text-center text-3xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                  The Mindfulness Journey
+                  For Someone Special
                 </CardTitle>
-                <CardDescription className="text-center text-base leading-relaxed text-muted-foreground mt-2">
-                  A moment of reflection
+                <CardDescription className="text-center text-base leading-relaxed text-charcoal/70 mt-3 px-2">
+                  Ten private moments only you know, made real
                 </CardDescription>
               </CardHeader>
               <CardContent className="relative space-y-6">
-                <ul className="space-y-3 text-sm text-charcoal/70 leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <span className="text-sage mt-0.5">•</span>
-                    <span>Curate 10 shapes that tell your life story</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-sage mt-0.5">•</span>
-                    <span>A moment of reflection before the puzzle is even made</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-sage mt-0.5">•</span>
-                    <span>Add your photo or choose colors</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-sage mt-0.5">•</span>
-                    <span>Handcrafted wooden pieces</span>
-                  </li>
-                </ul>
                 <div className="flex items-center justify-center pt-2">
-                  <Badge variant="secondary" className="text-lg font-semibold px-5 py-2 bg-stone text-charcoal">
+                  <Badge variant="secondary" className="text-2xl font-bold px-6 py-2 bg-stone text-charcoal">
                     ${PRICING.solo}
                   </Badge>
                 </div>
@@ -156,6 +129,9 @@ export function HomePage({ onSelectType }: HomePageProps) {
                 >
                   Start Creating
                 </Button>
+                <p className="text-xs text-center text-charcoal/50 leading-relaxed pt-2" style={{ fontFamily: 'var(--font-quicksand)' }}>
+                  Anniversaries, milestones, memorials, just because
+                </p>
               </CardContent>
             </Card>
           </div>

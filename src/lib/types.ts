@@ -1,4 +1,4 @@
-export type PuzzleType = 'couple' | 'solo' | 'children'
+export type PuzzleType = 'couple' | 'solo'
 
 export type ShapeType = 
   | 'heart' | 'star' | 'flower' | 'dolphin' | 'turtle' 
