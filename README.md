@@ -215,7 +215,6 @@ custom-shape-puzzle/
 │   │   ├── ui/         # Reusable UI primitives (Button, Card, Input)
 │   │   ├── HomePage.tsx
 │   │   ├── ShapeSelection.tsx
-│   │   ├── MeaningCapture.tsx
 │   │   ├── DesignChoice.tsx
 │   │   ├── BoxDesign.tsx
 │   │   ├── Checkout.tsx
