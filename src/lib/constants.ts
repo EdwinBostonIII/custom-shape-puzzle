@@ -1,127 +1,130 @@
-import { Shape } from './types'
+import { Shape, OccasionPack, WoodStainColor } from './types'
 
+// Curated 40-shape library based on research
+// Focus on most meaningful, laser-cuttable shapes
 export const PUZZLE_SHAPES: Shape[] = [
-  { id: 'rose', name: 'Rose', category: 'flora', availableFor: ['couple', 'solo'], description: 'Love blooms eternal' },
-  { id: 'tulip', name: 'Tulip', category: 'flora', availableFor: ['couple', 'solo'], description: 'Perfect happiness together' },
-  { id: 'lily', name: 'Lily', category: 'flora', availableFor: ['couple', 'solo'], description: 'Pure devotion' },
-  { id: 'lotus', name: 'Lotus', category: 'flora', availableFor: ['couple', 'solo'], description: 'New beginnings' },
-  { id: 'sunflower', name: 'Sunflower', category: 'flora', availableFor: ['couple', 'solo'], description: 'Bright and sunny days' },
-  { id: 'daisy', name: 'Daisy', category: 'flora', availableFor: ['couple', 'solo'], description: 'Simple joy and innocence' },
-  { id: 'flower', name: 'Flower', category: 'flora', availableFor: ['couple', 'solo'], description: 'Growth and beauty' },
-  { id: 'maple-leaf', name: 'Maple Leaf', category: 'flora', availableFor: ['couple', 'solo'], description: 'Fall adventures together' },
-  { id: 'oak-leaf', name: 'Oak Leaf', category: 'flora', availableFor: ['couple', 'solo'], description: 'Strength and endurance' },
-  { id: 'leaf-simple', name: 'Leaf', category: 'flora', availableFor: ['couple', 'solo'], description: 'Nature walks' },
-  { id: 'tree', name: 'Tree', category: 'flora', availableFor: ['couple', 'solo'], description: 'Deep roots and growth' },
-  { id: 'pine', name: 'Pine Tree', category: 'flora', availableFor: ['couple', 'solo'], description: 'Winter warmth' },
-  { id: 'palm', name: 'Palm Tree', category: 'flora', availableFor: ['couple', 'solo'], description: 'Tropical escapes' },
-  { id: 'cactus', name: 'Cactus', category: 'flora', availableFor: ['couple', 'solo'], description: 'Resilient and unique' },
-  { id: 'mushroom', name: 'Mushroom', category: 'flora', availableFor: ['couple', 'solo'], description: 'Forest discoveries' },
-  
-  { id: 'whale', name: 'Whale', category: 'fauna-sea', availableFor: ['couple', 'solo'], description: 'Gentle giant wisdom' },
-  { id: 'dolphin', name: 'Dolphin', category: 'fauna-sea', availableFor: ['couple', 'solo'], description: 'Playful spirits' },
-  { id: 'octopus', name: 'Octopus', category: 'fauna-sea', availableFor: ['couple', 'solo'], description: 'Creative problem-solving' },
-  { id: 'fish', name: 'Fish', category: 'fauna-sea', availableFor: ['couple', 'solo'], description: 'Going with the flow' },
-  { id: 'seahorse', name: 'Seahorse', category: 'fauna-sea', availableFor: ['couple', 'solo'], description: 'Devoted partnership' },
-  { id: 'turtle', name: 'Sea Turtle', category: 'fauna-sea', availableFor: ['couple', 'solo'], description: 'Patient journeys together' },
-  { id: 'starfish', name: 'Starfish', category: 'fauna-sea', availableFor: ['couple', 'solo'], description: 'Beach memories' },
-  { id: 'shell', name: 'Shell', category: 'fauna-sea', availableFor: ['couple', 'solo'], description: 'Treasures collected' },
-  
-  { id: 'owl', name: 'Owl', category: 'fauna-sky', availableFor: ['couple', 'solo'], description: 'Shared wisdom' },
-  { id: 'eagle', name: 'Eagle', category: 'fauna-sky', availableFor: ['couple', 'solo'], description: 'Soaring together' },
-  { id: 'hummingbird', name: 'Hummingbird', category: 'fauna-sky', availableFor: ['couple', 'solo'], description: 'Sweet moments' },
-  { id: 'peacock', name: 'Peacock', category: 'fauna-sky', availableFor: ['couple', 'solo'], description: 'Bold confidence' },
-  { id: 'swan', name: 'Swan', category: 'fauna-sky', availableFor: ['couple', 'solo'], description: 'Lifelong grace' },
-  { id: 'penguin', name: 'Penguin', category: 'fauna-sky', availableFor: ['couple', 'solo'], description: 'Loyal companions' },
-  { id: 'butterfly', name: 'Butterfly', category: 'fauna-sky', availableFor: ['couple', 'solo'], description: 'Beautiful transformation' },
-  
-  { id: 'cat', name: 'Cat', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Cozy comfort' },
-  { id: 'dog', name: 'Dog', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Unconditional love' },
-  { id: 'fox', name: 'Fox', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Clever adventures' },
-  { id: 'rabbit', name: 'Rabbit', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Gentle energy' },
-  { id: 'deer', name: 'Deer', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Graceful moments' },
-  { id: 'bear', name: 'Bear', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Protective embrace' },
-  { id: 'hedgehog', name: 'Hedgehog', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Small but mighty' },
-  { id: 'squirrel', name: 'Squirrel', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Playful gatherings' },
-  { id: 'elephant', name: 'Elephant', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Never forgetting' },
-  { id: 'giraffe', name: 'Giraffe', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Standing tall together' },
-  { id: 'koala', name: 'Koala', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Sweet cuddles' },
-  { id: 'paw', name: 'Paw Print', category: 'fauna-land', availableFor: ['couple', 'solo'], description: 'Furry family member' },
-  
-  { id: 'moon', name: 'Moon', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Nighttime promises' },
-  { id: 'crescent', name: 'Crescent Moon', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Dreams and wishes' },
-  { id: 'sun', name: 'Sun', category: 'celestial', availableFor: ['couple', 'solo'], description: 'You are my sunshine' },
-  { id: 'star', name: 'Star', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Wish upon together' },
-  { id: 'cloud', name: 'Cloud', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Daydreaming side by side' },
-  { id: 'rainbow', name: 'Rainbow', category: 'celestial', availableFor: ['couple', 'solo'], description: 'After every storm' },
-  { id: 'lightning', name: 'Lightning', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Electric connection' },
-  { id: 'snowflake', name: 'Snowflake', category: 'celestial', availableFor: ['couple', 'solo'], description: 'One of a kind' },
-  { id: 'flame', name: 'Flame', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Passion and warmth' },
-  { id: 'raindrop', name: 'Raindrop', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Dancing in the rain' },
-  { id: 'wind', name: 'Wind', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Free spirits' },
-  { id: 'mountain', name: 'Mountain', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Conquering peaks' },
-  { id: 'wave', name: 'Wave', category: 'celestial', availableFor: ['couple', 'solo'], description: 'Ocean adventures' },
-  
-  { id: 'circle', name: 'Circle', category: 'geometric', availableFor: ['couple', 'solo'], description: 'Perfect unity' },
-  { id: 'hexagon', name: 'Hexagon', category: 'geometric', availableFor: ['couple', 'solo'], description: 'Strong together' },
-  { id: 'triangle', name: 'Triangle', category: 'geometric', availableFor: ['couple', 'solo'], description: 'Balanced foundation' },
-  { id: 'square', name: 'Square', category: 'geometric', availableFor: ['couple', 'solo'], description: 'Stable and true' },
-  { id: 'diamond', name: 'Diamond', category: 'geometric', availableFor: ['couple', 'solo'], description: 'Rare and precious' },
-  { id: 'spiral', name: 'Spiral', category: 'geometric', availableFor: ['couple', 'solo'], description: 'Growing together' },
-  { id: 'infinity', name: 'Infinity', category: 'geometric', availableFor: ['couple', 'solo'], description: 'Forever and always' },
-  
-  { id: 'guitar', name: 'Guitar', category: 'creative', availableFor: ['couple', 'solo'], description: 'Our song' },
-  { id: 'piano', name: 'Piano', category: 'creative', availableFor: ['couple', 'solo'], description: 'Life in harmony' },
-  { id: 'music-note', name: 'Music Note', category: 'creative', availableFor: ['couple', 'solo'], description: 'Melodies and memories' },
-  { id: 'microphone', name: 'Microphone', category: 'creative', availableFor: ['couple', 'solo'], description: 'Singing together' },
-  { id: 'headphones', name: 'Headphones', category: 'creative', availableFor: ['couple', 'solo'], description: 'Shared playlists' },
-  { id: 'book', name: 'Book', category: 'creative', availableFor: ['couple', 'solo'], description: 'Stories we love' },
-  { id: 'pencil', name: 'Pencil', category: 'creative', availableFor: ['couple', 'solo'], description: 'Creating together' },
-  { id: 'palette', name: 'Art Palette', category: 'creative', availableFor: ['couple', 'solo'], description: 'Painting our life' },
-  { id: 'camera', name: 'Camera', category: 'creative', availableFor: ['couple', 'solo'], description: 'Capturing moments' },
-  { id: 'telescope', name: 'Telescope', category: 'creative', availableFor: ['couple', 'solo'], description: 'Stargazing nights' },
-  
-  { id: 'coffee', name: 'Coffee', category: 'culinary', availableFor: ['couple', 'solo'], description: 'Morning ritual' },
-  { id: 'cupcake', name: 'Cupcake', category: 'culinary', availableFor: ['couple', 'solo'], description: 'Sweet celebrations' },
-  { id: 'ice-cream', name: 'Ice Cream', category: 'culinary', availableFor: ['couple', 'solo'], description: 'Summer treats' },
-  { id: 'pizza', name: 'Pizza', category: 'culinary', availableFor: ['couple', 'solo'], description: 'Friday night tradition' },
-  { id: 'cookie', name: 'Cookie', category: 'culinary', availableFor: ['couple', 'solo'], description: 'Homemade love' },
-  
-  { id: 'house', name: 'House', category: 'structures', availableFor: ['couple', 'solo'], description: 'Our home together' },
-  { id: 'castle', name: 'Castle', category: 'structures', availableFor: ['couple', 'solo'], description: 'Building dreams' },
-  { id: 'lighthouse', name: 'Lighthouse', category: 'structures', availableFor: ['couple', 'solo'], description: 'Guiding light' },
-  { id: 'tent', name: 'Tent', category: 'structures', availableFor: ['couple', 'solo'], description: 'Camping memories' },
-  { id: 'windmill', name: 'Windmill', category: 'structures', availableFor: ['couple', 'solo'], description: 'Dutch adventures' },
-  
-  { id: 'car', name: 'Car', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Road trip adventures' },
-  { id: 'train', name: 'Train', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Journey together' },
-  { id: 'airplane', name: 'Airplane', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Flying to new places' },
-  { id: 'boat', name: 'Boat', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Sailing away' },
-  { id: 'rocket', name: 'Rocket', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Sky-high dreams' },
-  { id: 'anchor', name: 'Anchor', category: 'adventure', availableFor: ['couple', 'solo'], description: 'You keep me grounded' },
-  { id: 'compass', name: 'Compass', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Finding our way' },
-  { id: 'hot-air-balloon', name: 'Hot Air Balloon', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Rising above' },
-  { id: 'bicycle', name: 'Bicycle', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Rides together' },
-  { id: 'skateboard', name: 'Skateboard', category: 'adventure', availableFor: ['couple', 'solo'], description: 'Childhood thrills' },
-  
-  { id: 'heart', name: 'Heart', category: 'symbols', availableFor: ['couple', 'solo'], description: 'Love always' },
-  { id: 'crown', name: 'Crown', category: 'treasures', availableFor: ['couple', 'solo'], description: 'You are royalty to me' },
-  { id: 'gem', name: 'Gem', category: 'treasures', availableFor: ['couple', 'solo'], description: 'A rare find' },
-  { id: 'ring', name: 'Ring', category: 'treasures', availableFor: ['couple', 'solo'], description: 'Eternal promise' },
-  { id: 'key', name: 'Key', category: 'treasures', availableFor: ['couple', 'solo'], description: 'You unlock my heart' },
-  { id: 'lock', name: 'Lock', category: 'treasures', availableFor: ['couple', 'solo'], description: 'Safe and secure' },
-  { id: 'hourglass', name: 'Hourglass', category: 'treasures', availableFor: ['couple', 'solo'], description: 'Time together' },
-  { id: 'clover', name: 'Four-Leaf Clover', category: 'symbols', availableFor: ['couple', 'solo'], description: 'Lucky to have you' },
-  { id: 'feather', name: 'Feather', category: 'symbols', availableFor: ['couple', 'solo'], description: 'Light as air' },
+  // Flora (5 shapes)
+  { id: 'rose', name: 'Rose', category: 'flora', description: 'Love blooms eternal', occasionTags: ['anniversary', 'milestone'] },
+  { id: 'sunflower', name: 'Sunflower', category: 'flora', description: 'Bright and sunny days', occasionTags: ['friendship', 'family'] },
+  { id: 'lotus', name: 'Lotus', category: 'flora', description: 'New beginnings', occasionTags: ['milestone', 'nature'] },
+  { id: 'tree', name: 'Tree', category: 'flora', description: 'Deep roots and growth', occasionTags: ['family', 'nature'] },
+  { id: 'leaf-simple', name: 'Leaf', category: 'flora', description: 'Nature walks together', occasionTags: ['nature', 'travel'] },
+
+  // Fauna (12 shapes)
+  { id: 'butterfly', name: 'Butterfly', category: 'fauna', description: 'Beautiful transformation', occasionTags: ['milestone', 'nature'] },
+  { id: 'fox', name: 'Fox', category: 'fauna', description: 'Clever adventures', occasionTags: ['travel', 'nature'] },
+  { id: 'dog', name: 'Dog', category: 'fauna', description: 'Unconditional love', occasionTags: ['family', 'friendship'] },
+  { id: 'cat', name: 'Cat', category: 'fauna', description: 'Cozy comfort', occasionTags: ['family'] },
+  { id: 'owl', name: 'Owl', category: 'fauna', description: 'Shared wisdom', occasionTags: ['nature', 'milestone'] },
+  { id: 'whale', name: 'Whale', category: 'fauna', description: 'Gentle giant wisdom', occasionTags: ['nature', 'travel'] },
+  { id: 'turtle', name: 'Turtle', category: 'fauna', description: 'Patient journeys together', occasionTags: ['anniversary', 'nature'] },
+  { id: 'penguin', name: 'Penguin', category: 'fauna', description: 'Loyal companions', occasionTags: ['anniversary', 'friendship'] },
+  { id: 'deer', name: 'Deer', category: 'fauna', description: 'Graceful moments', occasionTags: ['nature'] },
+  { id: 'rabbit', name: 'Rabbit', category: 'fauna', description: 'Gentle energy', occasionTags: ['family', 'nature'] },
+  { id: 'bear', name: 'Bear', category: 'fauna', description: 'Protective embrace', occasionTags: ['family'] },
+  { id: 'elephant', name: 'Elephant', category: 'fauna', description: 'Never forgetting', occasionTags: ['family', 'milestone'] },
+
+  // Celestial (6 shapes)
+  { id: 'moon', name: 'Moon', category: 'celestial', description: 'Nighttime promises', occasionTags: ['anniversary'] },
+  { id: 'sun', name: 'Sun', category: 'celestial', description: 'You are my sunshine', occasionTags: ['family', 'friendship'] },
+  { id: 'star', name: 'Star', category: 'celestial', description: 'Wish upon together', occasionTags: ['milestone', 'anniversary'] },
+  { id: 'cloud', name: 'Cloud', category: 'celestial', description: 'Daydreaming side by side', occasionTags: ['nature'] },
+  { id: 'mountain', name: 'Mountain', category: 'celestial', description: 'Conquering peaks together', occasionTags: ['travel', 'milestone'] },
+  { id: 'wave', name: 'Wave', category: 'celestial', description: 'Ocean adventures', occasionTags: ['travel', 'nature'] },
+
+  // Symbols (6 shapes)
+  { id: 'heart', name: 'Heart', category: 'symbols', description: 'Love always', occasionTags: ['anniversary', 'family', 'friendship'] },
+  { id: 'infinity', name: 'Infinity', category: 'symbols', description: 'Forever and always', occasionTags: ['anniversary', 'milestone'] },
+  { id: 'diamond', name: 'Diamond', category: 'symbols', description: 'Rare and precious', occasionTags: ['anniversary', 'milestone'] },
+  { id: 'key', name: 'Key', category: 'symbols', description: 'You unlock my heart', occasionTags: ['anniversary'] },
+  { id: 'anchor', name: 'Anchor', category: 'symbols', description: 'You keep me grounded', occasionTags: ['family', 'friendship'] },
+  { id: 'compass', name: 'Compass', category: 'symbols', description: 'Finding our way together', occasionTags: ['travel', 'milestone'] },
+
+  // Adventure & Creative (11 shapes)
+  { id: 'camera', name: 'Camera', category: 'adventure', description: 'Capturing moments', occasionTags: ['travel', 'milestone'] },
+  { id: 'music-note', name: 'Music Note', category: 'adventure', description: 'Melodies and memories', occasionTags: ['friendship', 'anniversary'] },
+  { id: 'book', name: 'Book', category: 'adventure', description: 'Stories we love', occasionTags: ['friendship'] },
+  { id: 'coffee', name: 'Coffee', category: 'adventure', description: 'Morning ritual together', occasionTags: ['friendship', 'family'] },
+  { id: 'airplane', name: 'Airplane', category: 'adventure', description: 'Flying to new places', occasionTags: ['travel'] },
+  { id: 'hot-air-balloon', name: 'Hot Air Balloon', category: 'adventure', description: 'Rising above together', occasionTags: ['travel', 'milestone'] },
+  { id: 'house', name: 'House', category: 'adventure', description: 'Our home together', occasionTags: ['family', 'milestone'] },
+  { id: 'lighthouse', name: 'Lighthouse', category: 'adventure', description: 'Guiding light', occasionTags: ['family', 'travel'] },
+  { id: 'bicycle', name: 'Bicycle', category: 'adventure', description: 'Rides together', occasionTags: ['travel', 'nature'] },
+  { id: 'feather', name: 'Feather', category: 'adventure', description: 'Light as air', occasionTags: ['nature'] },
+  { id: 'ring', name: 'Ring', category: 'adventure', description: 'Eternal promise', occasionTags: ['anniversary', 'milestone'] },
 ]
 
+// Occasion-based starter packs for quick selection
+export const OCCASION_PACKS: OccasionPack[] = [
+  {
+    id: 'anniversary',
+    name: 'Anniversary',
+    description: 'Celebrate your love story',
+    icon: '💕',
+    shapes: ['heart', 'rose', 'ring', 'infinity', 'moon', 'star', 'penguin', 'turtle', 'key', 'diamond'],
+  },
+  {
+    id: 'best-friends',
+    name: 'Best Friends',
+    description: 'Friendship that lasts forever',
+    icon: '🤝',
+    shapes: ['heart', 'sun', 'coffee', 'music-note', 'anchor', 'dog', 'book', 'sunflower', 'star', 'butterfly'],
+  },
+  {
+    id: 'family',
+    name: 'Family',
+    description: 'The roots that keep us grounded',
+    icon: '🏠',
+    shapes: ['tree', 'house', 'heart', 'elephant', 'bear', 'sun', 'anchor', 'lighthouse', 'rabbit', 'owl'],
+  },
+  {
+    id: 'adventure',
+    name: 'Adventure',
+    description: 'For the explorers at heart',
+    icon: '✈️',
+    shapes: ['airplane', 'compass', 'mountain', 'wave', 'hot-air-balloon', 'camera', 'bicycle', 'whale', 'fox', 'star'],
+  },
+]
+
+// Single price point (no couple/solo distinction per master list)
 export const PRICING = {
-  couple: 65,
-  solo: 65,
+  base: 65,
+  shipping: 0, // Free shipping
 }
 
-export const DEFAULT_COLORS = [
-  '#EF4444', '#F97316', '#F59E0B', '#EAB308', '#84CC16',
-  '#22C55E', '#10B981', '#14B8A6', '#06B6D4', '#0EA5E9',
-  '#3B82F6', '#6366F1', '#8B5CF6', '#A855F7', '#D946EF',
-  '#EC4899', '#F43F5E', '#64748B', '#475569', '#1E293B',
+// Wood stain options with visual colors for preview
+export const WOOD_STAINS: { id: WoodStainColor; name: string; hex: string; description: string }[] = [
+  { id: 'natural', name: 'Natural', hex: '#DEB887', description: 'Light natural birch' },
+  { id: 'honey', name: 'Honey Oak', hex: '#CD853F', description: 'Warm golden tones' },
+  { id: 'walnut', name: 'Walnut', hex: '#5D4037', description: 'Rich dark brown' },
+  { id: 'ebony', name: 'Ebony', hex: '#2C2416', description: 'Deep charcoal' },
+  { id: 'gray-wash', name: 'Gray Wash', hex: '#8B8B83', description: 'Modern driftwood' },
+  { id: 'white-wash', name: 'White Wash', hex: '#F5F5DC', description: 'Coastal whitewash' },
 ]
+
+// Category labels for shape organization (simple string map for display)
+export const SHAPE_CATEGORIES: Record<string, string> = {
+  flora: 'Nature & Plants',
+  fauna: 'Animals',
+  celestial: 'Sky & Elements',
+  symbols: 'Symbols',
+  adventure: 'Adventures',
+}
+
+// Production timeline constants
+export const PRODUCTION = {
+  daysToShip: 14, // 2 weeks as stated in master list
+  shippingDays: { min: 2, max: 5 },
+}
+
+// Calculate estimated delivery date
+export function getEstimatedDeliveryDate(): string {
+  const today = new Date()
+  const deliveryDate = new Date(today)
+  deliveryDate.setDate(today.getDate() + PRODUCTION.daysToShip + PRODUCTION.shippingDays.max)
+  
+  return deliveryDate.toLocaleDateString('en-US', { 
+    month: 'long', 
+    day: 'numeric' 
+  })
+}

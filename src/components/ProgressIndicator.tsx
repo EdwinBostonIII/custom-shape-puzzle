@@ -1,6 +1,7 @@
 import { Check } from '@phosphor-icons/react'
 
-type Step = 'home' | 'mode-select' | 'shapes' | 'partner-handoff' | 'waiting' | 'template' | 'design' | 'boxdesign' | 'checkout' | 'confirmation'
+// Simplified 4-step flow per Validated Improvements Master List
+type Step = 'home' | 'shapes' | 'stain' | 'checkout' | 'confirmation'
 
 interface ProgressStep {
   id: Step[]
@@ -13,13 +14,12 @@ interface ProgressIndicatorProps {
 }
 
 export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
+  // Simplified to 4 visible steps per master list recommendations
   const steps: ProgressStep[] = [
-    { id: ['home'], label: 'Start', icon: '🏠' },
-    { id: ['mode-select', 'shapes', 'partner-handoff', 'waiting'], label: 'Select Shapes', icon: '✨' },
-    { id: ['template', 'design'], label: 'Design', icon: '🎨' },
-    { id: ['boxdesign'], label: 'Box', icon: '📦' },
+    { id: ['shapes'], label: 'Pick Shapes', icon: '✨' },
+    { id: ['stain'], label: 'Choose Stain', icon: '🪵' },
     { id: ['checkout'], label: 'Checkout', icon: '💳' },
-    { id: ['confirmation'], label: 'Complete', icon: '✓' },
+    { id: ['confirmation'], label: 'Done!', icon: '✓' },
   ]
 
   const getCurrentStepIndex = () => {

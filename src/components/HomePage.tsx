@@ -1,16 +1,17 @@
-import { Heart, User } from '@phosphor-icons/react'
+import { Gift, ShieldCheck, Truck, Timer, Sparkle } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { PuzzleType } from '@/lib/types'
-import { PRICING } from '@/lib/constants'
+import { PRICING, getEstimatedDeliveryDate } from '@/lib/constants'
 import { FAQSection } from './FAQSection'
 
 interface HomePageProps {
-  onSelectType: (type: PuzzleType) => void
+  onStart: () => void
 }
 
-export function HomePage({ onSelectType }: HomePageProps) {
+export function HomePage({ onStart }: HomePageProps) {
+  const estimatedDelivery = getEstimatedDeliveryDate()
+
   return (
     <div className="min-h-screen bg-cream relative">
       {/* Navigation Bar */}
@@ -20,27 +21,35 @@ export function HomePage({ onSelectType }: HomePageProps) {
             <h1 className="text-2xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
               Interlock
             </h1>
-            <a href="#products" className="scroll-smooth">
-              <Button size="sm" className="rounded-full ripple-effect">
-                Get Started
+            <div className="flex items-center gap-4">
+              <span className="hidden sm:block text-sm text-charcoal/60">
+                Free US Shipping
+              </span>
+              <Button size="sm" className="rounded-full ripple-effect" onClick={onStart}>
+                Create Yours – ${PRICING.base}
               </Button>
-            </a>
+            </div>
           </div>
         </div>
       </nav>
 
       <div className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
-          {/* Hero Section with organic blob background */}
+          {/* Hero Section with Price Transparency */}
           <div className="mb-20 text-center md:mb-28 relative">
             {/* Organic blob background */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] pointer-events-none opacity-20">
-              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full animate-pulse">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
                 <path fill="rgba(224, 122, 95, 0.3)" d="M47.3,-57.8C59.6,-45.6,67.3,-29.2,69.8,-12.2C72.3,4.8,69.6,22.3,61.1,36.8C52.6,51.3,38.3,62.8,21.8,68.4C5.3,74,-13.3,73.7,-29.2,67.2C-45.1,60.7,-58.3,48,-65.8,32.8C-73.3,17.6,-75.1,-0.1,-70.8,-16.2C-66.5,-32.3,-56.1,-46.8,-42.8,-58.8C-29.5,-70.8,-14.8,-80.3,1.3,-81.9C17.4,-83.5,34.9,-70,47.3,-57.8Z" transform="translate(100 100)" />
               </svg>
             </div>
 
             <div className="mb-6 relative z-10">
+              {/* Price Badge - Prominent */}
+              <Badge className="mb-6 text-lg px-6 py-2 bg-terracotta text-white border-0 shadow-lg" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                ${PRICING.base} · Free Shipping
+              </Badge>
+
               <h1
                 className="text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6 leading-tight"
                 style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', fontWeight: '600' }}
@@ -49,200 +58,179 @@ export function HomePage({ onSelectType }: HomePageProps) {
               </h1>
             </div>
             <p className="mx-auto max-w-2xl text-lg md:text-xl text-charcoal/80 leading-relaxed mb-3" style={{ fontFamily: 'var(--font-quicksand)' }}>
-              Ten custom pieces. Handcrafted with love. Ships free in two weeks.
+              Ten custom laser-cut shapes. Handcrafted with love. Ships free.
             </p>
 
-            {/* Limited pre-orders badge */}
-            <div className="mt-8">
-              <Badge className="text-sm px-4 py-2 bg-terracotta/10 text-terracotta border border-terracotta/30" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.05rem' }}>
-                Limited pre-orders ship December 20th
+            {/* Estimated Delivery - Per Master List */}
+            <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Badge className="text-sm px-4 py-2 bg-sage/20 text-charcoal border border-sage/30" style={{ fontFamily: 'var(--font-quicksand)' }}>
+                <Timer size={16} weight="bold" className="mr-2 text-sage" />
+                Arrives by {estimatedDelivery}
               </Badge>
             </div>
+
+            {/* Single CTA Button */}
+            <div className="mt-10">
+              <Button
+                size="lg"
+                className="text-lg px-10 py-7 rounded-full shadow-xl ripple-effect"
+                onClick={onStart}
+                aria-label="Start creating your custom puzzle"
+              >
+                <Sparkle size={24} weight="fill" className="mr-2" />
+                Create Your Puzzle
+              </Button>
+            </div>
           </div>
 
-          {/* Product Cards with Scrapbook Styling */}
-          <div id="products" className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto scroll-mt-20">
-            {/* Together Card */}
-            <Card className="washi-tape group relative overflow-visible shadow-lg hover:shadow-xl transition-all duration-300 pt-8">
-              {/* Handwritten badge */}
-              <div className="absolute -top-3 -right-3 z-10">
-                <div className="bg-terracotta text-white px-3 py-1 rounded-full rotate-12 shadow-md" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.1rem' }}>
-                  Most Popular
-                </div>
-              </div>
-
-              <CardHeader className="relative pb-4">
-                <div className="mb-6 flex items-center justify-center">
-                  <div className="rounded-full bg-terracotta/10 p-6 transition-all duration-300 group-hover:scale-105">
-                    <Heart size={56} weight="fill" className="text-terracotta" />
-                  </div>
-                </div>
-                <CardTitle className="text-center text-3xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                  Together
-                </CardTitle>
-                <CardDescription className="text-center text-base leading-relaxed text-charcoal/70 mt-3 px-2">
-                  You each pick five pieces that mean something only to you
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative space-y-6">
-                <div className="flex items-center justify-center pt-2">
-                  <Badge variant="secondary" className="text-2xl font-bold px-6 py-2 bg-stone text-charcoal">
-                    ${PRICING.couple}
-                  </Badge>
-                </div>
-                <Button
-                  className="w-full text-base py-6 ripple-effect"
-                  size="lg"
-                  onClick={() => onSelectType('couple')}
-                  aria-label="Create a custom couple puzzle together"
-                >
-                  Create Your Puzzle →
-                </Button>
-                <p className="text-xs text-center text-charcoal/50 leading-relaxed pt-2" style={{ fontFamily: 'var(--font-quicksand)' }}>
-                  Perfect for couples, best friends, siblings, parent + adult child
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* For Someone Special Card */}
-            <Card className="washi-tape group relative overflow-visible shadow-lg hover:shadow-xl transition-all duration-300 pt-8">
-              <CardHeader className="relative pb-4">
-                <div className="mb-6 flex items-center justify-center">
-                  <div className="rounded-full bg-sage/10 p-6 transition-all duration-300 group-hover:scale-105">
-                    <User size={56} weight="fill" className="text-sage" />
-                  </div>
-                </div>
-                <CardTitle className="text-center text-3xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                  For Someone Special
-                </CardTitle>
-                <CardDescription className="text-center text-base leading-relaxed text-charcoal/70 mt-3 px-2">
-                  Ten private moments only you know, made real
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="relative space-y-6">
-                <div className="flex items-center justify-center pt-2">
-                  <Badge variant="secondary" className="text-2xl font-bold px-6 py-2 bg-stone text-charcoal">
-                    ${PRICING.solo}
-                  </Badge>
-                </div>
-                <Button
-                  variant="secondary"
-                  className="w-full text-base py-6 ripple-effect"
-                  size="lg"
-                  onClick={() => onSelectType('solo')}
-                  aria-label="Create a personalized solo puzzle"
-                >
-                  Design Your Gift →
-                </Button>
-                <p className="text-xs text-center text-charcoal/50 leading-relaxed pt-2" style={{ fontFamily: 'var(--font-quicksand)' }}>
-                  Anniversaries, milestones, memorials, just because
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Trust Indicators */}
-          <div className="mt-16 mb-20">
+          {/* Trust Indicators - Enhanced per Master List */}
+          <div className="mb-20">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="text-center space-y-2">
-                <div className="text-3xl md:text-4xl font-bold text-terracotta" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                  1,200+
+              <div className="text-center space-y-3 p-4">
+                <div className="mx-auto w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center">
+                  <Gift size={24} weight="fill" className="text-terracotta" />
                 </div>
-                <p className="text-sm text-charcoal/60 font-light">Puzzles Created</p>
+                <div>
+                  <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>Handcrafted</p>
+                  <p className="text-sm text-charcoal/60">Every puzzle unique</p>
+                </div>
               </div>
-              <div className="text-center space-y-2">
-                <div className="text-3xl md:text-4xl font-bold text-sage" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                  4.9★
+              <div className="text-center space-y-3 p-4">
+                <div className="mx-auto w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center">
+                  <Truck size={24} weight="fill" className="text-sage" />
                 </div>
-                <p className="text-sm text-charcoal/60 font-light">Average Rating</p>
+                <div>
+                  <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>Free Shipping</p>
+                  <p className="text-sm text-charcoal/60">Anywhere in the US</p>
+                </div>
               </div>
-              <div className="text-center space-y-2">
-                <div className="text-3xl md:text-4xl font-bold text-terracotta" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                  100%
+              <div className="text-center space-y-3 p-4">
+                <div className="mx-auto w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center">
+                  <ShieldCheck size={24} weight="fill" className="text-terracotta" />
                 </div>
-                <p className="text-sm text-charcoal/60 font-light">Handcrafted</p>
+                <div>
+                  <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>30-Day Guarantee</p>
+                  <p className="text-sm text-charcoal/60">Love it or we fix it</p>
+                </div>
               </div>
-              <div className="text-center space-y-2">
-                <div className="text-3xl md:text-4xl font-bold text-sage" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                  Free
+              <div className="text-center space-y-3 p-4">
+                <div className="mx-auto w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center">
+                  <Timer size={24} weight="fill" className="text-sage" />
                 </div>
-                <p className="text-sm text-charcoal/60 font-light">US Shipping</p>
+                <div>
+                  <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>2-Week Delivery</p>
+                  <p className="text-sm text-charcoal/60">Made to order</p>
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Customer Quote */}
-            <div className="mt-12 max-w-3xl mx-auto">
-              <Card className="border-2 border-sage/30 bg-sage/5 shadow-sage">
-                <CardContent className="p-8 md:p-10 text-center">
-                  <p className="text-lg md:text-xl text-charcoal/80 leading-relaxed mb-4 italic" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                    "We gave this to my parents for their 50th anniversary. They cried when they saw the shapes we chose. It's hanging on their wall now&mdash;best gift we've ever given."
+          {/* Why Interlock - Differentiation Section per Master List */}
+          <div className="mb-20">
+            <div className="max-w-4xl mx-auto text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em' }}>
+                Not Another Generic Puzzle
+              </h2>
+              <p className="text-lg text-charcoal/70 max-w-2xl mx-auto">
+                While others sell mass-produced photo puzzles, we craft something personal. Each of your 10 shapes tells a piece of your story.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <Card className="border-2 border-stone p-6 text-center">
+                <CardContent className="pt-6 space-y-4">
+                  <div className="text-4xl">🧩</div>
+                  <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                    Meaningful Shapes
+                  </h3>
+                  <p className="text-charcoal/70">
+                    A fox for your adventurous spirit. A moon for late-night talks. Each piece carries meaning only you know.
                   </p>
-                  <p className="text-sm text-charcoal/50 font-medium" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.1rem' }}>
-                    &mdash; Sarah & Michael, Boston MA
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 border-stone p-6 text-center">
+                <CardContent className="pt-6 space-y-4">
+                  <div className="text-4xl">🪵</div>
+                  <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                    Real Wood, Real Craft
+                  </h3>
+                  <p className="text-charcoal/70">
+                    Laser-cut from Baltic birch. Finished by hand. A keepsake that gets better with time.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 border-stone p-6 text-center">
+                <CardContent className="pt-6 space-y-4">
+                  <div className="text-4xl">💌</div>
+                  <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                    Story Card Included
+                  </h3>
+                  <p className="text-charcoal/70">
+                    Your notes about each shape are beautifully printed on a linen card. A puzzle with a story.
                   </p>
                 </CardContent>
               </Card>
             </div>
           </div>
 
-          {/* Mystery Upgrade Section with Polaroid styling */}
-          <div className="mt-24 mb-12">
-            <div className="mx-auto max-w-6xl overflow-hidden rounded-3xl bg-sage/10 shadow-lg">
-              <div className="grid md:grid-cols-2 gap-0">
-                {/* Left side - Text */}
-                <div className="p-12 md:p-16 flex flex-col justify-center">
-                  <div className="mb-6">
-                    <Badge className="text-sm px-4 py-1.5 mb-6 bg-stone text-charcoal" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1rem' }}>
-                      Optional Upgrade
-                    </Badge>
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4 text-charcoal" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em' }}>
-                      Keep it a Mystery
-                    </h2>
-                  </div>
-                  <p className="text-lg text-charcoal/70 leading-relaxed mb-8">
-                    Don't spoil the photo. We'll laser-engrave your hints on the box, turning assembly into a game of discovery.
-                  </p>
-                  <div className="space-y-3 text-sm text-charcoal/70">
-                    <div className="flex items-start gap-3">
-                      <span className="text-sage mt-0.5">✓</span>
-                      <span>No photo preview until completion</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-sage mt-0.5">✓</span>
-                      <span>Custom hints laser-engraved on the lid</span>
-                    </div>
-                    <div className="flex items-start gap-3">
-                      <span className="text-sage mt-0.5">✓</span>
-                      <span>Hidden message revealed when opening</span>
-                    </div>
-                  </div>
-                </div>
+          {/* Customer Quote */}
+          <div className="mb-20 max-w-3xl mx-auto">
+            <Card className="border-2 border-sage/30 bg-sage/5 shadow-sage">
+              <CardContent className="p-8 md:p-10 text-center">
+                <p className="text-lg md:text-xl text-charcoal/80 leading-relaxed mb-4 italic" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  "We gave this to my parents for their 50th anniversary. They cried when they saw the shapes we chose. It's hanging on their wall now&mdash;best gift we've ever given."
+                </p>
+                <p className="text-sm text-charcoal/50 font-medium" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.1rem' }}>
+                  &mdash; Sarah & Michael, Boston MA
+                </p>
+              </CardContent>
+            </Card>
+          </div>
 
-                {/* Right side - Polaroid-style box image */}
-                <div className="relative bg-gradient-to-br from-sage/20 to-sage/5 flex items-center justify-center p-12 md:p-16">
-                  {/* Polaroid frame */}
-                  <div className="bg-white p-4 pb-12 shadow-2xl rotate-2 max-w-sm w-full">
-                    <div className="relative bg-gradient-to-br from-amber-700 to-amber-900 rounded-lg p-8 aspect-square flex items-center justify-center">
-                      <div className="text-center space-y-4">
-                        <p className="text-amber-200/90 text-xl md:text-2xl italic leading-relaxed" style={{ fontFamily: 'var(--font-fraunces)', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-                          "Where we first met"
-                        </p>
-                        <p className="text-amber-200/90 text-xl md:text-2xl italic leading-relaxed" style={{ fontFamily: 'var(--font-fraunces)', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-                          "Your favorite song"
-                        </p>
-                        <div className="pt-4 text-amber-300/60 text-xs tracking-widest">
-                          INTERLOCK
-                        </div>
-                      </div>
-                    </div>
-                    {/* Polaroid caption */}
-                    <p className="text-center mt-4 text-charcoal" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.25rem' }}>
-                      For our 5th Anniversary
-                    </p>
-                  </div>
-                </div>
-              </div>
+          {/* How It Works - Simple 4-Step Process */}
+          <div className="mb-20">
+            <div className="max-w-4xl mx-auto text-center mb-12">
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em' }}>
+                Simple as 1-2-3-4
+              </h2>
             </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+              {[
+                { step: '1', title: 'Pick Shapes', desc: 'Choose 10 meaningful shapes', icon: '✨' },
+                { step: '2', title: 'Add Notes', desc: 'Tell us why each matters', icon: '📝' },
+                { step: '3', title: 'Choose Stain', desc: 'Pick your wood color', icon: '🪵' },
+                { step: '4', title: 'We Craft It', desc: 'Ships in 2 weeks', icon: '📦' },
+              ].map((item) => (
+                <div key={item.step} className="text-center space-y-3">
+                  <div className="mx-auto w-16 h-16 rounded-full bg-terracotta/10 flex items-center justify-center text-2xl">
+                    {item.icon}
+                  </div>
+                  <div className="text-xs font-bold text-terracotta uppercase tracking-wide">Step {item.step}</div>
+                  <h3 className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>{item.title}</h3>
+                  <p className="text-sm text-charcoal/60">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Final CTA */}
+          <div className="text-center py-12 px-8 bg-terracotta/5 rounded-3xl max-w-3xl mx-auto mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-4" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              Ready to create something meaningful?
+            </h2>
+            <p className="text-charcoal/70 mb-6">
+              ${PRICING.base} · Free shipping · Arrives by {estimatedDelivery}
+            </p>
+            <Button
+              size="lg"
+              className="text-lg px-10 py-6 rounded-full shadow-xl ripple-effect"
+              onClick={onStart}
+            >
+              Start Creating →
+            </Button>
           </div>
 
         </div>
@@ -252,8 +240,9 @@ export function HomePage({ onSelectType }: HomePageProps) {
       <FAQSection />
 
       {/* Footer */}
-      <div className="py-12 text-center text-base text-charcoal/60 bg-cream">
-        <p className="font-light">Handcrafted with care · Ships within 2 weeks · Free shipping in the US</p>
+      <div className="py-12 text-center text-base text-charcoal/60 bg-cream border-t border-stone/30">
+        <p className="font-light mb-2">Handcrafted with care · Ships within 2 weeks · Free shipping in the US</p>
+        <p className="text-sm text-charcoal/40">© 2025 Interlock. Made with ❤️ in the USA</p>
       </div>
     </div>
   )

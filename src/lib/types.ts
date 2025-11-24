@@ -1,54 +1,46 @@
-export type PuzzleType = 'couple' | 'solo'
+// Simplified types for streamlined MVP launch
+// Based on Validated Improvements Master List recommendations
 
 export type ShapeType = 
-  | 'heart' | 'star' | 'flower' | 'dolphin' | 'turtle' 
-  | 'butterfly' | 'moon' | 'sun' | 'cloud' | 'rainbow'
-  | 'tree' | 'mountain' | 'wave' | 'spiral' | 'diamond'
-  | 'circle' | 'hexagon' | 'triangle' | 'square'
-  | 'car' | 'train' | 'airplane' | 'boat' | 'rocket'
-  | 'cat' | 'dog' | 'bear' | 'elephant' | 'giraffe'
-  | 'rose' | 'tulip' | 'lily' | 'lotus' | 'sunflower' | 'daisy'
-  | 'maple-leaf' | 'oak-leaf' | 'pine' | 'palm' | 'cactus' | 'mushroom'
-  | 'whale' | 'octopus' | 'fish' | 'seahorse' | 'starfish' | 'shell'
-  | 'owl' | 'eagle' | 'hummingbird' | 'peacock' | 'swan' | 'penguin'
-  | 'fox' | 'rabbit' | 'deer' | 'hedgehog' | 'squirrel' | 'koala'
-  | 'crescent' | 'lightning' | 'snowflake' | 'flame' | 'raindrop' | 'wind'
-  | 'guitar' | 'piano' | 'music-note' | 'microphone' | 'headphones'
-  | 'book' | 'pencil' | 'palette' | 'camera' | 'telescope'
-  | 'coffee' | 'cupcake' | 'ice-cream' | 'pizza' | 'cookie'
-  | 'house' | 'castle' | 'lighthouse' | 'tent' | 'windmill'
-  | 'anchor' | 'compass' | 'hot-air-balloon' | 'bicycle' | 'skateboard'
-  | 'crown' | 'gem' | 'ring' | 'key' | 'lock' | 'hourglass'
-  | 'infinity' | 'clover' | 'feather' | 'paw' | 'leaf-simple'
+  // Flora (5 shapes - curated)
+  | 'rose' | 'sunflower' | 'lotus' | 'tree' | 'leaf-simple'
+  // Fauna (12 shapes - curated)
+  | 'butterfly' | 'fox' | 'dog' | 'cat' | 'owl' | 'whale' | 'turtle' | 'penguin' | 'deer' | 'rabbit' | 'bear' | 'elephant'
+  // Celestial (6 shapes - curated)
+  | 'moon' | 'sun' | 'star' | 'cloud' | 'mountain' | 'wave'
+  // Symbols (6 shapes - curated)
+  | 'heart' | 'infinity' | 'diamond' | 'key' | 'anchor' | 'compass'
+  // Creative & Adventure (11 shapes - curated)
+  | 'camera' | 'music-note' | 'book' | 'coffee' | 'airplane' | 'hot-air-balloon'
+  | 'house' | 'lighthouse' | 'bicycle' | 'feather' | 'ring'
 
 export interface Shape {
   id: ShapeType
   name: string
-  category: 'flora' | 'fauna-sea' | 'fauna-land' | 'fauna-sky' | 'geometric' 
-    | 'celestial' | 'creative' | 'culinary' | 'structures' | 'adventure' | 'treasures' | 'symbols'
-  availableFor: PuzzleType[]
+  category: 'flora' | 'fauna' | 'celestial' | 'symbols' | 'adventure'
   description: string
+  occasionTags?: OccasionTag[]
 }
+
+export type OccasionTag = 'anniversary' | 'friendship' | 'family' | 'travel' | 'nature' | 'milestone'
 
 export interface PuzzleSession {
   id: string
-  type: PuzzleType
   selectedShapes: ShapeType[]
-  partnerShapes?: ShapeType[]
-  isPartnerComplete?: boolean
   shapeMeanings?: Partial<Record<ShapeType, string>>
-  partnerShapeMeanings?: Partial<Record<ShapeType, string>>
-  designType?: 'photo' | 'colors'
-  photoData?: string
-  colorMap?: Partial<Record<ShapeType, string>>
-  boxDesign?: 'standard' | 'mystery'
-  boxTitle?: string
-  boxHint1?: string
-  boxHint2?: string
-  boxHiddenMessage?: string
+  woodStain: WoodStainColor
   shippingInfo?: ShippingInfo
   orderComplete?: boolean
+  createdAt: number
 }
+
+export type WoodStainColor = 
+  | 'natural'    // Light natural wood
+  | 'honey'      // Warm honey oak
+  | 'walnut'     // Rich walnut brown
+  | 'ebony'      // Deep dark brown
+  | 'gray-wash'  // Modern gray
+  | 'white-wash' // Light whitewash
 
 export interface ShippingInfo {
   fullName: string
@@ -57,7 +49,13 @@ export interface ShippingInfo {
   city: string
   state: string
   zipCode: string
-  cardNumber: string
-  expiryDate: string
-  cvv: string
+}
+
+// Occasion-based starter packs for quick selection
+export interface OccasionPack {
+  id: string
+  name: string
+  description: string
+  icon: string
+  shapes: ShapeType[]
 }
