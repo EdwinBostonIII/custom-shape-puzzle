@@ -109,7 +109,7 @@ export function ShapeSelection({
   }, {} as Record<string, typeof availableShapes>)
 
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-cream pb-32">
       <div className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 flex items-center justify-between">
@@ -120,10 +120,10 @@ export function ShapeSelection({
           </div>
 
           <div className="mb-12 text-center">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
               {isPartnerMode ? "Pick Your Special Shapes" : "Choose What Matters"}
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
+            <p className="mx-auto max-w-2xl text-lg text-charcoal/70 font-light leading-relaxed">
               {type === 'couple' && !isPartnerMode
                 ? `Select ${requiredCount} shapes that remind you of your time together. Each one tells part of your story.`
                 : `Pick ${requiredCount} shapes that mean something to you. They can represent memories, dreams, or the things you love most.`}
@@ -148,7 +148,7 @@ export function ShapeSelection({
             
             return (
               <div key={category} className="mb-16">
-                <h2 className="mb-8 text-2xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-outfit)' }}>
+                <h2 className="mb-8 text-2xl font-semibold tracking-tight text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
                   {categoryTitles[category] || category}
                 </h2>
                 <div className="grid grid-cols-3 gap-4 md:grid-cols-5 lg:grid-cols-7">
@@ -158,20 +158,20 @@ export function ShapeSelection({
                       className={cn(
                         "group relative cursor-pointer overflow-hidden transition-all duration-300",
                         selected.includes(shape.id)
-                          ? "border-2 border-accent shadow-xl ring-2 ring-accent/20 scale-105"
-                          : "border border-border hover:border-primary/30 hover:shadow-lg hover:scale-102",
+                          ? "border-2 border-terracotta shadow-terracotta scale-105"
+                          : "border border-stone hover:border-terracotta/30 hover:shadow-md hover:scale-102",
                         selected.length >= requiredCount && !selected.includes(shape.id) && "cursor-not-allowed opacity-40"
                       )}
                       onClick={() => handleShapeClick(shape.id)}
                     >
-                      <div className="flex aspect-square flex-col items-center justify-center p-3 bg-gradient-to-br from-background to-muted/30">
+                      <div className="flex aspect-square flex-col items-center justify-center p-3 bg-white">
                         <ShapeIcon shape={shape.id} className="h-10 w-10 md:h-12 md:w-12 transition-transform duration-300 group-hover:scale-110" />
-                        <p className="mt-2 text-center text-xs font-medium leading-tight">{shape.name}</p>
-                        <p className="mt-1 text-center text-[10px] text-muted-foreground leading-tight px-1">{shape.description}</p>
+                        <p className="mt-2 text-center text-xs font-medium leading-tight text-charcoal">{shape.name}</p>
+                        <p className="mt-1 text-center text-[10px] text-charcoal/60 leading-tight px-1">{shape.description}</p>
                       </div>
                       {selected.includes(shape.id) && (
-                        <div className="absolute right-1.5 top-1.5 rounded-full bg-accent p-1 shadow-lg">
-                          <Check size={14} weight="bold" className="text-accent-foreground" />
+                        <div className="absolute right-1.5 top-1.5 rounded-full bg-terracotta p-1 shadow-lg">
+                          <Check size={14} weight="bold" className="text-white" />
                         </div>
                       )}
                     </Card>
@@ -183,20 +183,26 @@ export function ShapeSelection({
         </div>
       </div>
 
-      {/* Inventory Tray - Fixed at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-background via-background to-background/95 backdrop-blur-sm border-t-2 border-border shadow-2xl z-50">
+      {/* Inventory Tray - Fixed at bottom with corkboard styling */}
+      <div
+        className="fixed bottom-0 left-0 right-0 backdrop-blur-md border-t-2 border-stone shadow-2xl z-50"
+        style={{
+          background: 'linear-gradient(180deg, rgba(232, 227, 220, 0.95) 0%, rgba(232, 227, 220, 0.98) 100%)',
+          backgroundImage: `repeating-linear-gradient(90deg, rgba(60, 54, 51, 0.02) 0px, transparent 1px, transparent 2px, rgba(60, 54, 51, 0.02) 3px)`,
+        }}
+      >
         <div className="px-6 py-6 md:px-12">
           <div className="mx-auto max-w-7xl">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-lg font-semibold" style={{ fontFamily: 'var(--font-outfit)' }}>
+              <h3 className="text-lg font-semibold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
                 Your Tray
               </h3>
-              <Badge variant="secondary" className="text-sm">
+              <Badge className="text-sm bg-stone text-charcoal">
                 {selected.length} / {requiredCount} filled
               </Badge>
             </div>
-            
-            {/* Tray slots */}
+
+            {/* Tray slots with carved-in effect */}
             <div className="grid grid-cols-5 md:grid-cols-10 gap-3 mb-4">
               {Array.from({ length: requiredCount }).map((_, index) => {
                 const shape = selected[index]
@@ -205,10 +211,11 @@ export function ShapeSelection({
                     key={index}
                     className={cn(
                       "aspect-square rounded-xl border-2 border-dashed flex items-center justify-center relative transition-all",
-                      shape 
-                        ? "bg-accent/10 border-accent shadow-md" 
-                        : "bg-muted/30 border-muted-foreground/30"
+                      shape
+                        ? "bg-white border-terracotta shadow-md"
+                        : "bg-stone/50 border-stone shadow-[inset_2px_2px_5px_rgba(0,0,0,0.1)]"
                     )}
+                    style={!shape ? { boxShadow: 'inset 2px 2px 5px rgba(0,0,0,0.1)' } : undefined}
                   >
                     {shape ? (
                       <>
@@ -217,11 +224,11 @@ export function ShapeSelection({
                           onClick={() => handleRemoveFromTray(shape)}
                           className="absolute -top-2 -right-2 rounded-full bg-destructive p-1 shadow-lg hover:scale-110 transition-transform"
                         >
-                          <X size={12} weight="bold" className="text-destructive-foreground" />
+                          <X size={12} weight="bold" className="text-white" />
                         </button>
                       </>
                     ) : (
-                      <span className="text-muted-foreground/40 text-xs md:text-sm">{index + 1}</span>
+                      <span className="text-charcoal/30 text-xs md:text-sm font-semibold">{index + 1}</span>
                     )}
                   </div>
                 )

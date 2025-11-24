@@ -8,40 +8,49 @@
 }
 
 :root {
-  --background: oklch(0.98 0.008 85);
-  --foreground: oklch(0.22 0.015 260);
+  /* Digital Scrapbook Color Palette */
+  --cream: #F9F7F2;
+  --charcoal: #3C3633;
+  --terracotta: #E07A5F;
+  --sage: #81B29A;
+  --stone: #E8E3DC;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.015 260);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.015 260);
+  /* Mapped to system colors */
+  --background: var(--cream);
+  --foreground: var(--charcoal);
 
-  --primary: oklch(0.68 0.15 25);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.75 0.08 145);
-  --secondary-foreground: oklch(0.22 0.015 260);
-  --accent: oklch(0.75 0.18 65);
-  --accent-foreground: oklch(0.15 0.015 260);
-  
-  --muted: oklch(0.94 0.015 285);
-  --muted-foreground: oklch(0.48 0.01 260);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.99 0 0);
+  --card: #FFFFFF;
+  --card-foreground: var(--charcoal);
+  --popover: #FFFFFF;
+  --popover-foreground: var(--charcoal);
 
-  --border: oklch(0.92 0.01 85);
-  --input: oklch(0.88 0.015 85);
-  --ring: oklch(0.68 0.15 25);
+  --primary: var(--terracotta);
+  --primary-foreground: #FFFFFF;
+  --secondary: var(--sage);
+  --secondary-foreground: var(--charcoal);
+  --accent: var(--terracotta);
+  --accent-foreground: #FFFFFF;
 
-  --radius: 0.75rem;
-  
-  --pastel-coral: oklch(0.82 0.10 25);
-  --pastel-sage: oklch(0.85 0.06 145);
-  --pastel-lavender: oklch(0.82 0.08 285);
-  --pastel-sky: oklch(0.85 0.08 220);
-  --pastel-peach: oklch(0.85 0.10 55);
-  --pastel-mint: oklch(0.88 0.06 165);
-  --pastel-rose: oklch(0.82 0.09 10);
-  --pastel-blue: oklch(0.80 0.09 240);
+  --muted: var(--stone);
+  --muted-foreground: #857B75;
+  --destructive: #D9534F;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #D4CEC5;
+  --input: #EAE5DD;
+  --ring: var(--terracotta);
+
+  --radius: 1rem;
+
+  /* Pastel variants for special use */
+  --pastel-coral: #F4BBA7;
+  --pastel-sage: #B5D4C6;
+  --pastel-lavender: #D9C5E8;
+  --pastel-sky: #C5DBE8;
+  --pastel-peach: #F4D4A7;
+  --pastel-mint: #C6E8D4;
+  --pastel-rose: #F4C5C5;
+  --pastel-blue: #A7C5F4;
 }
 
 @theme {
@@ -72,8 +81,10 @@
   --radius-2xl: calc(var(--radius) * 3);
   --radius-full: 9999px;
   
-  --font-outfit: 'Outfit', sans-serif;
-  --font-inter: 'Inter', sans-serif;
+  /* Digital Scrapbook Typography */
+  --font-fraunces: 'Fraunces', serif;
+  --font-quicksand: 'Quicksand', sans-serif;
+  --font-caveat: 'Caveat', cursive;
   
   --color-pastel-coral: var(--pastel-coral);
   --color-pastel-sage: var(--pastel-sage);
@@ -86,11 +97,29 @@
 }
 
 body {
-  font-family: var(--font-inter);
+  font-family: var(--font-quicksand);
+  background: var(--background);
+  color: var(--foreground);
+  position: relative;
+}
+
+/* Paper texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-outfit);
+  font-family: var(--font-fraunces);
+  font-weight: 600;
 }
 
 html {
@@ -100,4 +129,61 @@ html {
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrapbook-specific utility classes */
+@layer utilities {
+  .shadow-terracotta {
+    box-shadow: 0 4px 14px -2px rgba(224, 122, 95, 0.3), 0 2px 4px -1px rgba(224, 122, 95, 0.15);
+  }
+
+  .shadow-sage {
+    box-shadow: 0 4px 14px -2px rgba(129, 178, 154, 0.3), 0 2px 4px -1px rgba(129, 178, 154, 0.15);
+  }
+
+  /* Washi tape effect for cards */
+  .washi-tape::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 20px;
+    background: rgba(224, 122, 95, 0.3);
+    border-left: 1px dashed rgba(224, 122, 95, 0.4);
+    border-right: 1px dashed rgba(224, 122, 95, 0.4);
+    opacity: 0.6;
+  }
+
+  /* Handwritten underline effect */
+  .underline-brush {
+    position: relative;
+  }
+
+  .underline-brush::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 3px;
+    background: currentColor;
+    opacity: 0.4;
+    border-radius: 2px;
+  }
+
+  /* Stamp button effect */
+  .stamp-button {
+    position: relative;
+    transition: transform 0.15s ease;
+  }
+
+  .stamp-button:hover {
+    transform: translateY(1px);
+  }
+
+  .stamp-button:active {
+    transform: translateY(2px);
+  }
 }

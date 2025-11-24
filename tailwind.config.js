@@ -24,6 +24,11 @@ const defaultTheme = {
       pwa: { raw: "(display-mode: standalone)" },
     },
     colors: {
+      cream: "#F9F7F2",
+      charcoal: "#3C3633",
+      terracotta: "#E07A5F",
+      sage: "#81B29A",
+      stone: "#E8E3DC",
       neutral: {
         1: "var(--color-neutral-1)",
         2: "var(--color-neutral-2)",
