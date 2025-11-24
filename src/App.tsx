@@ -11,6 +11,7 @@ import { DesignChoice } from '@/components/DesignChoice'
 import { BoxDesign } from '@/components/BoxDesign'
 import { Checkout } from '@/components/Checkout'
 import { OrderConfirmation } from '@/components/OrderConfirmation'
+import { ProgressIndicator } from '@/components/ProgressIndicator'
 import { PuzzleSession, PuzzleType, ShapeType, ShippingInfo } from '@/lib/types'
 
 type Step = 'home' | 'mode-select' | 'shapes' | 'partner-handoff' | 'waiting' | 'template' | 'design' | 'boxdesign' | 'checkout' | 'confirmation'
@@ -192,7 +193,12 @@ function App() {
   return (
     <>
       <Toaster position="top-center" />
-      
+
+      {/* Show progress indicator on all steps except home, confirmation, and partner-handoff */}
+      {step !== 'home' && step !== 'confirmation' && step !== 'partner-handoff' && (
+        <ProgressIndicator currentStep={step} />
+      )}
+
       {step === 'home' && (
         <HomePage onSelectType={handleSelectType} />
       )}
