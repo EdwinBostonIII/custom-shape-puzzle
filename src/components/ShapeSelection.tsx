@@ -236,7 +236,9 @@ export function ShapeSelection({
   }
 
   const handleUpdateMeaning = (shapeId: ShapeType, meaning: string) => {
-    setMeanings({ ...meanings, [shapeId]: meaning })
+    const newMeanings = { ...meanings, [shapeId]: meaning }
+    setMeanings(newMeanings)
+    addToHistory(selected, newMeanings)
   }
 
   const handleRemoveFromTray = (shapeId: ShapeType) => {
