@@ -42,7 +42,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       <div className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-4xl">
           <div className="mb-8">
@@ -53,20 +53,20 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
           </div>
 
           <div className="mb-12 text-center">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl" style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
               Complete Your Order
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light">
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
               Your heirloom puzzle is just moments away
             </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-8">
-            <Card>
+            <Card className="border-2 shadow-lg">
               <CardHeader>
-                <CardTitle>Shipping Information</CardTitle>
+                <CardTitle style={{ fontFamily: 'var(--font-outfit)' }}>Shipping Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-5">
                 <div className="space-y-2">
                   <Label htmlFor="fullName">Full Name *</Label>
                   <Input
@@ -74,6 +74,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                     required
                     value={formData.fullName || ''}
                     onChange={(e) => handleInputChange('fullName', e.target.value)}
+                    className="h-11"
                   />
                 </div>
 
@@ -85,6 +86,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                     required
                     value={formData.email || ''}
                     onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="h-11"
                   />
                 </div>
 
@@ -95,6 +97,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                     required
                     value={formData.address || ''}
                     onChange={(e) => handleInputChange('address', e.target.value)}
+                    className="h-11"
                   />
                 </div>
 
@@ -106,6 +109,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                       required
                       value={formData.city || ''}
                       onChange={(e) => handleInputChange('city', e.target.value)}
+                      className="h-11"
                     />
                   </div>
 
@@ -116,6 +120,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                       required
                       value={formData.state || ''}
                       onChange={(e) => handleInputChange('state', e.target.value)}
+                      className="h-11"
                     />
                   </div>
 
@@ -126,17 +131,18 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                       required
                       value={formData.zipCode || ''}
                       onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                      className="h-11"
                     />
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border-2 shadow-lg">
               <CardHeader>
-                <CardTitle>Payment Information</CardTitle>
+                <CardTitle style={{ fontFamily: 'var(--font-outfit)' }}>Payment Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-5">
                 <div className="space-y-2">
                   <Label htmlFor="cardNumber">Card Number *</Label>
                   <Input
@@ -145,6 +151,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                     placeholder="1234 5678 9012 3456"
                     value={formData.cardNumber || ''}
                     onChange={(e) => handleInputChange('cardNumber', e.target.value)}
+                    className="h-11"
                   />
                 </div>
 
@@ -157,6 +164,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                       placeholder="MM/YY"
                       value={formData.expiryDate || ''}
                       onChange={(e) => handleInputChange('expiryDate', e.target.value)}
+                      className="h-11"
                     />
                   </div>
 
@@ -168,23 +176,24 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
                       placeholder="123"
                       value={formData.cvv || ''}
                       onChange={(e) => handleInputChange('cvv', e.target.value)}
+                      className="h-11"
                     />
                   </div>
                 </div>
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="border-2 shadow-lg bg-gradient-to-br from-primary/5 to-accent/5">
               <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+                <CardTitle style={{ fontFamily: 'var(--font-outfit)' }}>Order Summary</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <div className="flex justify-between text-lg">
                     <span>Custom Puzzle ({type === 'couple' ? 'Couples/Best Friends' : type === 'solo' ? 'Solo' : "Children's"})</span>
                     <span className="font-semibold">${price}</span>
                   </div>
-                  <div className="flex justify-between border-t pt-2 text-xl font-bold">
+                  <div className="flex justify-between border-t pt-3 text-2xl font-bold">
                     <span>Total</span>
                     <span>${price}</span>
                   </div>
@@ -192,8 +201,8 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
               </CardContent>
             </Card>
 
-            <div className="flex justify-center">
-              <Button type="submit" size="lg" className="min-w-[200px]">
+            <div className="flex justify-center pt-4">
+              <Button type="submit" size="lg" className="min-w-[240px] px-8 py-6 text-base">
                 Place Order - ${price}
               </Button>
             </div>

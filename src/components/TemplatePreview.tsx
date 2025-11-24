@@ -12,7 +12,7 @@ interface TemplatePreviewProps {
 
 export function TemplatePreview({ shapes, onBack, onContinue }: TemplatePreviewProps) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       <div className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8">
@@ -22,38 +22,53 @@ export function TemplatePreview({ shapes, onBack, onContinue }: TemplatePreviewP
             </Button>
           </div>
 
-          <div className="mb-12 text-center">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl" style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+          <div className="mb-16 text-center">
+            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
               Your Puzzle Preview
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light">
-              A glimpse of your custom piece shapes
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
+              A glimpse of your custom piece shapes—each one unique and meaningful
             </p>
           </div>
 
-          <Card className="mx-auto mb-12 max-w-4xl overflow-hidden border-2 p-8 md:p-12">
-            <div className="grid grid-cols-5 gap-6">
+          <Card className="mx-auto mb-16 max-w-5xl overflow-hidden border-2 shadow-2xl p-10 md:p-16 bg-gradient-to-br from-card to-muted/10">
+            <div className="grid grid-cols-5 gap-8">
               {shapes.map((shape, index) => (
                 <div
                   key={`${shape}-${index}`}
-                  className="flex aspect-square items-center justify-center rounded-xl border-2 border-border bg-gradient-to-br from-muted/50 to-muted/20 p-4 transition-all hover:scale-110 hover:border-primary hover:shadow-lg"
+                  className="flex aspect-square items-center justify-center rounded-2xl border border-border/50 bg-card p-6 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:-rotate-2"
+                  style={{
+                    animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`,
+                  }}
                 >
-                  <ShapeIcon shape={shape} className="h-full w-full text-primary" />
+                  <ShapeIcon shape={shape} className="h-full w-full" />
                 </div>
               ))}
             </div>
           </Card>
 
-          <div className="flex justify-center gap-4">
-            <Button variant="outline" size="lg" onClick={onBack}>
+          <div className="flex justify-center gap-6">
+            <Button variant="outline" size="lg" onClick={onBack} className="px-8 py-6 text-base">
               Modify Shapes
             </Button>
-            <Button size="lg" onClick={onContinue}>
+            <Button size="lg" onClick={onContinue} className="px-8 py-6 text-base">
               Continue to Design
             </Button>
           </div>
         </div>
       </div>
+      <style>{`
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </div>
   )
 }

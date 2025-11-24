@@ -66,7 +66,7 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
   const allColorsSelected = Object.keys(colorMap).length === shapes.length
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
       <div className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8">
@@ -77,31 +77,31 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
           </div>
 
           <div className="mb-12 text-center">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl" style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
               Design Your Puzzle
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light">
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
               Choose between a treasured photo or custom colors for each piece
             </p>
           </div>
 
           <Tabs value={designType} onValueChange={(v) => setDesignType(v as 'photo' | 'colors')} className="mx-auto max-w-5xl">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="photo" className="gap-2">
+            <TabsList className="grid w-full grid-cols-2 h-14">
+              <TabsTrigger value="photo" className="gap-2 text-base">
                 <ImageIcon size={20} />
                 Upload Photo
               </TabsTrigger>
-              <TabsTrigger value="colors" className="gap-2">
+              <TabsTrigger value="colors" className="gap-2 text-base">
                 <Palette size={20} />
                 Choose Colors
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="photo" className="mt-8">
-              <Card className="p-8">
-                <div className="space-y-6">
+              <Card className="p-10 md:p-12 border-2 shadow-xl">
+                <div className="space-y-8">
                   <div className="text-center">
-                    <p className="mb-4 text-sm text-muted-foreground">
+                    <p className="mb-6 text-base text-muted-foreground leading-relaxed">
                       Upload a reference photo that will be used for your puzzle design
                     </p>
                     <input
@@ -116,6 +116,7 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
                       variant="outline"
                       size="lg"
                       onClick={() => fileInputRef.current?.click()}
+                      className="px-8 py-6 text-base"
                     >
                       <ImageIcon className="mr-2" size={20} />
                       Select Image
@@ -123,7 +124,7 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
                   </div>
 
                   {photoData && (
-                    <div className="mx-auto max-w-md overflow-hidden rounded-lg border-2 border-border">
+                    <div className="mx-auto max-w-md overflow-hidden rounded-2xl border-2 border-border shadow-xl">
                       <img src={photoData} alt="Uploaded preview" className="h-auto w-full" />
                     </div>
                   )}
@@ -132,40 +133,40 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
             </TabsContent>
 
             <TabsContent value="colors" className="mt-8">
-              <Card className="p-8">
-                <div className="space-y-6">
-                  <p className="text-center text-sm text-muted-foreground">
+              <Card className="p-10 md:p-12 border-2 shadow-xl">
+                <div className="space-y-8">
+                  <p className="text-center text-base text-muted-foreground leading-relaxed">
                     Select a color for each puzzle piece shape
                   </p>
 
-                  <div className="grid gap-6 md:grid-cols-2">
+                  <div className="grid gap-8 md:grid-cols-2">
                     {shapes.map((shape, index) => (
-                      <div key={`${shape}-${index}`} className="space-y-3">
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-12 w-12 items-center justify-center rounded-lg border-2 border-border bg-muted/30">
-                            <ShapeIcon shape={shape} className="h-8 w-8" />
+                      <div key={`${shape}-${index}`} className="space-y-4">
+                        <div className="flex items-center gap-4">
+                          <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-border bg-muted/30 shadow-sm">
+                            <ShapeIcon shape={shape} className="h-10 w-10" />
                           </div>
                           <div className="flex-1">
-                            <p className="text-sm font-medium capitalize">{shape}</p>
+                            <p className="text-base font-medium capitalize">{shape.replace(/-/g, ' ')}</p>
                             {colorMap[shape] && (
-                              <div className="mt-1 flex items-center gap-2">
+                              <div className="mt-1.5 flex items-center gap-2">
                                 <div
-                                  className="h-4 w-4 rounded-full border border-border"
+                                  className="h-5 w-5 rounded-md border border-border shadow-sm"
                                   style={{ backgroundColor: colorMap[shape] }}
                                 />
-                                <span className="text-xs text-muted-foreground">{colorMap[shape]}</span>
+                                <span className="text-xs text-muted-foreground font-mono">{colorMap[shape]}</span>
                               </div>
                             )}
                           </div>
                         </div>
-                        <div className="grid grid-cols-10 gap-1">
+                        <div className="grid grid-cols-10 gap-1.5">
                           {DEFAULT_COLORS.map(color => (
                             <button
                               key={color}
                               onClick={() => handleColorSelect(shape, color)}
                               className={cn(
-                                "h-8 w-8 rounded-md border-2 transition-all hover:scale-110",
-                                colorMap[shape] === color ? "border-foreground scale-110" : "border-transparent"
+                                "h-9 w-9 rounded-lg border-2 transition-all hover:scale-110 hover:shadow-md",
+                                colorMap[shape] === color ? "border-foreground scale-110 shadow-md" : "border-transparent"
                               )}
                               style={{ backgroundColor: color }}
                               title={color}
@@ -180,11 +181,12 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
             </TabsContent>
           </Tabs>
 
-          <div className="mt-8 flex justify-center">
+          <div className="mt-12 flex justify-center">
             <Button
               size="lg"
               onClick={handleContinue}
               disabled={designType === 'photo' ? !photoData : !allColorsSelected}
+              className="px-8 py-6 text-base"
             >
               Continue to Checkout
             </Button>

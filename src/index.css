@@ -8,31 +8,40 @@
 }
 
 :root {
-  --background: oklch(0.98 0.005 85);
-  --foreground: oklch(0.20 0.015 260);
+  --background: oklch(0.98 0.008 85);
+  --foreground: oklch(0.22 0.015 260);
 
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.20 0.015 260);
+  --card-foreground: oklch(0.22 0.015 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.20 0.015 260);
+  --popover-foreground: oklch(0.22 0.015 260);
 
-  --primary: oklch(0.68 0.18 25);
+  --primary: oklch(0.68 0.15 25);
   --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.78 0.10 160);
-  --secondary-foreground: oklch(0.20 0.015 260);
-  --accent: oklch(0.78 0.20 65);
+  --secondary: oklch(0.75 0.08 145);
+  --secondary-foreground: oklch(0.22 0.015 260);
+  --accent: oklch(0.75 0.18 65);
   --accent-foreground: oklch(0.15 0.015 260);
   
-  --muted: oklch(0.94 0.01 285);
+  --muted: oklch(0.94 0.015 285);
   --muted-foreground: oklch(0.48 0.01 260);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.90 0.01 85);
-  --input: oklch(0.90 0.01 85);
-  --ring: oklch(0.68 0.18 25);
+  --border: oklch(0.92 0.01 85);
+  --input: oklch(0.88 0.015 85);
+  --ring: oklch(0.68 0.15 25);
 
-  --radius: 0.625rem;
+  --radius: 0.75rem;
+  
+  --pastel-coral: oklch(0.82 0.10 25);
+  --pastel-sage: oklch(0.85 0.06 145);
+  --pastel-lavender: oklch(0.82 0.08 285);
+  --pastel-sky: oklch(0.85 0.08 220);
+  --pastel-peach: oklch(0.85 0.10 55);
+  --pastel-mint: oklch(0.88 0.06 165);
+  --pastel-rose: oklch(0.82 0.09 10);
+  --pastel-blue: oklch(0.80 0.09 240);
 }
 
 @theme {
@@ -65,6 +74,15 @@
   
   --font-outfit: 'Outfit', sans-serif;
   --font-inter: 'Inter', sans-serif;
+  
+  --color-pastel-coral: var(--pastel-coral);
+  --color-pastel-sage: var(--pastel-sage);
+  --color-pastel-lavender: var(--pastel-lavender);
+  --color-pastel-sky: var(--pastel-sky);
+  --color-pastel-peach: var(--pastel-peach);
+  --color-pastel-mint: var(--pastel-mint);
+  --color-pastel-rose: var(--pastel-rose);
+  --color-pastel-blue: var(--pastel-blue);
 }
 
 body {
@@ -73,4 +91,13 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-outfit);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }

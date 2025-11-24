@@ -11,49 +11,64 @@ interface HomePageProps {
 
 export function HomePage({ onSelectType }: HomePageProps) {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="px-6 py-12 md:px-12 lg:px-24">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+      <div className="px-6 py-16 md:px-12 lg:px-24">
         <div className="mx-auto max-w-7xl">
-          <div className="mb-16 text-center md:mb-24">
-            <div className="mb-6 inline-block">
-              <h1 className="text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl" style={{ letterSpacing: '-0.03em', lineHeight: '1' }}>
+          <div className="mb-20 text-center md:mb-28">
+            <div className="mb-8 inline-block">
+              <h1 
+                className="text-6xl font-bold tracking-tight md:text-7xl lg:text-8xl bg-gradient-to-br from-primary via-accent to-secondary bg-clip-text text-transparent" 
+                style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.03em', lineHeight: '1', fontWeight: '700' }}
+              >
                 Interlock
               </h1>
-              <div className="mt-2 h-1 w-full bg-gradient-to-r from-primary via-accent to-secondary rounded-full" />
+              <div className="mt-4 h-1.5 w-full bg-gradient-to-r from-primary via-accent to-secondary rounded-full shadow-lg" />
             </div>
-            <p className="mx-auto max-w-2xl text-xl text-muted-foreground md:text-2xl font-light" style={{ lineHeight: '1.5' }}>
+            <p className="mx-auto max-w-2xl text-xl text-foreground/70 md:text-2xl font-light leading-relaxed" style={{ lineHeight: '1.6' }}>
               Heirloom puzzles crafted from shapes that matter to you
             </p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            <Card className="group relative overflow-hidden border-2 transition-all duration-300 hover:border-primary hover:shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <CardHeader className="relative">
-                <div className="mb-4 flex items-center justify-center">
-                  <div className="rounded-full bg-primary/10 p-4 transition-colors duration-300 group-hover:bg-primary/20">
-                    <Heart size={40} weight="fill" className="text-primary" />
+            <Card className="group relative overflow-hidden border-2 transition-all duration-500 hover:border-primary hover:shadow-2xl hover:-translate-y-1">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-primary/4 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <CardHeader className="relative pb-4">
+                <div className="mb-6 flex items-center justify-center">
+                  <div className="rounded-2xl bg-primary/10 p-5 transition-all duration-500 group-hover:bg-primary/20 group-hover:scale-110 group-hover:rotate-3">
+                    <Heart size={48} weight="fill" className="text-primary" />
                   </div>
                 </div>
-                <CardTitle className="text-center text-2xl">Couples & Best Friends</CardTitle>
-                <CardDescription className="text-center">
+                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>Couples & Best Friends</CardTitle>
+                <CardDescription className="text-center text-base leading-relaxed">
                   Create together with someone special
                 </CardDescription>
               </CardHeader>
-              <CardContent className="relative space-y-4">
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• You each choose 5 unique shapes</li>
-                  <li>• Share a link for collaboration</li>
-                  <li>• Upload a photo or pick colors</li>
-                  <li>• Premium quality puzzle pieces</li>
+              <CardContent className="relative space-y-6">
+                <ul className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>You each choose 5 unique shapes</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Share a link for collaboration</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Upload a photo or pick colors</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Premium quality puzzle pieces</span>
+                  </li>
                 </ul>
-                <div className="flex items-center justify-center pt-4">
-                  <Badge variant="secondary" className="text-lg font-semibold">
+                <div className="flex items-center justify-center pt-2">
+                  <Badge variant="secondary" className="text-lg font-semibold px-4 py-1.5">
                     ${PRICING.couple}
                   </Badge>
                 </div>
                 <Button 
-                  className="w-full" 
+                  className="w-full text-base py-6" 
                   size="lg"
                   onClick={() => onSelectType('couple')}
                 >
@@ -62,33 +77,45 @@ export function HomePage({ onSelectType }: HomePageProps) {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden border-2 transition-all duration-300 hover:border-secondary hover:shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <CardHeader className="relative">
-                <div className="mb-4 flex items-center justify-center">
-                  <div className="rounded-full bg-secondary/10 p-4 transition-colors duration-300 group-hover:bg-secondary/20">
-                    <User size={40} weight="fill" className="text-secondary" />
+            <Card className="group relative overflow-hidden border-2 transition-all duration-500 hover:border-secondary hover:shadow-2xl hover:-translate-y-1">
+              <div className="absolute inset-0 bg-gradient-to-br from-secondary/8 via-secondary/4 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <CardHeader className="relative pb-4">
+                <div className="mb-6 flex items-center justify-center">
+                  <div className="rounded-2xl bg-secondary/10 p-5 transition-all duration-500 group-hover:bg-secondary/20 group-hover:scale-110 group-hover:rotate-3">
+                    <User size={48} weight="fill" className="text-secondary" />
                   </div>
                 </div>
-                <CardTitle className="text-center text-2xl">Solo Creation</CardTitle>
-                <CardDescription className="text-center">
+                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>Solo Creation</CardTitle>
+                <CardDescription className="text-center text-base leading-relaxed">
                   Design your puzzle independently
                 </CardDescription>
               </CardHeader>
-              <CardContent className="relative space-y-4">
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Choose all 10 shapes yourself</li>
-                  <li>• Quick and simple process</li>
-                  <li>• Upload a photo or pick colors</li>
-                  <li>• Premium quality puzzle pieces</li>
+              <CardContent className="relative space-y-6">
+                <ul className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+                  <li className="flex items-start gap-2">
+                    <span className="text-secondary mt-0.5">•</span>
+                    <span>Choose all 10 shapes yourself</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-secondary mt-0.5">•</span>
+                    <span>Quick and simple process</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-secondary mt-0.5">•</span>
+                    <span>Upload a photo or pick colors</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-secondary mt-0.5">•</span>
+                    <span>Premium quality puzzle pieces</span>
+                  </li>
                 </ul>
-                <div className="flex items-center justify-center pt-4">
-                  <Badge variant="secondary" className="text-lg font-semibold">
+                <div className="flex items-center justify-center pt-2">
+                  <Badge variant="secondary" className="text-lg font-semibold px-4 py-1.5">
                     ${PRICING.solo}
                   </Badge>
                 </div>
                 <Button 
-                  className="w-full" 
+                  className="w-full text-base py-6" 
                   size="lg"
                   onClick={() => onSelectType('solo')}
                 >
@@ -97,33 +124,45 @@ export function HomePage({ onSelectType }: HomePageProps) {
               </CardContent>
             </Card>
 
-            <Card className="group relative overflow-hidden border-2 transition-all duration-300 hover:border-accent hover:shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-              <CardHeader className="relative">
-                <div className="mb-4 flex items-center justify-center">
-                  <div className="rounded-full bg-accent/10 p-4 transition-colors duration-300 group-hover:bg-accent/20">
-                    <Baby size={40} weight="fill" className="text-accent" />
+            <Card className="group relative overflow-hidden border-2 transition-all duration-500 hover:border-accent hover:shadow-2xl hover:-translate-y-1">
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/8 via-accent/4 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <CardHeader className="relative pb-4">
+                <div className="mb-6 flex items-center justify-center">
+                  <div className="rounded-2xl bg-accent/10 p-5 transition-all duration-500 group-hover:bg-accent/20 group-hover:scale-110 group-hover:rotate-3">
+                    <Baby size={48} weight="fill" className="text-accent" />
                   </div>
                 </div>
-                <CardTitle className="text-center text-2xl">Children's Puzzle</CardTitle>
-                <CardDescription className="text-center">
+                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>Children's Puzzle</CardTitle>
+                <CardDescription className="text-center text-base leading-relaxed">
                   Perfect for little hands
                 </CardDescription>
               </CardHeader>
-              <CardContent className="relative space-y-4">
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Child-friendly shapes & sizes</li>
-                  <li>• Wooden frame included</li>
-                  <li>• Easy-grip pegs on pieces</li>
-                  <li>• Durable for repeated play</li>
+              <CardContent className="relative space-y-6">
+                <ul className="space-y-3 text-sm text-muted-foreground leading-relaxed">
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent mt-0.5">•</span>
+                    <span>Child-friendly shapes & sizes</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent mt-0.5">•</span>
+                    <span>Wooden frame included</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent mt-0.5">•</span>
+                    <span>Easy-grip pegs on pieces</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-accent mt-0.5">•</span>
+                    <span>Durable for repeated play</span>
+                  </li>
                 </ul>
-                <div className="flex items-center justify-center pt-4">
-                  <Badge variant="secondary" className="text-lg font-semibold">
+                <div className="flex items-center justify-center pt-2">
+                  <Badge variant="secondary" className="text-lg font-semibold px-4 py-1.5">
                     ${PRICING.children}
                   </Badge>
                 </div>
                 <Button 
-                  className="w-full" 
+                  className="w-full text-base py-6" 
                   size="lg"
                   onClick={() => onSelectType('children')}
                 >
@@ -133,8 +172,8 @@ export function HomePage({ onSelectType }: HomePageProps) {
             </Card>
           </div>
 
-          <div className="mt-16 text-center text-sm text-muted-foreground">
-            <p className="font-light">Premium quality pieces · Custom design · Delivered to your door</p>
+          <div className="mt-20 text-center text-sm text-muted-foreground">
+            <p className="font-light text-base">Premium quality pieces · Custom design · Delivered to your door</p>
           </div>
         </div>
       </div>

@@ -4,9 +4,28 @@ import { ReactElement } from 'react'
 interface ShapeIconProps {
   shape: ShapeType
   className?: string
+  color?: string
 }
 
-export function ShapeIcon({ shape, className = "w-12 h-12" }: ShapeIconProps) {
+const PASTEL_COLORS = [
+  'oklch(0.82 0.10 25)',
+  'oklch(0.85 0.06 145)',
+  'oklch(0.82 0.08 285)',
+  'oklch(0.85 0.08 220)',
+  'oklch(0.85 0.10 55)',
+  'oklch(0.88 0.06 165)',
+  'oklch(0.82 0.09 10)',
+  'oklch(0.80 0.09 240)',
+]
+
+function getShapeColor(shape: ShapeType): string {
+  const index = shape.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % PASTEL_COLORS.length
+  return PASTEL_COLORS[index]
+}
+
+export function ShapeIcon({ shape, className = "w-12 h-12", color }: ShapeIconProps) {
+  const shapeColor = color || getShapeColor(shape)
+  
   const shapes: Record<ShapeType, ReactElement> = {
     'heart': <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />,
     'star': <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />,
@@ -124,9 +143,10 @@ export function ShapeIcon({ shape, className = "w-12 h-12" }: ShapeIconProps) {
   return (
     <svg
       viewBox="0 0 24 24"
-      fill="currentColor"
+      fill={shapeColor}
       className={className}
       xmlns="http://www.w3.org/2000/svg"
+      style={{ filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))' }}
     >
       {shapes[shape] || <circle cx="12" cy="12" r="8" />}
     </svg>

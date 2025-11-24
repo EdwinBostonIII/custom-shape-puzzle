@@ -80,10 +80,10 @@ export function ShapeSelection({
           </div>
 
           <div className="mb-12 text-center">
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl" style={{ letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
               {isPartnerMode ? "Choose Your Shapes" : "Select Your Puzzle Shapes"}
             </h1>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
               {type === 'couple' && !isPartnerMode
                 ? `Pick ${requiredCount} shapes that remind you of your special someone`
                 : `Choose ${requiredCount} unique shapes for your puzzle pieces`}
@@ -107,28 +107,30 @@ export function ShapeSelection({
             }
             
             return (
-              <div key={category} className="mb-12">
-                <h2 className="mb-6 text-2xl font-semibold">{categoryTitles[category] || category}</h2>
-                <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+              <div key={category} className="mb-16">
+                <h2 className="mb-8 text-2xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-outfit)' }}>
+                  {categoryTitles[category] || category}
+                </h2>
+                <div className="grid grid-cols-3 gap-4 md:grid-cols-5 lg:grid-cols-7">
                   {shapes.map(shape => (
                     <Card
                       key={shape.id}
                       className={cn(
-                        "group relative cursor-pointer overflow-hidden transition-all duration-300 hover:scale-105",
+                        "group relative cursor-pointer overflow-hidden transition-all duration-300",
                         selected.includes(shape.id)
-                          ? "border-2 border-accent shadow-lg"
-                          : "border-2 border-transparent hover:border-secondary",
-                        selected.length >= requiredCount && !selected.includes(shape.id) && "cursor-not-allowed opacity-50"
+                          ? "border-2 border-accent shadow-xl ring-2 ring-accent/20 scale-105"
+                          : "border border-border hover:border-primary/30 hover:shadow-lg hover:scale-102",
+                        selected.length >= requiredCount && !selected.includes(shape.id) && "cursor-not-allowed opacity-40"
                       )}
                       onClick={() => handleShapeClick(shape.id)}
                     >
-                      <div className="flex aspect-square flex-col items-center justify-center p-6">
-                        <ShapeIcon shape={shape.id} className="mb-2 h-16 w-16 transition-colors duration-300" />
-                        <p className="text-center text-sm font-medium">{shape.name}</p>
+                      <div className="flex aspect-square flex-col items-center justify-center p-4 bg-gradient-to-br from-background to-muted/30">
+                        <ShapeIcon shape={shape.id} className="h-12 w-12 md:h-14 md:w-14 transition-transform duration-300 group-hover:scale-110" />
+                        <p className="mt-2 text-center text-xs font-medium leading-tight">{shape.name}</p>
                       </div>
                       {selected.includes(shape.id) && (
-                        <div className="absolute right-2 top-2 rounded-full bg-accent p-1">
-                          <Check size={16} weight="bold" className="text-accent-foreground" />
+                        <div className="absolute right-1.5 top-1.5 rounded-full bg-accent p-1 shadow-lg">
+                          <Check size={14} weight="bold" className="text-accent-foreground" />
                         </div>
                       )}
                     </Card>
@@ -139,13 +141,13 @@ export function ShapeSelection({
           })}
 
           <div className="sticky bottom-6 mt-12 flex justify-center">
-            <div className="rounded-lg border-2 border-border bg-card p-4 shadow-xl">
+            <div className="rounded-2xl border border-border bg-card/95 backdrop-blur-sm p-6 shadow-2xl">
               {type === 'couple' && !isPartnerMode ? (
                 <Button
                   size="lg"
                   disabled={selected.length !== 5}
                   onClick={handleGenerateLink}
-                  className="gap-2"
+                  className="gap-2 text-base px-8 py-6"
                 >
                   <LinkIcon size={20} weight="bold" />
                   Generate Partner Link
@@ -155,8 +157,9 @@ export function ShapeSelection({
                   size="lg"
                   disabled={selected.length !== requiredCount}
                   onClick={handleContinue}
+                  className="text-base px-8 py-6"
                 >
-                  Continue to Template
+                  Continue to Preview
                 </Button>
               )}
             </div>
