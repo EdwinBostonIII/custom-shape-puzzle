@@ -26,6 +26,13 @@ export function BoxDesign({ photoData, onBack, onContinue }: BoxDesignProps) {
   const [boxHint2, setBoxHint2] = useState('')
   const [boxHiddenMessage, setBoxHiddenMessage] = useState('')
 
+  // Smart prompt suggestions for hints - removes writer's block
+  const hintSuggestions = {
+    titles: ['Our Story', 'Together', 'Forever', 'Our Journey', 'Love Story', 'Us'],
+    hint1: ['Where we met', 'Our first date location', 'The song that played', 'What we ate', 'The weather that day', 'Our favorite place'],
+    hint2: ['What you were wearing', 'What you said first', 'Our inside joke', 'The gift I gave', 'Your favorite detail', 'What made us laugh']
+  }
+
   const handleContinue = () => {
     if (boxStyle === 'mystery') {
       if (!boxTitle || !boxHint1 || !boxHint2) {
@@ -88,6 +95,19 @@ export function BoxDesign({ photoData, onBack, onContinue }: BoxDesignProps) {
                           placeholder="e.g., 'Our First Year'"
                           maxLength={50}
                         />
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          <span className="text-xs text-charcoal/50">Try:</span>
+                          {hintSuggestions.titles.map((suggestion) => (
+                            <button
+                              key={suggestion}
+                              type="button"
+                              onClick={() => setBoxTitle(suggestion)}
+                              className="px-3 py-1 text-xs rounded-full bg-sage/20 text-charcoal hover:bg-sage/40 transition-colors"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                        </div>
                         <p className="text-xs text-charcoal/50">
                           {boxTitle.length} / 50 characters
                         </p>
@@ -102,6 +122,19 @@ export function BoxDesign({ photoData, onBack, onContinue }: BoxDesignProps) {
                           placeholder="e.g., 'The location of our first date'"
                           maxLength={80}
                         />
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          <span className="text-xs text-charcoal/50">Ideas:</span>
+                          {hintSuggestions.hint1.map((suggestion) => (
+                            <button
+                              key={suggestion}
+                              type="button"
+                              onClick={() => setBoxHint1(suggestion)}
+                              className="px-3 py-1 text-xs rounded-full bg-terracotta/20 text-charcoal hover:bg-terracotta/40 transition-colors"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                        </div>
                         <p className="text-xs text-charcoal/50">
                           {boxHint1.length} / 80 characters
                         </p>
@@ -116,6 +149,19 @@ export function BoxDesign({ photoData, onBack, onContinue }: BoxDesignProps) {
                           placeholder="e.g., 'What you were wearing when we met'"
                           maxLength={80}
                         />
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          <span className="text-xs text-charcoal/50">Ideas:</span>
+                          {hintSuggestions.hint2.map((suggestion) => (
+                            <button
+                              key={suggestion}
+                              type="button"
+                              onClick={() => setBoxHint2(suggestion)}
+                              className="px-3 py-1 text-xs rounded-full bg-terracotta/20 text-charcoal hover:bg-terracotta/40 transition-colors"
+                            >
+                              {suggestion}
+                            </button>
+                          ))}
+                        </div>
                         <p className="text-xs text-charcoal/50">
                           {boxHint2.length} / 80 characters
                         </p>

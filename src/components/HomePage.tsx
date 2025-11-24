@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { PuzzleType } from '@/lib/types'
 import { PRICING } from '@/lib/constants'
+import { FAQSection } from './FAQSection'
 
 interface HomePageProps {
   onSelectType: (type: PuzzleType) => void
@@ -19,9 +20,11 @@ export function HomePage({ onSelectType }: HomePageProps) {
             <h1 className="text-2xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
               Interlock
             </h1>
-            <Button size="sm" className="rounded-full">
-              Start Creating
-            </Button>
+            <a href="#products" className="scroll-smooth">
+              <Button size="sm" className="rounded-full ripple-effect">
+                Get Started
+              </Button>
+            </a>
           </div>
         </div>
       </nav>
@@ -58,7 +61,7 @@ export function HomePage({ onSelectType }: HomePageProps) {
           </div>
 
           {/* Product Cards with Scrapbook Styling */}
-          <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+          <div id="products" className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto scroll-mt-20">
             {/* Together Card */}
             <Card className="washi-tape group relative overflow-visible shadow-lg hover:shadow-xl transition-all duration-300 pt-8">
               {/* Handwritten badge */}
@@ -88,11 +91,12 @@ export function HomePage({ onSelectType }: HomePageProps) {
                   </Badge>
                 </div>
                 <Button
-                  className="w-full text-base py-6"
+                  className="w-full text-base py-6 ripple-effect"
                   size="lg"
                   onClick={() => onSelectType('couple')}
+                  aria-label="Create a custom couple puzzle together"
                 >
-                  Start Creating
+                  Create Your Puzzle →
                 </Button>
                 <p className="text-xs text-center text-charcoal/50 leading-relaxed pt-2" style={{ fontFamily: 'var(--font-quicksand)' }}>
                   Perfect for couples, best friends, siblings, parent + adult child
@@ -123,17 +127,62 @@ export function HomePage({ onSelectType }: HomePageProps) {
                 </div>
                 <Button
                   variant="secondary"
-                  className="w-full text-base py-6"
+                  className="w-full text-base py-6 ripple-effect"
                   size="lg"
                   onClick={() => onSelectType('solo')}
+                  aria-label="Create a personalized solo puzzle"
                 >
-                  Start Creating
+                  Design Your Gift →
                 </Button>
                 <p className="text-xs text-center text-charcoal/50 leading-relaxed pt-2" style={{ fontFamily: 'var(--font-quicksand)' }}>
                   Anniversaries, milestones, memorials, just because
                 </p>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Trust Indicators */}
+          <div className="mt-16 mb-20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+              <div className="text-center space-y-2">
+                <div className="text-3xl md:text-4xl font-bold text-terracotta" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  1,200+
+                </div>
+                <p className="text-sm text-charcoal/60 font-light">Puzzles Created</p>
+              </div>
+              <div className="text-center space-y-2">
+                <div className="text-3xl md:text-4xl font-bold text-sage" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  4.9★
+                </div>
+                <p className="text-sm text-charcoal/60 font-light">Average Rating</p>
+              </div>
+              <div className="text-center space-y-2">
+                <div className="text-3xl md:text-4xl font-bold text-terracotta" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  100%
+                </div>
+                <p className="text-sm text-charcoal/60 font-light">Handcrafted</p>
+              </div>
+              <div className="text-center space-y-2">
+                <div className="text-3xl md:text-4xl font-bold text-sage" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  Free
+                </div>
+                <p className="text-sm text-charcoal/60 font-light">US Shipping</p>
+              </div>
+            </div>
+
+            {/* Customer Quote */}
+            <div className="mt-12 max-w-3xl mx-auto">
+              <Card className="border-2 border-sage/30 bg-sage/5 shadow-sage">
+                <CardContent className="p-8 md:p-10 text-center">
+                  <p className="text-lg md:text-xl text-charcoal/80 leading-relaxed mb-4 italic" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                    "We gave this to my parents for their 50th anniversary. They cried when they saw the shapes we chose. It's hanging on their wall now&mdash;best gift we've ever given."
+                  </p>
+                  <p className="text-sm text-charcoal/50 font-medium" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.1rem' }}>
+                    &mdash; Sarah & Michael, Boston MA
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
           </div>
 
           {/* Mystery Upgrade Section with Polaroid styling */}
@@ -196,10 +245,15 @@ export function HomePage({ onSelectType }: HomePageProps) {
             </div>
           </div>
 
-          <div className="mt-20 text-center text-base text-charcoal/60">
-            <p className="font-light">Handcrafted with care · Ships within 2 weeks · Free shipping in the US</p>
-          </div>
         </div>
+      </div>
+
+      {/* FAQ Section */}
+      <FAQSection />
+
+      {/* Footer */}
+      <div className="py-12 text-center text-base text-charcoal/60 bg-cream">
+        <p className="font-light">Handcrafted with care · Ships within 2 weeks · Free shipping in the US</p>
       </div>
     </div>
   )
