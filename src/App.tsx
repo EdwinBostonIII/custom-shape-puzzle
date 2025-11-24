@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { Toaster } from 'sonner'
 import { useKV } from '@github/spark/hooks'
 import { HomePage } from '@/components/HomePage'
+import { ModeSelectScreen } from '@/components/ModeSelectScreen'
 import { ShapeSelection } from '@/components/ShapeSelection'
+import { PartnerHandoffScreen } from '@/components/PartnerHandoffScreen'
 import { PartnerWaiting } from '@/components/PartnerWaiting'
 import { TemplatePreview } from '@/components/TemplatePreview'
 import { DesignChoice } from '@/components/DesignChoice'
@@ -11,10 +13,14 @@ import { Checkout } from '@/components/Checkout'
 import { OrderConfirmation } from '@/components/OrderConfirmation'
 import { PuzzleSession, PuzzleType, ShapeType, ShippingInfo } from '@/lib/types'
 
-type Step = 'home' | 'shapes' | 'waiting' | 'template' | 'design' | 'boxdesign' | 'checkout' | 'confirmation'
+type Step = 'home' | 'mode-select' | 'shapes' | 'partner-handoff' | 'waiting' | 'template' | 'design' | 'boxdesign' | 'checkout' | 'confirmation'
 
 function generateId() {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2)
+  // Use crypto.getRandomValues for better randomness
+  const array = new Uint32Array(2);
+  window.crypto.getRandomValues(array);
+  const randomPart = Array.from(array).map(n => n.toString(36)).join('');
+  return Date.now().toString(36) + randomPart;
 }
 
 function App() {
@@ -23,6 +29,8 @@ function App() {
   const [session, setSession] = useKV<PuzzleSession>(`puzzle-session-${sessionId}`, {} as PuzzleSession)
   const [orderNumber, setOrderNumber] = useState<string>('')
   const [isPartnerMode, setIsPartnerMode] = useState(false)
+  const [isCouchMode, setIsCouchMode] = useState(false)
+  const [isPartner1Complete, setIsPartner1Complete] = useState(false)
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search)
@@ -35,9 +43,10 @@ function App() {
     }
   }, [])
 
-  const handleSelectType = (type: PuzzleType) => {
+  const handleSelectType = (type: PuzzleType, couchMode?: boolean) => {
     const newSessionId = generateId()
     setSessionId(newSessionId)
+    setIsCouchMode(couchMode || false)
     setSession({
       id: newSessionId,
       type,
@@ -45,11 +54,35 @@ function App() {
       partnerShapes: [],
       isPartnerComplete: false,
     })
+
+    // For couple in couch mode, show mode selection first
+    if (type === 'couple' && couchMode === undefined) {
+      setStep('mode-select')
+    } else {
+      setStep('shapes')
+    }
+  }
+
+  const handleModeSelect = (couch: boolean) => {
+    setIsCouchMode(couch)
     setStep('shapes')
   }
 
+  const handlePartner1Complete = (shapes: ShapeType[], meanings?: Partial<Record<ShapeType, string>>) => {
+    setSession(prev => {
+      if (!prev || !prev.id) return prev!
+      return {
+        ...prev,
+        selectedShapes: shapes,
+        shapeMeanings: meanings,
+      }
+    })
+    setIsPartner1Complete(true)
+    setStep('partner-handoff')
+  }
+
   const handleShapesSelected = (shapes: ShapeType[], meanings?: Partial<Record<ShapeType, string>>) => {
-    if (isPartnerMode) {
+    if (isPartnerMode || (isCouchMode && isPartner1Complete)) {
       setSession(prev => {
         if (!prev || !prev.id) return prev!
         return {
@@ -164,24 +197,57 @@ function App() {
         <HomePage onSelectType={handleSelectType} />
       )}
 
+      {step === 'mode-select' && (
+        <ModeSelectScreen
+          onSelect={handleModeSelect}
+          onBack={handleCreateAnother}
+        />
+      )}
+
       {step === 'shapes' && session && (
         <ShapeSelection
           type={session.type}
           sessionId={sessionId}
-          selectedShapes={isPartnerMode ? session.partnerShapes || [] : session.selectedShapes}
-          shapeMeanings={isPartnerMode ? session.partnerShapeMeanings : session.shapeMeanings}
+          selectedShapes={
+            isPartnerMode
+              ? session.partnerShapes || []
+              : (isCouchMode && isPartner1Complete)
+                ? session.partnerShapes || []
+                : session.selectedShapes || []
+          }
+          shapeMeanings={
+            isPartnerMode
+              ? session.partnerShapeMeanings
+              : (isCouchMode && isPartner1Complete)
+                ? session.partnerShapeMeanings
+                : session.shapeMeanings
+          }
           onShapesSelected={handleShapesSelected}
           onBack={handleCreateAnother}
           onContinue={() => {
             if (isPartnerMode) {
-              window.close()
-            } else if (session.type === 'couple') {
+              // Partner completed - show success message instead of closing window
+              setStep('confirmation')
+              setOrderNumber('PARTNER-COMPLETE')
+            } else if (session.type === 'couple' && !isCouchMode) {
               setStep('waiting')
+            } else if (session.type === 'couple' && isCouchMode && !isPartner1Complete) {
+              // Partner 1 finished in couch mode - show handoff
+              handlePartner1Complete(session.selectedShapes, session.shapeMeanings)
             } else {
               setStep('template')
             }
           }}
-          isPartnerMode={isPartnerMode}
+          isPartnerMode={isPartnerMode || (isCouchMode && isPartner1Complete)}
+        />
+      )}
+
+      {step === 'partner-handoff' && (
+        <PartnerHandoffScreen
+          onContinue={() => {
+            setIsPartnerMode(false)
+            setStep('shapes')
+          }}
         />
       )}
 
