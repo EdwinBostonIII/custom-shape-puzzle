@@ -190,7 +190,7 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
               <CardContent>
                 <div className="space-y-3">
                   <div className="flex justify-between text-lg">
-                    <span>Custom Puzzle ({type === 'couple' ? 'Couples/Best Friends' : type === 'solo' ? 'Solo' : "Children's"})</span>
+                    <span>Custom Puzzle ({type === 'couple' ? 'Partners' : 'Solo'})</span>
                     <span className="font-semibold">${price}</span>
                   </div>
                   <div className="flex justify-between border-t pt-3 text-2xl font-bold">
