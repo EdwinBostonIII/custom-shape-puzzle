@@ -24,10 +24,10 @@ export function TemplatePreview({ shapes, onBack, onContinue }: TemplatePreviewP
 
           <div className="mb-16 text-center">
             <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              Your Puzzle Preview
+              Here Are Your Pieces
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
-              A glimpse of your custom piece shapes—each one unique and meaningful
+              Each shape tells part of your story. Together, they create something beautiful.
             </p>
           </div>
 

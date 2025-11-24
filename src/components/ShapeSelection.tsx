@@ -81,12 +81,12 @@ export function ShapeSelection({
 
           <div className="mb-12 text-center">
             <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              {isPartnerMode ? "Choose Your Shapes" : "Select Your Puzzle Shapes"}
+              {isPartnerMode ? "Pick Your Special Shapes" : "Choose What Matters"}
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
               {type === 'couple' && !isPartnerMode
-                ? `Pick ${requiredCount} shapes that remind you of your special someone`
-                : `Choose ${requiredCount} unique shapes for your puzzle pieces`}
+                ? `Select ${requiredCount} shapes that remind you of your time together. Each one tells part of your story.`
+                : `Pick ${requiredCount} shapes that mean something to you. They can represent memories, dreams, or the things you love most.`}
             </p>
           </div>
 
@@ -124,9 +124,10 @@ export function ShapeSelection({
                       )}
                       onClick={() => handleShapeClick(shape.id)}
                     >
-                      <div className="flex aspect-square flex-col items-center justify-center p-4 bg-gradient-to-br from-background to-muted/30">
-                        <ShapeIcon shape={shape.id} className="h-12 w-12 md:h-14 md:w-14 transition-transform duration-300 group-hover:scale-110" />
+                      <div className="flex aspect-square flex-col items-center justify-center p-3 bg-gradient-to-br from-background to-muted/30">
+                        <ShapeIcon shape={shape.id} className="h-10 w-10 md:h-12 md:w-12 transition-transform duration-300 group-hover:scale-110" />
                         <p className="mt-2 text-center text-xs font-medium leading-tight">{shape.name}</p>
+                        <p className="mt-1 text-center text-[10px] text-muted-foreground leading-tight px-1">{shape.description}</p>
                       </div>
                       {selected.includes(shape.id) && (
                         <div className="absolute right-1.5 top-1.5 rounded-full bg-accent p-1 shadow-lg">

@@ -54,10 +54,10 @@ export function Checkout({ type, onBack, onComplete }: CheckoutProps) {
 
           <div className="mb-12 text-center">
             <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              Complete Your Order
+              Almost There
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
-              Your heirloom puzzle is just moments away
+              Your custom puzzle will be handcrafted with care and shipped to you within two weeks.
             </p>
           </div>
 

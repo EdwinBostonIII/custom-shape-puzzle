@@ -78,10 +78,10 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
 
           <div className="mb-12 text-center">
             <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl" style={{ fontFamily: 'var(--font-outfit)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
-              Design Your Puzzle
+              Bring Your Puzzle to Life
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-muted-foreground font-light leading-relaxed">
-              Choose between a treasured photo or custom colors for each piece
+              Choose a cherished photo or pick colors that feel just right for each piece.
             </p>
           </div>
 
@@ -102,7 +102,7 @@ export function DesignChoice({ shapes, onBack, onContinue }: DesignChoiceProps) 
                 <div className="space-y-8">
                   <div className="text-center">
                     <p className="mb-6 text-base text-muted-foreground leading-relaxed">
-                      Upload a reference photo that will be used for your puzzle design
+                      Share a photo that means something special to you. We'll use it to design your puzzle.
                     </p>
                     <input
                       ref={fileInputRef}

@@ -24,8 +24,11 @@ export function HomePage({ onSelectType }: HomePageProps) {
               </h1>
               <div className="mt-4 h-1.5 w-full bg-gradient-to-r from-primary via-accent to-secondary rounded-full shadow-lg" />
             </div>
-            <p className="mx-auto max-w-2xl text-xl text-foreground/70 md:text-2xl font-light leading-relaxed" style={{ lineHeight: '1.6' }}>
-              Heirloom puzzles crafted from shapes that matter to you
+            <p className="mx-auto max-w-3xl text-xl text-foreground/70 md:text-2xl font-light leading-relaxed mb-6" style={{ lineHeight: '1.6' }}>
+              Create a one-of-a-kind wooden puzzle using shapes that hold special meaning. Each piece represents a memory, a milestone, or something you love. Together, they form something beautiful to treasure forever.
+            </p>
+            <p className="mx-auto max-w-2xl text-base text-muted-foreground font-light leading-relaxed">
+              Choose your shapes, design with a photo or colors, and we'll handcraft your heirloom puzzle.
             </p>
           </div>
 
@@ -38,28 +41,28 @@ export function HomePage({ onSelectType }: HomePageProps) {
                     <Heart size={48} weight="fill" className="text-primary" />
                   </div>
                 </div>
-                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>Couples & Best Friends</CardTitle>
+                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>For Couples & Friends</CardTitle>
                 <CardDescription className="text-center text-base leading-relaxed">
-                  Create together with someone special
+                  Build something meaningful together
                 </CardDescription>
               </CardHeader>
               <CardContent className="relative space-y-6">
                 <ul className="space-y-3 text-sm text-muted-foreground leading-relaxed">
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>You each choose 5 unique shapes</span>
+                    <span>Each person picks 5 special shapes</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Share a link for collaboration</span>
+                    <span>Share a link to collaborate</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Upload a photo or pick colors</span>
+                    <span>Add your photo or choose colors</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-primary mt-0.5">•</span>
-                    <span>Premium quality puzzle pieces</span>
+                    <span>Handcrafted wooden pieces</span>
                   </li>
                 </ul>
                 <div className="flex items-center justify-center pt-2">
@@ -72,7 +75,7 @@ export function HomePage({ onSelectType }: HomePageProps) {
                   size="lg"
                   onClick={() => onSelectType('couple')}
                 >
-                  Start Creating Together
+                  Create Together
                 </Button>
               </CardContent>
             </Card>
@@ -85,28 +88,28 @@ export function HomePage({ onSelectType }: HomePageProps) {
                     <User size={48} weight="fill" className="text-secondary" />
                   </div>
                 </div>
-                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>Solo Creation</CardTitle>
+                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>Just for You</CardTitle>
                 <CardDescription className="text-center text-base leading-relaxed">
-                  Design your puzzle independently
+                  Create your personal masterpiece
                 </CardDescription>
               </CardHeader>
               <CardContent className="relative space-y-6">
                 <ul className="space-y-3 text-sm text-muted-foreground leading-relaxed">
                   <li className="flex items-start gap-2">
                     <span className="text-secondary mt-0.5">•</span>
-                    <span>Choose all 10 shapes yourself</span>
+                    <span>Pick all 10 shapes yourself</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-secondary mt-0.5">•</span>
-                    <span>Quick and simple process</span>
+                    <span>Express your unique story</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-secondary mt-0.5">•</span>
-                    <span>Upload a photo or pick colors</span>
+                    <span>Add your photo or choose colors</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-secondary mt-0.5">•</span>
-                    <span>Premium quality puzzle pieces</span>
+                    <span>Handcrafted wooden pieces</span>
                   </li>
                 </ul>
                 <div className="flex items-center justify-center pt-2">
@@ -119,7 +122,7 @@ export function HomePage({ onSelectType }: HomePageProps) {
                   size="lg"
                   onClick={() => onSelectType('solo')}
                 >
-                  Create Your Puzzle
+                  Start Creating
                 </Button>
               </CardContent>
             </Card>
@@ -132,28 +135,28 @@ export function HomePage({ onSelectType }: HomePageProps) {
                     <Baby size={48} weight="fill" className="text-accent" />
                   </div>
                 </div>
-                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>Children's Puzzle</CardTitle>
+                <CardTitle className="text-center text-2xl" style={{ fontFamily: 'var(--font-outfit)' }}>For Little Ones</CardTitle>
                 <CardDescription className="text-center text-base leading-relaxed">
-                  Perfect for little hands
+                  A keepsake puzzle for children
                 </CardDescription>
               </CardHeader>
               <CardContent className="relative space-y-6">
                 <ul className="space-y-3 text-sm text-muted-foreground leading-relaxed">
                   <li className="flex items-start gap-2">
                     <span className="text-accent mt-0.5">•</span>
-                    <span>Child-friendly shapes & sizes</span>
+                    <span>Safe, chunky wooden pieces</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-accent mt-0.5">•</span>
-                    <span>Wooden frame included</span>
+                    <span>Beautiful wooden frame included</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-accent mt-0.5">•</span>
-                    <span>Easy-grip pegs on pieces</span>
+                    <span>Easy grip pegs for small hands</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-accent mt-0.5">•</span>
-                    <span>Durable for repeated play</span>
+                    <span>Built to last for years of play</span>
                   </li>
                 </ul>
                 <div className="flex items-center justify-center pt-2">
@@ -173,7 +176,7 @@ export function HomePage({ onSelectType }: HomePageProps) {
           </div>
 
           <div className="mt-20 text-center text-sm text-muted-foreground">
-            <p className="font-light text-base">Premium quality pieces · Custom design · Delivered to your door</p>
+            <p className="font-light text-base">Handcrafted with care · Ships within 2 weeks · Free shipping in the US</p>
           </div>
         </div>
       </div>

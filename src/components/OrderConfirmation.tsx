@@ -36,7 +36,7 @@ export function OrderConfirmation({ orderNumber, onCreateAnother }: OrderConfirm
 
           <div className="space-y-4">
             <p className="text-base text-muted-foreground font-light leading-relaxed max-w-lg mx-auto">
-              A confirmation email with tracking details is on its way. Your heirloom puzzle will be handcrafted with care and arrive within 5-7 business days.
+              We'll send you a confirmation email with all the details. Your puzzle will be handcrafted with love and arrive within two weeks.
             </p>
           </div>
 

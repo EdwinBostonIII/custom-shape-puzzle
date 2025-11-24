@@ -1,11 +1,11 @@
 # Planning Guide
 
-A sophisticated custom puzzle creation platform where users craft heirloom-quality jigsaw puzzles by selecting from an extensive library of beautifully rendered shapes, uploading cherished photos or designing with colors, and ordering premium physical products delivered to their door.
+Create a one-of-a-kind wooden puzzle using shapes that hold special meaning. Each piece represents a memory, a milestone, or something you love. Together, they form something beautiful to treasure forever.
 
 **Experience Qualities**: 
-1. **Delightful** - The process of creating a puzzle should feel magical and personal, with smooth transitions and satisfying interactions that build excitement.
-2. **Intimate** - Especially for couples/friends mode, the shared creation experience should feel like a meaningful gesture of connection.
-3. **Effortless** - Despite the customization complexity, the flow should feel natural and intuitive, guiding users confidently through each step.
+1. **Comforting** - The design should feel warm and inviting, like wrapping yourself in a cozy blanket. Every interaction should feel safe, friendly, and thoughtful.
+2. **Meaningful** - Each shape carries emotional weight. The experience of selecting pieces should feel personal and reflective, helping users tell their unique story.
+3. **Effortless** - Despite the deep customization, the flow should feel natural and intuitive, gently guiding users through each decision without overwhelming them.
 
 **Complexity Level**: Light Application (multiple features with basic state)
   - Multi-step workflow with different paths, shared links for collaborative creation, state management across steps, but no user accounts or complex backend requirements.
@@ -13,32 +13,32 @@ A sophisticated custom puzzle creation platform where users craft heirloom-quali
 ## Essential Features
 
 ### Feature: Puzzle Type Selection
-- **Functionality**: User selects from three puzzle types: Couples/Best Friends ($65), Solo ($65), or Children's ($85)
-- **Purpose**: Segments users into appropriate creation flows and sets expectations for pricing and features
+- **Functionality**: User selects from three puzzle types: For Couples & Friends ($65), Just for You ($65), or For Little Ones ($85)
+- **Purpose**: Helps users choose the right creation path with clear, friendly language that emphasizes meaning over transaction
 - **Trigger**: Landing on homepage
-- **Progression**: View hero section → Read type descriptions with visuals → Click puzzle type card → Navigate to shape selection
-- **Success criteria**: Clear visual distinction between types, pricing displayed, smooth navigation to next step
+- **Progression**: Read welcoming hero text → View three beautifully presented options → Click puzzle type card → Navigate to shape selection
+- **Success criteria**: Clear emotional appeal, pricing feels secondary to meaning, smooth animated navigation to next step
 
 ### Feature: Collaborative Shape Selection (Couples/Friends)
-- **Functionality**: Primary user selects 5 shapes, generates shareable link, partner selects 5 shapes, both selections merge
-- **Purpose**: Creates shared creation experience that strengthens the gift's meaning
-- **Trigger**: Selecting Couples/Best Friends option
-- **Progression**: View shape gallery → Select 5 pieces → Generate/copy share link → Send to partner → Partner opens link and selects 5 → Primary user sees completion → Continue to template
-- **Success criteria**: Link copies successfully, real-time update when partner completes, visual feedback for selection progress (5/5 shapes)
+- **Functionality**: Primary user selects 5 shapes (each with meaningful descriptions), generates shareable link, partner selects 5 shapes, both selections merge
+- **Purpose**: Creates shared creation experience where each person contributes shapes that represent their perspective on the relationship
+- **Trigger**: Selecting "For Couples & Friends" option
+- **Progression**: View shape gallery with descriptions → Select 5 pieces → Generate/copy share link → Send to partner → Partner opens link and selects 5 → Primary user sees completion → Continue to template
+- **Success criteria**: Descriptions clearly visible, link copies successfully, real-time update when partner completes, visual feedback for selection progress (5/5 shapes), all pieces solid and able to interlock
 
 ### Feature: Solo Shape Selection
-- **Functionality**: User independently selects all 10 puzzle piece shapes
-- **Purpose**: Simplified personal customization without coordination
-- **Trigger**: Selecting Solo option
-- **Progression**: View shape gallery → Select 10 pieces (progress indicator) → Continue to template
-- **Success criteria**: Clear count of selected shapes, prevents continuing until 10 selected
+- **Functionality**: User independently selects all 10 puzzle piece shapes, each with a meaningful description (romantic, friendship, or childhood meaning)
+- **Purpose**: Personal customization that helps users reflect on what matters most in their life
+- **Trigger**: Selecting "Just for You" option
+- **Progression**: View shape gallery organized by category → Read descriptions under each shape → Select 10 pieces (progress indicator) → Continue to template
+- **Success criteria**: Descriptions visible under each piece, clear count of selected shapes, prevents continuing until 10 selected, pieces displayed in pastel colors
 
 ### Feature: Children's Shape Selection
-- **Functionality**: Similar to solo but with child-friendly shape options (larger, simpler)
-- **Purpose**: Age-appropriate puzzle creation with safety features
-- **Trigger**: Selecting Children's option  
-- **Progression**: View child-themed shape gallery → Select 10 pieces → Continue to template
-- **Success criteria**: Distinct visual presentation, child-appropriate shapes visible
+- **Functionality**: Similar to solo but with child-friendly shape options (larger, simpler), each with playful descriptions
+- **Purpose**: Age-appropriate puzzle creation that captures childhood wonder with safety features
+- **Trigger**: Selecting "For Little Ones" option  
+- **Progression**: View child-themed shape gallery with descriptions → Select 10 pieces → Continue to template
+- **Success criteria**: Distinct visual presentation, child-appropriate shapes visible with playful descriptions, all pieces solid with no disconnected parts
 
 ### Feature: Template Preview
 - **Functionality**: Displays custom puzzle template using selected shapes arranged attractively
@@ -73,7 +73,7 @@ A sophisticated custom puzzle creation platform where users craft heirloom-quali
 
 ## Design Direction
 
-The design should feel warm, playful, and premium—like unwrapping a thoughtful gift. It should balance whimsy (celebrating creativity and connection) with sophistication (this is a quality product worth the price). The interface should be spacious and uncluttered, letting each step breathe while maintaining momentum through the multi-step flow.
+The design should feel warm, comforting, and genuine. Like receiving a handwritten letter from someone you love. It should balance whimsy (celebrating creativity and connection) with sincerity (this is a treasured keepsake). The interface should be spacious and gentle, with soft colors and rounded edges that invite touch. Every element should feel handcrafted and considered, never corporate or transactional. The experience should wrap users in emotional warmth while making the technical process feel effortless.
 
 ## Color Selection
 

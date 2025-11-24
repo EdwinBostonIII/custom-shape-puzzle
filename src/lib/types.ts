@@ -27,6 +27,7 @@ export interface Shape {
   category: 'flora' | 'fauna-sea' | 'fauna-land' | 'fauna-sky' | 'geometric' 
     | 'celestial' | 'creative' | 'culinary' | 'structures' | 'adventure' | 'treasures' | 'symbols'
   availableFor: PuzzleType[]
+  description: string
 }
 
 export interface PuzzleSession {
