@@ -260,3 +260,90 @@
     --color-bg-overlay: var(--color-neutral-3);
   }
 }
+
+/* ========================================
+   PUZZLE PIECE STYLES
+   ======================================== */
+
+/* Wood grain texture overlay for hover effects */
+.wood-texture-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.wood-texture-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(139, 90, 43, 0.03) 2px,
+      rgba(139, 90, 43, 0.03) 4px
+    );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.wood-texture-hover:hover::before {
+  opacity: 1;
+}
+
+/* Puzzle piece slot animations */
+.puzzle-piece-slot {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.puzzle-piece-slot.filled {
+  animation: piece-snap 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes piece-snap {
+  0% {
+    transform: scale(1.15) rotate(5deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(0.95) rotate(-2deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+/* Font family utility classes */
+.font-display {
+  font-family: var(--font-fraunces, 'Fraunces', serif);
+}
+
+.font-body {
+  font-family: var(--font-quicksand, 'Quicksand', sans-serif);
+}
+
+.font-handwritten {
+  font-family: var(--font-caveat, 'Caveat', cursive);
+}
+
+/* Puzzle assembly container */
+.puzzle-assembly {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2px;
+}
+
+/* Shadow for puzzle pieces */
+.puzzle-piece-shadow {
+  filter: drop-shadow(2px 3px 4px rgba(0, 0, 0, 0.25));
+}
+
+/* Interlocking piece hover state */
+.puzzle-piece-interactive:hover {
+  transform: scale(1.05) translateY(-2px);
+  filter: drop-shadow(3px 5px 6px rgba(0, 0, 0, 0.3));
+}

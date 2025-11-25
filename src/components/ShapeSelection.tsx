@@ -5,6 +5,8 @@ import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
 import { Check, ArrowLeft, X, Sparkle } from '@phosphor-icons/react'
 import { ShapeIcon } from './ShapeIcon'
+import { MotifPreview } from './PuzzlePieceRenderer'
+import { FloatingPuzzlePreview } from './LivePuzzleAssembly'
 import { ShapeType } from '@/lib/types'
 import { PUZZLE_SHAPES, OCCASION_PACKS, SHAPE_CATEGORIES } from '@/lib/constants'
 import { cn } from '@/lib/utils'
@@ -327,6 +329,12 @@ export function ShapeSelection({
 
   return (
     <div className="min-h-screen bg-cream pb-32">
+      {/* Floating Puzzle Preview - shows puzzle being assembled */}
+      <FloatingPuzzlePreview 
+        selectedMotifs={selected}
+        visible={selected.length > 0 && !showNotesPhase}
+      />
+
       {/* Occasion Packs Quick Start (shown for first-time visitors) */}
       {showOccasionPacks && selected.length === 0 && (
         <div className="bg-sage/20 border-b-2 border-stone px-6 py-8">
@@ -496,7 +504,7 @@ export function ShapeSelection({
               </Badge>
             </div>
 
-            {/* Tray slots */}
+            {/* Tray slots - Show puzzle pieces being assembled */}
             <div className="grid grid-cols-5 md:grid-cols-10 gap-3 mb-4" role="list" aria-label="Selected shapes tray">
               {Array.from({ length: REQUIRED_COUNT }).map((_, index) => {
                 const shape = selected[index]
@@ -507,16 +515,21 @@ export function ShapeSelection({
                     role="listitem"
                     aria-label={shape ? `Slot ${index + 1}: ${shapeName}` : `Slot ${index + 1}: Empty`}
                     className={cn(
-                      "puzzle-piece-slot aspect-square rounded-xl border-2 border-dashed flex items-center justify-center relative transition-all",
+                      "puzzle-piece-slot aspect-square rounded-xl border-2 border-dashed flex items-center justify-center relative transition-all overflow-hidden",
                       shape
                         ? "bg-white border-terracotta shadow-md filled"
                         : "bg-stone/50 border-stone"
                     )}
-                    style={!shape ? { boxShadow: 'inset 2px 2px 5px rgba(0,0,0,0.1)' } : undefined}
                   >
                     {shape ? (
                       <>
-                        <ShapeIcon shape={shape} className="h-8 w-8 md:h-12 md:w-12" aria-hidden="true" />
+                        {/* Use MotifPreview for a cleaner look in the tray */}
+                        <MotifPreview 
+                          motif={shape} 
+                          stain="walnut" 
+                          size={48}
+                          className="transition-transform hover:scale-110"
+                        />
                         <button
                           onClick={() => handleRemoveFromTray(shape)}
                           aria-label={`Remove ${shapeName} from tray`}

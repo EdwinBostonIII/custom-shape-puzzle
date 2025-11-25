@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ArrowLeft, Check } from '@phosphor-icons/react'
-import { ShapeIcon } from './ShapeIcon'
+import { AssembledPuzzle } from './PuzzlePieceRenderer'
 import { ShapeType, WoodStainColor } from '@/lib/types'
-import { PUZZLE_SHAPES, WOOD_STAINS } from '@/lib/constants'
+import { WOOD_STAINS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
 // Type for the full stain object (with id, name, hex, description)
@@ -67,30 +67,19 @@ export function ColorSelection({
             <h2 className="text-xl font-semibold text-charcoal mb-6 text-center font-display">
               Your Puzzle Preview
             </h2>
-            <div 
-              className="grid grid-cols-5 gap-3 md:gap-4 max-w-2xl mx-auto p-6 rounded-2xl transition-colors duration-300"
-              style={{ 
-                backgroundColor: selectedStain?.hex || '#F5E6D3',
-                boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.1)'
-              }}
-              role="img"
-              aria-label={`Puzzle preview with ${selectedStain?.name || 'no'} stain selected`}
-            >
-              {selectedShapes.slice(0, 10).map((shapeId, index) => {
-                const shape = PUZZLE_SHAPES.find(s => s.id === shapeId)
-                return (
-                  <div 
-                    key={index}
-                    className="aspect-square rounded-xl bg-white/90 flex items-center justify-center shadow-md"
-                    title={shape?.name}
-                  >
-                    <ShapeIcon shape={shapeId} className="h-8 w-8 md:h-10 md:w-10" />
-                  </div>
-                )
-              })}
+            <div className="flex justify-center">
+              <AssembledPuzzle
+                motifs={[
+                  ...selectedShapes.slice(0, 10),
+                  ...Array(10 - Math.min(selectedShapes.length, 10)).fill(null)
+                ]}
+                stain={selectedStain?.id || 'natural'}
+                width={450}
+                className="drop-shadow-lg"
+              />
             </div>
             {shapeMeanings && Object.keys(shapeMeanings).length > 0 && (
-              <p className="text-center text-sm text-charcoal/60 mt-4">
+              <p className="text-center text-sm text-charcoal/60 mt-6">
                 Your personal story notes will appear on the included Story Card.
               </p>
             )}
