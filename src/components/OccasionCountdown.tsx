@@ -280,8 +280,8 @@ function DeliveryCountdownFull({
     return () => clearInterval(interval)
   }, [occasionDeadline])
   
-  const isUrgent = showUrgency && timeLeft && timeLeft.days <= 3 && timeLeft.total > 0
-  const isPastDeadline = timeLeft && timeLeft.total <= 0
+  const isUrgent = showUrgency && timeLeft !== null && timeLeft.days <= 3 && timeLeft.total > 0
+  const isPastDeadline = timeLeft !== null && timeLeft.total <= 0
 
   return (
     <div className={cn('space-y-4', className)}>

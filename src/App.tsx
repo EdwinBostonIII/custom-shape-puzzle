@@ -4,6 +4,8 @@ import { HomePage } from '@/components/HomePage'
 import { ProgressIndicator } from '@/components/ProgressIndicator'
 import { EmailCapturePopup } from '@/components/EmailCapture'
 import { ChatWidget } from '@/components/ChatWidget'
+import { LiveOrderNotification } from '@/components/SocialProofNotifications'
+import { PersonalizationProvider, usePersonalization } from '@/components/Personalization'
 import { 
   PageSkeleton, 
   TierSelectionSkeleton, 
@@ -362,8 +364,24 @@ function App() {
 
       {/* Global Chat Widget - FAQ and Support */}
       <ChatWidget />
+      
+      {/* Live Order Notifications - Social Proof */}
+      <LiveOrderNotification 
+        enabled={step === 'home' || step === 'tier'} 
+        position="bottom-left"
+        interval={20000}
+      />
     </>
   )
 }
 
-export default App
+// Wrap App with PersonalizationProvider
+function AppWithProviders() {
+  return (
+    <PersonalizationProvider>
+      <App />
+    </PersonalizationProvider>
+  )
+}
+
+export default AppWithProviders

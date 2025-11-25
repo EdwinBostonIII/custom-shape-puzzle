@@ -28,7 +28,7 @@ interface AnalyticsConfig {
 }
 
 interface EventData {
-  [key: string]: string | number | boolean | undefined
+  [key: string]: string | number | boolean | undefined | null | object
 }
 
 interface ConversionData {

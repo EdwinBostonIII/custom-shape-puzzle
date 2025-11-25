@@ -16,6 +16,10 @@ import { OccasionCountdown } from './OccasionCountdown'
 import { UrgencyBanner, FloatingUrgency } from './UrgencyBanner'
 import { CustomerReviews } from './CustomerReviews'
 import { ReturnPolicyModal, MiniGuarantee } from './ReturnPolicyModal'
+import { SocialProofBanner, ViewerCount } from './SocialProofNotifications'
+import { UpcomingOccasionsBanner } from './GiftCalendar'
+import { BNPLPromoBanner } from './PaymentOptions'
+import { VideoTestimonialsCarousel, ProductDemoVideo } from './VideoTestimonials'
 
 interface HomePageProps {
   onStart: () => void
@@ -215,6 +219,21 @@ export function HomePage({ onStart }: HomePageProps) {
             </ul>
           </section>
 
+          {/* Social Proof Banner - Research: Social proof increases trust and conversion */}
+          <div className="mb-16 max-w-4xl mx-auto">
+            <SocialProofBanner variant="hero" />
+          </div>
+
+          {/* Gift Calendar - Upcoming Occasions */}
+          <div className="mb-16 max-w-3xl mx-auto">
+            <UpcomingOccasionsBanner maxOccasions={4} />
+          </div>
+
+          {/* BNPL Promo - Research: Klarna shows 40% higher AOV, 20% conversion increase */}
+          <div className="mb-20 max-w-3xl mx-auto">
+            <BNPLPromoBanner minPrice={89} maxPrice={199} />
+          </div>
+
           {/* Occasion Countdown - Holiday/Gift Targeting */}
           <div className="mb-20 max-w-2xl mx-auto">
             <OccasionCountdown variant="compact" />
@@ -261,6 +280,22 @@ export function HomePage({ onStart }: HomePageProps) {
           {/* Full Customer Reviews Section - Research: Reviews increase conversion by 270% */}
           <div className="mb-20">
             <CustomerReviews />
+          </div>
+
+          {/* Video Testimonials - Research: Video commerce $562B, increases conversion 144% */}
+          <div className="mb-20">
+            <VideoTestimonialsCarousel 
+              title="Real Reactions, Real Stories"
+              subtitle="Watch customers open their puzzles"
+            />
+          </div>
+
+          {/* Product Demo Video - Research: Product videos increase purchase intent 85% */}
+          <div className="mb-20">
+            <ProductDemoVideo 
+              title="See How It's Made"
+              subtitle="From Baltic birch to your doorstep"
+            />
           </div>
 
           {/* Return Policy Visibility - Research: 67% check policy before buying */}

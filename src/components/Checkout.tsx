@@ -11,6 +11,8 @@ import { ShapeIcon } from './ShapeIcon'
 import { RiskReversal, OrderValueProgress, DeliveryCountdown, CheckoutTrustStrip } from './TrustSignals'
 import { CheckoutGuarantee, MiniGuarantee } from './ReturnPolicyModal'
 import { CheckoutUrgencyStrip } from './UrgencyBanner'
+import { BNPLInfoCard, PriceWithBNPL } from './PaymentOptions'
+import { SocialProofBanner } from './SocialProofNotifications'
 import { cn } from '@/lib/utils'
 
 export interface CheckoutProps {
@@ -358,7 +360,13 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                       <span>Total</span>
                       <span>${pricing.total}</span>
                     </div>
+                    
+                    {/* BNPL Option - Research: 40% higher AOV, 20% conversion increase */}
+                    <PriceWithBNPL price={pricing.total} size="sm" showProvider />
                   </div>
+
+                  {/* Buy Now Pay Later Info */}
+                  <BNPLInfoCard price={pricing.total} defaultExpanded={false} />
 
                   {/* Estimated Delivery */}
                   <div className="bg-sage/10 rounded-xl p-4">
