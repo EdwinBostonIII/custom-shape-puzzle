@@ -256,7 +256,7 @@ export function AdminDashboard({ onClose }: AdminDashboardProps) {
                         <div>
                           <p className="font-medium">Template {template.id.slice(0, 8)}</p>
                           <p className="text-sm text-charcoal/60">
-                            {template.pieces.length} pieces • {template.shapeIds.length} shapes
+                            {template.pieces.length} pieces • {template.shapes.length} shapes
                           </p>
                         </div>
                       </div>
@@ -445,7 +445,7 @@ function TemplateCard({ template, onView, onExportSVG, onExportDXF }: TemplateCa
       
       {/* Shape preview grid */}
       <div className="grid grid-cols-5 gap-1 mb-4">
-        {template.shapeIds.slice(0, 10).map((shapeId, i) => (
+        {template.shapes.slice(0, 10).map((shapeId, i) => (
           <div key={i} className="aspect-square bg-stone/30 rounded p-1">
             <ShapeSilhouette shapeId={shapeId as ShapeType} className="text-charcoal/60" />
           </div>
@@ -518,7 +518,7 @@ function TemplatePreviewModal({ template, onClose }: TemplatePreviewModalProps) 
           
           <h3 className="font-semibold mb-3">Shapes Used</h3>
           <div className="grid grid-cols-5 gap-3 mb-6">
-            {template.shapeIds.map((shapeId, i) => {
+            {template.shapes.map((shapeId, i) => {
               const shape = PUZZLE_SHAPES.find(s => s.id === shapeId)
               return (
                 <div key={i} className="text-center">
@@ -545,8 +545,10 @@ function TemplatePreviewModal({ template, onClose }: TemplatePreviewModalProps) 
             >
               {Array.from({ length: template.gridWidth * template.gridHeight }).map((_, i) => {
                 const piece = template.pieces.find(
-                  p => p.gridX === i % template.gridWidth && p.gridY === Math.floor(i / template.gridWidth)
+                  p => p.x === i % template.gridWidth && p.y === Math.floor(i / template.gridWidth)
                 )
+                // Extract base shape from variantId (format: "shapeId_variant")
+                const baseShapeId = piece?.variantId.split('_')[0]
                 return (
                   <div 
                     key={i}
@@ -554,11 +556,11 @@ function TemplatePreviewModal({ template, onClose }: TemplatePreviewModalProps) 
                       "w-8 h-8 rounded flex items-center justify-center text-[8px]",
                       piece ? "bg-terracotta/20" : "bg-stone/30"
                     )}
-                    title={piece ? `${piece.shapeId} (${piece.variantId})` : 'Empty'}
+                    title={piece ? `${baseShapeId} (${piece.variantId})` : 'Empty'}
                   >
-                    {piece && (
+                    {piece && baseShapeId && (
                       <ShapeSilhouette 
-                        shapeId={piece.shapeId as ShapeType} 
+                        shapeId={baseShapeId as ShapeType} 
                         className="w-6 h-6 text-charcoal/70"
                       />
                     )}

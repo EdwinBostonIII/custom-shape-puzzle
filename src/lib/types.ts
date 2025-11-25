@@ -1,5 +1,6 @@
 // INTERLOCK - Type Definitions
 // Relationship Intelligence Platform
+// "A relationship infrastructure company disguised as a gifting brand"
 
 // ============================================================================
 // SHAPE TYPES
@@ -185,6 +186,15 @@ export interface PuzzleSession {
   // Order State
   orderComplete?: boolean
   
+  // Anniversary Capsule Subscription
+  capsuleSubscription?: CapsuleSubscription
+  
+  // Partner Collaboration Tracking
+  partnerInvitation?: PartnerInvitation
+  
+  // Privacy & Data Preferences
+  privacyPreferences?: PrivacyPreferences
+  
   // Meta
   createdAt: number
   updatedAt: number
@@ -197,6 +207,81 @@ export interface ShippingInfo {
   city: string
   state: string
   zipCode: string
+  phone?: string
+  giftMessage?: string
+  isGift?: boolean
+}
+
+// ============================================================================
+// ANNIVERSARY CAPSULE SUBSCRIPTION
+// ============================================================================
+
+export interface CapsuleSubscription {
+  id: string
+  tier: 'annual' | 'premium'
+  price: number                    // $79/year or $99/year premium
+  startDate: string
+  renewalDate: string
+  isActive: boolean
+  capsules: AnniversaryCapsule[]
+  isFirstFree: boolean             // Free with $149+ purchase
+}
+
+export interface AnniversaryCapsule {
+  id: string
+  year: number
+  deliveryDate: string
+  status: 'upcoming' | 'shipped' | 'delivered'
+  contents: {
+    miniPuzzle: boolean            // 50-piece memory snapshot
+    photoCard: boolean             // Printed highlights
+    memoryBook: boolean            // Premium tier only
+  }
+}
+
+// ============================================================================
+// PARTNER COLLABORATION
+// ============================================================================
+
+export interface PartnerInvitation {
+  id: string
+  shareLink: string
+  partnerEmail?: string
+  partnerName?: string
+  status: 'pending' | 'accepted' | 'expired'
+  sentAt: number
+  acceptedAt?: number
+  expiresAt: number                // 7 days
+  personAShapes: ShapeType[]
+  personBShapes: ShapeType[]
+  personAMemories: number          // Count of memories contributed
+  personBMemories: number
+}
+
+// ============================================================================
+// PRIVACY & DATA CONTROL
+// ============================================================================
+
+export interface PrivacyPreferences {
+  dataRetentionDays: 365 | 730 | -1   // 1 year, 2 years, or forever
+  allowAnonymizedAnalytics: boolean
+  marketingOptIn: boolean
+  exportRequestedAt?: number
+  deleteRequestedAt?: number
+}
+
+// ============================================================================
+// QUALITY ASSURANCE
+// ============================================================================
+
+export interface QualityCheckpoint {
+  id: string
+  orderId: string
+  stage: 'material' | 'cutting' | 'finishing' | 'packaging' | 'shipping'
+  status: 'pending' | 'passed' | 'flagged' | 'resolved'
+  checkedAt?: number
+  photoUrl?: string
+  notes?: string
 }
 
 // ============================================================================
@@ -220,6 +305,7 @@ export interface PricingBreakdown {
   woodStain: number
   premiumBox: number
   waxSeal: number
+  capsuleDiscount: number          // Discount when adding subscription
   subtotal: number
   shipping: number
   total: number

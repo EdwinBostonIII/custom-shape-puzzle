@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
-import { Check, Sparkles } from 'lucide-react'
+import { Check, Sparkles, Gift, Shield } from 'lucide-react'
 import { PuzzleTier, TierConfig } from '@/lib/types'
-import { PUZZLE_TIERS } from '@/lib/constants'
+import { PUZZLE_TIERS, CAPSULE_CONFIG, QUALITY_GUARANTEE } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
 interface TierSelectionProps {
@@ -12,6 +12,9 @@ interface TierSelectionProps {
 }
 
 export function TierSelection({ selectedTier, onSelectTier, onContinue, onBack }: TierSelectionProps) {
+  const selectedTierConfig = PUZZLE_TIERS.find(t => t.id === selectedTier)
+  const qualifiesForFreeCapsule = selectedTierConfig && selectedTierConfig.price >= CAPSULE_CONFIG.freeThreshold
+
   return (
     <div className="min-h-screen bg-cream pt-4">
       <main className="container mx-auto px-4 py-8 max-w-4xl">
@@ -22,9 +25,10 @@ export function TierSelection({ selectedTier, onSelectTier, onContinue, onBack }
         >
           ← Start Over
         </button>
+        
         {/* Intro text */}
         <div className="text-center mb-10">
-          <h2 className="font-serif text-3xl md:text-4xl text-charcoal mb-4">
+          <h2 className="font-display text-3xl md:text-4xl text-charcoal mb-4 tracking-display">
             How much of your story will you tell?
           </h2>
           <p className="text-charcoal/70 max-w-xl mx-auto">
@@ -34,7 +38,7 @@ export function TierSelection({ selectedTier, onSelectTier, onContinue, onBack }
         </div>
 
         {/* Tier Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-10">
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
           {PUZZLE_TIERS.map((tier, index) => (
             <TierCard
               key={tier.id}
@@ -46,6 +50,38 @@ export function TierSelection({ selectedTier, onSelectTier, onContinue, onBack }
           ))}
         </div>
 
+        {/* Free Capsule Callout - shows when $149+ tier selected */}
+        {qualifiesForFreeCapsule && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8 p-4 rounded-xl bg-sage/10 border border-sage/20 flex items-center gap-4"
+          >
+            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sage/20 flex items-center justify-center">
+              <Gift className="w-5 h-5 text-sage" />
+            </div>
+            <div className="flex-1">
+              <p className="font-medium text-charcoal text-sm">
+                🎁 Free first Anniversary Capsule included
+              </p>
+              <p className="text-xs text-charcoal/60">
+                Orders ${CAPSULE_CONFIG.freeThreshold}+ get a free year of our $79 annual memory subscription
+              </p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Quality Promise */}
+        <div className="mb-8 p-4 rounded-xl bg-charcoal/[0.02] border border-charcoal/10 flex items-center gap-4">
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-charcoal/5 flex items-center justify-center">
+            <Shield className="w-5 h-5 text-charcoal/60" />
+          </div>
+          <div className="flex-1">
+            <p className="font-medium text-charcoal text-sm">{QUALITY_GUARANTEE.headline}</p>
+            <p className="text-xs text-charcoal/60">{QUALITY_GUARANTEE.promise}</p>
+          </div>
+        </div>
+
         {/* Continue Button */}
         <div className="flex justify-center">
           <motion.button
@@ -54,7 +90,7 @@ export function TierSelection({ selectedTier, onSelectTier, onContinue, onBack }
             onClick={onContinue}
             className="bg-terracotta text-white px-8 py-4 rounded-full font-medium text-lg shadow-lg hover:shadow-xl transition-shadow"
           >
-            Continue with {PUZZLE_TIERS.find(t => t.id === selectedTier)?.name}
+            Continue with {selectedTierConfig?.name} →
           </motion.button>
         </div>
       </main>
@@ -70,6 +106,8 @@ interface TierCardProps {
 }
 
 function TierCard({ tier, isSelected, onSelect, index }: TierCardProps) {
+  const qualifiesForFreeCapsule = tier.price >= CAPSULE_CONFIG.freeThreshold
+
   return (
     <motion.button
       initial={{ opacity: 0, y: 20 }}
@@ -101,17 +139,17 @@ function TierCard({ tier, isSelected, onSelect, index }: TierCardProps) {
 
       {/* Tier Info */}
       <div className="mb-4">
-        <h3 className="font-serif text-2xl text-charcoal mb-1">{tier.name}</h3>
+        <h3 className="font-display text-2xl text-charcoal mb-1">{tier.name}</h3>
         <p className="text-charcoal/60 text-sm">{tier.description}</p>
       </div>
 
       {/* Stats */}
       <div className="flex items-baseline gap-4 mb-4">
         <div>
-          <span className="text-3xl font-serif text-charcoal">${tier.price}</span>
+          <span className="text-3xl font-display text-charcoal">${tier.price}</span>
         </div>
         <div className="text-sm text-charcoal/60">
-          {tier.pieces} pieces · {tier.shapes} shapes
+          {tier.pieces.toLocaleString()} pieces · {tier.shapes} shapes
         </div>
       </div>
 
@@ -123,12 +161,18 @@ function TierCard({ tier, isSelected, onSelect, index }: TierCardProps) {
         </li>
         <li className="flex items-center gap-2">
           <Check className="w-4 h-4 text-sage" />
-          Premium kraft packaging
+          Premium Baltic birch wood
         </li>
         <li className="flex items-center gap-2">
           <Check className="w-4 h-4 text-sage" />
-          Free shipping
+          Free shipping + 30-day guarantee
         </li>
+        {qualifiesForFreeCapsule && (
+          <li className="flex items-center gap-2 text-sage font-medium">
+            <Gift className="w-4 h-4 text-sage" />
+            Free first Anniversary Capsule
+          </li>
+        )}
       </ul>
     </motion.button>
   )

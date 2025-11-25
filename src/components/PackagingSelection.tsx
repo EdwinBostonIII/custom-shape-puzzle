@@ -232,13 +232,25 @@ export function PackagingSelection({
                 <span className="text-charcoal">+${pricing.waxSeal}</span>
               </div>
             )}
+            {pricing.capsule > 0 && (
+              <div className="flex justify-between">
+                <span className="text-charcoal/70">Anniversary Capsule</span>
+                <span className="text-charcoal">+${pricing.capsule}</span>
+              </div>
+            )}
+            {pricing.capsuleDiscount > 0 && (
+              <div className="flex justify-between text-sage">
+                <span>First Capsule Free</span>
+                <span>-${pricing.capsuleDiscount}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-charcoal/70">Shipping</span>
-              <span className="text-sage">Free</span>
+              <span className="text-sage font-medium">Free</span>
             </div>
             <div className="pt-2 border-t border-charcoal/10 flex justify-between">
               <span className="font-medium text-charcoal">Total</span>
-              <span className="font-serif text-xl text-charcoal">${pricing.total}</span>
+              <span className="font-display text-xl text-charcoal">${pricing.total}</span>
             </div>
           </div>
         </div>
@@ -251,7 +263,7 @@ export function PackagingSelection({
             onClick={onContinue}
             className="bg-terracotta text-white px-8 py-4 rounded-full font-medium text-lg shadow-lg hover:shadow-xl transition-shadow"
           >
-            Continue to Checkout
+            Continue to Checkout →
           </motion.button>
         </div>
       </main>

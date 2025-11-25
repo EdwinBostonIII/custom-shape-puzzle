@@ -1,46 +1,46 @@
 import { Shape, OccasionPack, WoodStainColor, ShapeCategory, TierConfig, PuzzleTier, ComfyColor, PackagingOptions } from './types'
 
 // ============================================================================
-// PUZZLE TIERS
+// PUZZLE TIERS - Premium positioning per investor feedback ($149-199 flagship)
 // ============================================================================
 
 export const PUZZLE_TIERS: TierConfig[] = [
   {
     id: 'essential',
     name: 'Essential',
-    pieces: 50,
+    pieces: 100,
     shapes: 5,
-    price: 45,
+    price: 79,
     hintCards: 3,
-    description: 'Perfect for a meaningful gesture',
+    description: 'A meaningful gesture that tells your story',
   },
   {
     id: 'classic',
     name: 'Classic',
-    pieces: 100,
+    pieces: 250,
     shapes: 7,
-    price: 69,
+    price: 129,
     hintCards: 4,
-    description: 'Our most popular size',
+    description: 'Our most popular—perfect balance of depth and discovery',
     isHero: true,
   },
   {
     id: 'grand',
     name: 'Grand',
-    pieces: 150,
+    pieces: 500,
     shapes: 10,
-    price: 99,
+    price: 179,
     hintCards: 5,
-    description: 'For stories that deserve more space',
+    description: 'For relationships that deserve a bigger canvas',
   },
   {
     id: 'heirloom',
     name: 'Heirloom',
-    pieces: 250,
+    pieces: 1000,
     shapes: 15,
-    price: 159,
+    price: 249,
     hintCards: 6,
-    description: 'A legacy piece to treasure forever',
+    description: 'A legacy piece—museum quality, generational keepsake',
   },
 ]
 
@@ -84,14 +84,25 @@ export const COMFY_PALETTE: ComfyColor[] = [
 ]
 
 // ============================================================================
-// PRICING
+// PRICING - Enhanced per investor feedback
 // ============================================================================
 
 export const PRICING = {
-  woodStain: 15,      // Premium wood stain upgrade
-  premiumBox: 12,     // Magnetic closure box
-  waxSeal: 5,         // Hand-stamped wax seal
-  shipping: 0,        // Free shipping (US)
+  woodStain: 19,        // Premium wood stain upgrade
+  premiumBox: 15,       // Magnetic closure box with velvet lining
+  waxSeal: 8,           // Hand-stamped wax seal
+  shipping: 0,          // Free shipping (US)
+  capsuleAnnual: 79,    // Anniversary Capsule subscription
+  capsulePremium: 99,   // Premium capsule with memory book
+  capsuleDiscount: 39,  // First capsule free discount on $149+ orders
+}
+
+// Anniversary Capsule configuration
+export const CAPSULE_CONFIG = {
+  annualPrice: 79,
+  premiumPrice: 99,
+  freeThreshold: 149,   // Free first capsule on orders $149+
+  renewalDiscount: 0.15, // 15% off renewal
 }
 
 export function calculateTotal(
@@ -100,17 +111,41 @@ export function calculateTotal(
     hasWoodStain?: boolean
     premiumBox?: boolean
     waxSeal?: boolean
+    addCapsule?: boolean
+    capsuleTier?: 'annual' | 'premium'
   } = {}
-): { base: number; woodStain: number; premiumBox: number; waxSeal: number; subtotal: number; shipping: number; total: number } {
+): { 
+  base: number
+  woodStain: number
+  premiumBox: number
+  waxSeal: number
+  capsule: number
+  capsuleDiscount: number
+  subtotal: number
+  shipping: number
+  total: number 
+} {
   const base = getTierConfig(tier).price
   const woodStain = options.hasWoodStain ? PRICING.woodStain : 0
   const premiumBox = options.premiumBox ? PRICING.premiumBox : 0
   const waxSeal = options.waxSeal ? PRICING.waxSeal : 0
-  const subtotal = base + woodStain + premiumBox + waxSeal
+  
+  // Anniversary Capsule pricing with free tier on $149+ orders
+  let capsule = 0
+  let capsuleDiscount = 0
+  if (options.addCapsule) {
+    capsule = options.capsuleTier === 'premium' ? PRICING.capsulePremium : PRICING.capsuleAnnual
+    // Free first capsule on orders $149+
+    if (base >= CAPSULE_CONFIG.freeThreshold) {
+      capsuleDiscount = PRICING.capsuleDiscount
+    }
+  }
+  
+  const subtotal = base + woodStain + premiumBox + waxSeal + capsule - capsuleDiscount
   const shipping = PRICING.shipping
   const total = subtotal + shipping
   
-  return { base, woodStain, premiumBox, waxSeal, subtotal, shipping, total }
+  return { base, woodStain, premiumBox, waxSeal, capsule, capsuleDiscount, subtotal, shipping, total }
 }
 
 // ============================================================================
@@ -286,17 +321,72 @@ export const SHAPE_CATEGORIES: Record<string, string> = {
   adventure: 'Adventures',
 }
 
+// ============================================================================
+// PRIVACY-FIRST BRANDING - Per investor feedback on privacy perception risk
+// ============================================================================
+
+export const PRIVACY_PROMISE = {
+  headline: "Your love story stays yours",
+  subhead: "We will never sell or share your memories. Full export or delete in one click.",
+  features: [
+    { icon: 'lock', text: "End-to-end encrypted storage" },
+    { icon: 'shield', text: "No third-party data sharing—ever" },
+    { icon: 'download', text: "Export all your data instantly" },
+    { icon: 'trash', text: "Permanent delete on request" },
+  ],
+  legalLinks: {
+    privacy: '/privacy',
+    terms: '/terms',
+    dataRequest: '/my-data',
+  }
+}
+
+// ============================================================================
+// QUALITY ASSURANCE - Per investor feedback on production quality risk
+// ============================================================================
+
+export const QUALITY_GUARANTEE = {
+  headline: "Crafted to Last Generations",
+  promise: "30-day happiness guarantee. If anything arrives less than perfect, we make it right—no questions asked.",
+  checkpoints: [
+    { stage: 'material', name: 'Material Inspection', description: 'FSC-certified Baltic birch verified' },
+    { stage: 'cutting', name: 'Precision Cutting', description: 'Laser calibration check before each batch' },
+    { stage: 'finishing', name: 'Hand Finishing', description: 'Every piece sanded and inspected' },
+    { stage: 'packaging', name: 'Packaging QC', description: 'Photo checkpoint before sealing' },
+  ],
+  certifications: [
+    { name: 'FSC Certified', description: 'Sustainably sourced wood' },
+    { name: 'Non-Toxic', description: 'Food-safe finishes' },
+  ],
+}
+
+// ============================================================================
+// PARTNER COLLABORATION - Track invitation and contribution metrics
+// ============================================================================
+
+export const COLLABORATION_CONFIG = {
+  invitationExpiryDays: 7,
+  minMemoriesForPlatformValue: 3,  // Key metric: partner adds ≥3 memories
+  reminderAfterDays: [2, 5],       // Send reminders
+  shareMessageTemplate: (name: string) => 
+    `${name} is creating something special for you both. Add your favorite memories to make it even more meaningful.`,
+}
+
 // Production timeline constants
 export const PRODUCTION = {
   daysToShip: 14, // 2 weeks
   shippingDays: { min: 2, max: 5 },
+  rushAvailable: true,
+  rushDays: 7,
+  rushFee: 25,
 }
 
 // Calculate estimated delivery date
-export function getEstimatedDeliveryDate(): string {
+export function getEstimatedDeliveryDate(rush = false): string {
   const today = new Date()
   const deliveryDate = new Date(today)
-  deliveryDate.setDate(today.getDate() + PRODUCTION.daysToShip + PRODUCTION.shippingDays.max)
+  const productionDays = rush ? PRODUCTION.rushDays : PRODUCTION.daysToShip
+  deliveryDate.setDate(today.getDate() + productionDays + PRODUCTION.shippingDays.max)
   
   return deliveryDate.toLocaleDateString('en-US', { 
     month: 'long', 

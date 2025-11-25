@@ -1,8 +1,8 @@
-import { Gift, ShieldCheck, Truck, Timer, Sparkle } from '@phosphor-icons/react'
+import { Gift, ShieldCheck, Truck, Timer, Sparkle, Lock, ArrowRight } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { PUZZLE_TIERS, getEstimatedDeliveryDate } from '@/lib/constants'
+import { PUZZLE_TIERS, getEstimatedDeliveryDate, PRIVACY_PROMISE, QUALITY_GUARANTEE, CAPSULE_CONFIG } from '@/lib/constants'
 import { FAQSection } from './FAQSection'
 
 interface HomePageProps {
@@ -21,12 +21,13 @@ export function HomePage({ onStart }: HomePageProps) {
       <nav className="sticky top-0 z-50 backdrop-blur-md bg-cream/80 border-b border-stone/50">
         <div className="px-6 py-4 md:px-12">
           <div className="mx-auto max-w-7xl flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+            <h1 className="text-2xl font-bold text-charcoal font-display">
               Interlock
             </h1>
             <div className="flex items-center gap-4">
-              <span className="hidden sm:block text-sm text-charcoal/60">
-                Free US Shipping
+              <span className="hidden sm:flex items-center gap-1.5 text-sm text-charcoal/60">
+                <Lock size={14} weight="fill" />
+                Your story stays private
               </span>
               <Button size="sm" className="rounded-full ripple-effect" onClick={onStart}>
                 Create Yours – From ${startingPrice}
@@ -49,24 +50,23 @@ export function HomePage({ onStart }: HomePageProps) {
 
             <div className="mb-6 relative z-10">
               {/* Price Badge - Prominent */}
-              <Badge className="mb-6 text-lg px-6 py-2 bg-terracotta text-white border-0 shadow-lg" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              <Badge className="mb-6 text-lg px-6 py-2 bg-terracotta text-white border-0 shadow-lg font-display">
                 From ${startingPrice} · Free Shipping
               </Badge>
 
               <h1
-                className="text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6 leading-tight"
-                style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', fontWeight: '600' }}
+                className="text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6 leading-tight font-display tracking-display font-semibold"
               >
                 A puzzle that tells your story—without showing your face.
               </h1>
             </div>
-            <p className="mx-auto max-w-2xl text-lg md:text-xl text-charcoal/80 leading-relaxed mb-3" style={{ fontFamily: 'var(--font-quicksand)' }}>
+            <p className="mx-auto max-w-2xl text-lg md:text-xl text-charcoal/80 leading-relaxed mb-3 font-body">
               Choose shapes that mean something. Add hints only you'd know. Solve it together.
             </p>
 
             {/* Estimated Delivery - Per Master List */}
             <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Badge className="text-sm px-4 py-2 bg-sage/20 text-charcoal border border-sage/30" style={{ fontFamily: 'var(--font-quicksand)' }}>
+              <Badge className="text-sm px-4 py-2 bg-sage/20 text-charcoal border border-sage/30 font-body">
                 <Timer size={16} weight="bold" className="mr-2 text-sage" />
                 Arrives by {estimatedDelivery}
               </Badge>
@@ -94,8 +94,8 @@ export function HomePage({ onStart }: HomePageProps) {
                   <Gift size={24} weight="fill" className="text-terracotta" />
                 </div>
                 <div>
-                  <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>Handcrafted</p>
-                  <p className="text-sm text-charcoal/60">Every puzzle unique</p>
+                  <p className="font-bold text-charcoal font-display">Handcrafted</p>
+                  <p className="text-sm text-charcoal/60">Baltic birch, laser-cut</p>
                 </div>
               </div>
               <div className="text-center space-y-3 p-4">
@@ -103,7 +103,7 @@ export function HomePage({ onStart }: HomePageProps) {
                   <Truck size={24} weight="fill" className="text-sage" />
                 </div>
                 <div>
-                  <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>Free Shipping</p>
+                  <p className="font-bold text-charcoal font-display">Free Shipping</p>
                   <p className="text-sm text-charcoal/60">Anywhere in the US</p>
                 </div>
               </div>
@@ -112,7 +112,7 @@ export function HomePage({ onStart }: HomePageProps) {
                   <ShieldCheck size={24} weight="fill" className="text-terracotta" />
                 </div>
                 <div>
-                  <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>30-Day Guarantee</p>
+                  <p className="font-bold text-charcoal font-display">30-Day Guarantee</p>
                   <p className="text-sm text-charcoal/60">Love it or we fix it</p>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export function HomePage({ onStart }: HomePageProps) {
                   <Timer size={24} weight="fill" className="text-sage" />
                 </div>
                 <div>
-                  <p className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>2-Week Delivery</p>
+                  <p className="font-bold text-charcoal font-display">2-Week Delivery</p>
                   <p className="text-sm text-charcoal/60">Made to order</p>
                 </div>
               </div>
@@ -131,7 +131,7 @@ export function HomePage({ onStart }: HomePageProps) {
           {/* Why Interlock - Differentiation Section per Master List */}
           <div className="mb-20">
             <div className="max-w-4xl mx-auto text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em' }}>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4 font-display tracking-display">
                 Not Another Photo Puzzle
               </h2>
               <p className="text-lg text-charcoal/70 max-w-2xl mx-auto">
@@ -143,7 +143,7 @@ export function HomePage({ onStart }: HomePageProps) {
               <Card className="border-2 border-stone p-6 text-center">
                 <CardContent className="pt-6 space-y-4">
                   <div className="text-4xl">✨</div>
-                  <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  <h3 className="text-xl font-bold text-charcoal font-display">
                     Shapes With Meaning
                   </h3>
                   <p className="text-charcoal/70">
@@ -155,7 +155,7 @@ export function HomePage({ onStart }: HomePageProps) {
               <Card className="border-2 border-stone p-6 text-center">
                 <CardContent className="pt-6 space-y-4">
                   <div className="text-4xl">💭</div>
-                  <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  <h3 className="text-xl font-bold text-charcoal font-display">
                     Hint Cards, Not Photos
                   </h3>
                   <p className="text-charcoal/70">
@@ -167,7 +167,7 @@ export function HomePage({ onStart }: HomePageProps) {
               <Card className="border-2 border-stone p-6 text-center">
                 <CardContent className="pt-6 space-y-4">
                   <div className="text-4xl">🪵</div>
-                  <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  <h3 className="text-xl font-bold text-charcoal font-display">
                     Heirloom Quality
                   </h3>
                   <p className="text-charcoal/70">
@@ -178,14 +178,43 @@ export function HomePage({ onStart }: HomePageProps) {
             </div>
           </div>
 
+          {/* Anniversary Capsule - New Subscription Upsell */}
+          <div className="mb-20">
+            <Card className="border-2 border-terracotta/20 bg-gradient-to-br from-terracotta/5 to-sage/5 max-w-4xl mx-auto overflow-hidden">
+              <CardContent className="p-8 md:p-12">
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="flex-shrink-0 w-24 h-24 rounded-full bg-terracotta/10 flex items-center justify-center text-4xl">
+                    📦
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <div className="inline-block mb-2">
+                      <Badge className="bg-terracotta/10 text-terracotta border-terracotta/20 text-xs">NEW</Badge>
+                    </div>
+                    <h3 className="text-2xl font-bold text-charcoal mb-2 font-display">
+                      Anniversary Capsule
+                    </h3>
+                    <p className="text-charcoal/70 mb-4">
+                      Every year, receive a mini puzzle with new memories from the past year. Keep your story growing.
+                    </p>
+                    <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                      <span className="text-sm text-charcoal/60">
+                        <span className="font-bold text-charcoal">${CAPSULE_CONFIG.annualPrice}/year</span> · Free first year on orders ${CAPSULE_CONFIG.freeThreshold}+
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Customer Quote */}
           <div className="mb-20 max-w-3xl mx-auto">
             <Card className="border-2 border-sage/30 bg-sage/5 shadow-sage">
               <CardContent className="p-8 md:p-10 text-center">
-                <p className="text-lg md:text-xl text-charcoal/80 leading-relaxed mb-4 italic" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                <p className="text-lg md:text-xl text-charcoal/80 leading-relaxed mb-4 italic font-display">
                   "We gave this to my parents for their 50th anniversary. They cried when they saw the shapes we chose. It's hanging on their wall now&mdash;best gift we've ever given."
                 </p>
-                <p className="text-sm text-charcoal/50 font-medium" style={{ fontFamily: 'var(--font-caveat)', fontSize: '1.1rem' }}>
+                <p className="text-sm text-charcoal/50 font-medium font-handwritten text-lg">
                   &mdash; Sarah & Michael, Boston MA
                 </p>
               </CardContent>
@@ -195,14 +224,14 @@ export function HomePage({ onStart }: HomePageProps) {
           {/* How It Works - Simple 4-Step Process */}
           <div className="mb-20">
             <div className="max-w-4xl mx-auto text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em' }}>
+              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4 font-display tracking-display">
                 Four Steps to Your Perfect Puzzle
               </h2>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
               {[
-                { step: '1', title: 'Choose Size', desc: '50 to 250 pieces', icon: '📐' },
+                { step: '1', title: 'Choose Size', desc: '100 to 1,000 pieces', icon: '📐' },
                 { step: '2', title: 'Pick Shapes', desc: 'Select meaningful silhouettes', icon: '✨' },
                 { step: '3', title: 'Add Hints', desc: 'Create memory prompts', icon: '💭' },
                 { step: '4', title: 'Receive', desc: 'Ships in ~2 weeks', icon: '📦' },
@@ -212,16 +241,33 @@ export function HomePage({ onStart }: HomePageProps) {
                     {item.icon}
                   </div>
                   <div className="text-xs font-bold text-terracotta uppercase tracking-wide">Step {item.step}</div>
-                  <h3 className="font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>{item.title}</h3>
+                  <h3 className="font-bold text-charcoal font-display">{item.title}</h3>
                   <p className="text-sm text-charcoal/60">{item.desc}</p>
                 </div>
               ))}
             </div>
           </div>
 
+          {/* Privacy Promise - Per investor feedback on privacy risk */}
+          <div className="mb-20 max-w-3xl mx-auto">
+            <Card className="border border-charcoal/10 bg-charcoal/[0.02]">
+              <CardContent className="p-6 md:p-8">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-charcoal/5 flex items-center justify-center">
+                    <Lock size={20} weight="fill" className="text-charcoal/70" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-charcoal mb-1 font-display">{PRIVACY_PROMISE.headline}</h3>
+                    <p className="text-sm text-charcoal/60">{PRIVACY_PROMISE.subhead}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Final CTA */}
           <div className="text-center py-12 px-8 bg-terracotta/5 rounded-3xl max-w-3xl mx-auto mb-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-4" style={{ fontFamily: 'var(--font-fraunces)' }}>
+            <h2 className="text-2xl md:text-3xl font-bold text-charcoal mb-4 font-display">
               Ready to create something meaningful?
             </h2>
             <p className="text-charcoal/70 mb-6">
@@ -232,7 +278,7 @@ export function HomePage({ onStart }: HomePageProps) {
               className="text-lg px-10 py-6 rounded-full shadow-xl ripple-effect"
               onClick={onStart}
             >
-              Start Creating →
+              Start Creating <ArrowRight size={20} weight="bold" className="ml-2" />
             </Button>
           </div>
 

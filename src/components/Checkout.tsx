@@ -203,6 +203,7 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
 
               <p className="text-xs text-center text-charcoal/50">
                 By placing your order, you agree to our Terms of Service and Privacy Policy.
+                Your data is encrypted and never shared. <a href="/privacy" className="underline">Learn more</a>
               </p>
             </form>
 
@@ -233,7 +234,7 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                   {/* Order Details */}
                   <div className="space-y-3 text-sm">
                     <div className="flex justify-between text-charcoal">
-                      <span>{tierConfig?.name || 'Classic'} Puzzle ({tierConfig?.pieces || 100} pieces)</span>
+                      <span>{tierConfig?.name || 'Classic'} Puzzle ({tierConfig?.pieces.toLocaleString() || '250'} pieces)</span>
                       <span className="font-medium">${pricing.base}</span>
                     </div>
                     {pricing.premiumBox > 0 && (
@@ -252,6 +253,18 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                       <div className="flex justify-between text-charcoal/70">
                         <span>Wood Stain: {selectedStain?.name || 'Natural'}</span>
                         <span>+${pricing.woodStain}</span>
+                      </div>
+                    )}
+                    {pricing.capsule > 0 && (
+                      <div className="flex justify-between text-charcoal/70">
+                        <span>Anniversary Capsule (1 year)</span>
+                        <span>+${pricing.capsule}</span>
+                      </div>
+                    )}
+                    {pricing.capsuleDiscount > 0 && (
+                      <div className="flex justify-between text-sage">
+                        <span>First Capsule Free</span>
+                        <span>-${pricing.capsuleDiscount}</span>
                       </div>
                     )}
                     <div className="flex justify-between text-charcoal/70">
@@ -277,15 +290,19 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                     <ul className="space-y-1.5 text-sm text-charcoal/70">
                       <li className="flex items-start gap-2">
                         <Check size={16} weight="bold" className="text-sage mt-0.5 flex-shrink-0" />
-                        <span>10-piece basswood puzzle (5" × 7")</span>
+                        <span>{tierConfig?.pieces.toLocaleString()}-piece Baltic birch puzzle</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Check size={16} weight="bold" className="text-sage mt-0.5 flex-shrink-0" />
-                        <span>Personalized Story Card</span>
+                        <span>{tierConfig?.hintCards} personalized hint cards</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <Check size={16} weight="bold" className="text-sage mt-0.5 flex-shrink-0" />
                         <span>Gift-ready packaging</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <Check size={16} weight="bold" className="text-sage mt-0.5 flex-shrink-0" />
+                        <span>30-day happiness guarantee</span>
                       </li>
                     </ul>
                   </div>
