@@ -146,7 +146,7 @@ export function LivePuzzleAssembly({
             />
           ))}
         </div>
-        <p className="text-xs text-charcoal/60" style={{ fontFamily: 'var(--font-quicksand)' }}>
+        <p className="font-body text-xs text-charcoal/60">
           {filledCount === 0 && 'Start selecting shapes to build your puzzle'}
           {filledCount > 0 && filledCount < 10 && `${10 - filledCount} more pieces to go`}
           {filledCount === 10 && '🎉 Your puzzle is complete!'}
@@ -182,7 +182,7 @@ export function FloatingPuzzlePreview({
           transition={{ type: 'spring', stiffness: 200, damping: 20 }}
           className="fixed bottom-32 right-6 z-40 bg-cream/95 backdrop-blur-md rounded-2xl shadow-2xl p-4 border-2 border-stone"
         >
-          <div className="text-sm font-semibold text-charcoal mb-2 text-center" style={{ fontFamily: 'var(--font-fraunces)' }}>
+          <div className="font-display text-sm font-semibold text-charcoal mb-2 text-center">
             Live Preview
           </div>
           <LivePuzzleAssembly

@@ -255,7 +255,7 @@ export function ShapeSelection({
           </div>
 
           <div className="mb-12 text-center" role="region" aria-labelledby="notes-heading">
-            <h1 id="notes-heading" className="mb-4 text-4xl font-bold tracking-tight md:text-5xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+            <h1 id="notes-heading" className="font-display mb-4 text-4xl font-bold tracking-tight md:text-5xl text-charcoal tracking-display leading-display">
               Tell Their Stories (Optional)
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-charcoal/70 font-light leading-relaxed">
@@ -278,7 +278,7 @@ export function ShapeSelection({
                     </div>
                     <div className="flex-1 space-y-3">
                       <div>
-                        <h3 className="text-xl font-semibold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                        <h3 className="font-display text-xl font-semibold text-charcoal">
                           {index + 1}. {shape.name}
                         </h3>
                         <p className="text-sm text-charcoal/60">{shape.description}</p>
@@ -345,7 +345,7 @@ export function ShapeSelection({
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Sparkle size={24} className="text-terracotta" weight="fill" />
-                <h2 className="text-xl font-semibold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                <h2 className="font-display text-xl font-semibold text-charcoal">
                   Quick Start Packs
                 </h2>
               </div>
@@ -378,7 +378,7 @@ export function ShapeSelection({
                   aria-label={`Apply ${pack.name} starter pack with ${pack.shapes.length} shapes`}
                 >
                   <div className="text-3xl mb-2">{pack.icon}</div>
-                  <h3 className="font-semibold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                  <h3 className="font-display font-semibold text-charcoal">
                     {pack.name}
                   </h3>
                   <p className="text-xs text-charcoal/60 mt-1">{pack.description}</p>
@@ -425,7 +425,7 @@ export function ShapeSelection({
           </div>
 
           <div className="mb-12 text-center" role="region" aria-labelledby="selection-heading">
-            <h1 id="selection-heading" className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+            <h1 id="selection-heading" className="font-display mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-charcoal tracking-display leading-display">
               Choose What Matters
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-charcoal/70 font-light leading-relaxed">
@@ -435,7 +435,7 @@ export function ShapeSelection({
 
           {Object.entries(groupedByCategory).map(([category, shapes]) => (
             <section key={category} id={`category-${category}`} className="mb-16 scroll-mt-32" role="region" aria-labelledby={`category-heading-${category}`}>
-              <h2 id={`category-heading-${category}`} className="mb-8 text-2xl font-semibold tracking-tight text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              <h2 id={`category-heading-${category}`} className="font-display mb-8 text-2xl font-semibold tracking-tight text-charcoal">
                 {SHAPE_CATEGORIES[category] || category}
               </h2>
               <div className="grid grid-cols-3 gap-4 md:grid-cols-5 lg:grid-cols-7" role="group" aria-label={`${SHAPE_CATEGORIES[category] || category} shapes`}>
@@ -504,7 +504,7 @@ export function ShapeSelection({
         <div className="px-6 py-6 md:px-12">
           <div className="mx-auto max-w-7xl">
             <div className="mb-4 flex items-center justify-between">
-              <h3 id="tray-heading" className="text-lg font-semibold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              <h3 id="tray-heading" className="font-display text-lg font-semibold text-charcoal">
                 Your Tray
               </h3>
               <Badge className="text-sm bg-stone text-charcoal" aria-label={`${selected.length} of ${REQUIRED_COUNT} shapes selected`}>

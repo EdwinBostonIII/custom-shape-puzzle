@@ -21,7 +21,7 @@ export function OrderConfirmation({ orderNumber, onCreateAnother }: OrderConfirm
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-charcoal" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', lineHeight: '1.1' }}>
+            <h1 className="font-display text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl text-charcoal tracking-display leading-display">
               {isPartnerComplete ? 'Your Shapes Are In!' : 'Your Puzzle Awaits'}
             </h1>
             <p className="text-xl text-charcoal/70 font-light leading-relaxed">

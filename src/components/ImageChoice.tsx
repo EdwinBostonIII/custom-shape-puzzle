@@ -145,9 +145,10 @@ export function ImageChoice({
                   />
                   <button
                     onClick={() => onPhotoUpload('')}
+                    aria-label="Remove uploaded photo"
                     className="absolute top-4 right-4 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-md hover:bg-white transition-colors"
                   >
-                    <X className="w-4 h-4 text-charcoal" />
+                    <X className="w-4 h-4 text-charcoal" aria-hidden="true" />
                   </button>
                   <button
                     onClick={() => fileInputRef.current?.click()}
@@ -203,6 +204,8 @@ export function ImageChoice({
                       <button
                         key={shapeId}
                         onClick={() => setSelectedShape(shapeId)}
+                        aria-label={`${shape?.name || shapeId}${assignedColor ? ' - color assigned' : ' - select to assign color'}`}
+                        aria-pressed={selectedShape === shapeId}
                         className={cn(
                           'relative w-16 h-16 rounded-xl border-2 flex items-center justify-center transition-all',
                           selectedShape === shapeId
@@ -254,6 +257,7 @@ export function ImageChoice({
                             key={color.id}
                             onClick={() => !isUsed || isCurrent ? handleColorSelect(color) : null}
                             disabled={isUsed && !isCurrent}
+                            aria-label={`${color.name} color${isCurrent ? ' - currently selected' : isUsed ? ' - already used' : ''}`}
                             className={cn(
                               'w-12 h-12 rounded-full transition-all relative',
                               isUsed && !isCurrent

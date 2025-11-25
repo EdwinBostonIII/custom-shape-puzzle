@@ -3,6 +3,13 @@ import { Toaster } from 'sonner'
 import { HomePage } from '@/components/HomePage'
 import { ProgressIndicator } from '@/components/ProgressIndicator'
 import { 
+  PageSkeleton, 
+  TierSelectionSkeleton, 
+  ImageChoiceSkeleton, 
+  PackagingSkeleton, 
+  CheckoutSkeleton 
+} from '@/components/Skeleton'
+import { 
   PuzzleSession, 
   ShapeType, 
   ShippingInfo, 
@@ -10,7 +17,8 @@ import {
   ImageChoice as ImageChoiceType,
   HintCard,
   PackagingOptions,
-  WoodStainColor
+  WoodStainColor,
+  PartnerInvitation
 } from '@/lib/types'
 import { createDefaultSession, getTierConfig } from '@/lib/constants'
 
@@ -22,21 +30,26 @@ const HintCardBuilder = lazy(() => import('@/components/HintCardBuilder').then(m
 const PackagingSelection = lazy(() => import('@/components/PackagingSelection').then(m => ({ default: m.PackagingSelection })))
 const Checkout = lazy(() => import('@/components/Checkout').then(m => ({ default: m.Checkout })))
 const OrderConfirmation = lazy(() => import('@/components/OrderConfirmation').then(m => ({ default: m.OrderConfirmation })))
+const PartnerInvitationFlow = lazy(() => import('@/components/PartnerInvitation').then(m => ({ default: m.PartnerInvitationFlow })))
 
-// Loading fallback component
-function LoadingFallback() {
-  return (
-    <div className="min-h-screen bg-cream flex items-center justify-center">
-      <div className="text-center space-y-4">
-        <div className="w-12 h-12 border-4 border-terracotta/30 border-t-terracotta rounded-full animate-spin mx-auto" />
-        <p className="text-charcoal/60 font-light">Loading...</p>
-      </div>
-    </div>
-  )
+// Loading fallback component with contextual skeletons
+function LoadingFallback({ step }: { step?: Step }) {
+  switch (step) {
+    case 'tier':
+      return <TierSelectionSkeleton />
+    case 'image':
+      return <ImageChoiceSkeleton />
+    case 'packaging':
+      return <PackagingSkeleton />
+    case 'checkout':
+      return <CheckoutSkeleton />
+    default:
+      return <PageSkeleton />
+  }
 }
 
-// New flow: Home → Tier → Shapes → Image → HintCards → Packaging → Checkout → Confirmation
-type Step = 'home' | 'tier' | 'shapes' | 'image' | 'hints' | 'packaging' | 'checkout' | 'confirmation'
+// Flow: Home → Tier → Shapes → Partner? → Image → HintCards → Packaging → Checkout → Confirmation
+type Step = 'home' | 'tier' | 'shapes' | 'partner' | 'image' | 'hints' | 'packaging' | 'checkout' | 'confirmation'
 
 function generateId() {
   const array = new Uint32Array(2)
@@ -141,6 +154,15 @@ function App() {
         updatedAt: Date.now(),
       }
     })
+    // Offer partner invitation after shapes are selected
+    setStep('partner')
+  }
+
+  const handlePartnerInvitationCreated = (invitation: PartnerInvitation) => {
+    setSession(prev => prev ? { ...prev, partnerInvitation: invitation, updatedAt: Date.now() } : prev)
+  }
+
+  const handleSkipPartner = () => {
     setStep('image')
   }
 
@@ -203,7 +225,7 @@ function App() {
   }
 
   // Show progress indicator for all steps except home and confirmation
-  const showProgress = !['home', 'confirmation'].includes(step)
+  const showProgress = !['home', 'confirmation', 'partner'].includes(step)
 
   return (
     <>
@@ -212,7 +234,7 @@ function App() {
       {/* Progress Indicator - sticky at top for all creation steps */}
       {showProgress && <ProgressIndicator currentStep={step} />}
 
-      <Suspense fallback={<LoadingFallback />}>
+      <Suspense fallback={<LoadingFallback step={step} />}>
         {step === 'home' && (
           <HomePage onStart={handleStart} />
         )}
@@ -233,6 +255,15 @@ function App() {
             tier={session.tier}
             onComplete={handleShapesComplete}
             onBack={() => handleBack('tier')}
+          />
+        )}
+
+        {step === 'partner' && session && (
+          <PartnerInvitationFlow
+            selectedShapes={session.selectedShapes}
+            onInvitationCreated={handlePartnerInvitationCreated}
+            onSkip={handleSkipPartner}
+            existingInvitation={session.partnerInvitation}
           />
         )}
 

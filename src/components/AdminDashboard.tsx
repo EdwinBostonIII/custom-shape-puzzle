@@ -129,7 +129,7 @@ export function AdminDashboard({ onClose }: AdminDashboardProps) {
               Back
             </Button>
             <div className="h-6 w-px bg-white/20" />
-            <h1 className="text-xl font-semibold" style={{ fontFamily: 'var(--font-fraunces)' }}>
+            <h1 className="font-display text-xl font-semibold">
               Admin Dashboard
             </h1>
           </div>
@@ -231,7 +231,7 @@ export function AdminDashboard({ onClose }: AdminDashboardProps) {
           {/* Production Tab */}
           <TabsContent value="production" className="space-y-6">
             <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              <h2 className="font-display text-xl font-semibold mb-4">
                 Production Queue
               </h2>
               <p className="text-charcoal/60 mb-6">
@@ -286,7 +286,7 @@ export function AdminDashboard({ onClose }: AdminDashboardProps) {
             </Card>
             
             <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              <h2 className="font-display text-xl font-semibold mb-4">
                 Batch Export
               </h2>
               <p className="text-charcoal/60 mb-4">
@@ -342,7 +342,7 @@ export function AdminDashboard({ onClose }: AdminDashboardProps) {
             )}
             
             <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              <h2 className="font-display text-xl font-semibold mb-4">
                 Shape Usage
               </h2>
               <div className="grid grid-cols-5 md:grid-cols-8 lg:grid-cols-10 gap-4">
@@ -361,37 +361,41 @@ export function AdminDashboard({ onClose }: AdminDashboardProps) {
           {/* Settings Tab */}
           <TabsContent value="settings" className="space-y-6">
             <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              <h2 className="font-display text-xl font-semibold mb-4">
                 Template Generation Settings
               </h2>
               <div className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Pieces per Puzzle</label>
+                    <label htmlFor="pieces-per-puzzle" className="block text-sm font-medium mb-1">Pieces per Puzzle</label>
                     <input 
+                      id="pieces-per-puzzle"
                       type="number" 
                       defaultValue={150}
                       disabled
+                      aria-describedby="pieces-help"
                       className="w-full px-3 py-2 border rounded-md bg-stone/30"
                     />
-                    <p className="text-xs text-charcoal/50 mt-1">150 pieces (15 × 10 shapes)</p>
+                    <p id="pieces-help" className="text-xs text-charcoal/50 mt-1">150 pieces (15 × 10 shapes)</p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Cell Size (mm)</label>
+                    <label htmlFor="cell-size" className="block text-sm font-medium mb-1">Cell Size (mm)</label>
                     <input 
+                      id="cell-size"
                       type="number" 
                       defaultValue={50}
                       disabled
+                      aria-describedby="cell-size-help"
                       className="w-full px-3 py-2 border rounded-md bg-stone/30"
                     />
-                    <p className="text-xs text-charcoal/50 mt-1">Size of each puzzle piece cell</p>
+                    <p id="cell-size-help" className="text-xs text-charcoal/50 mt-1">Size of each puzzle piece cell</p>
                   </div>
                 </div>
               </div>
             </Card>
             
             <Card className="p-6">
-              <h2 className="text-xl font-semibold mb-4" style={{ fontFamily: 'var(--font-fraunces)' }}>
+              <h2 className="font-display text-xl font-semibold mb-4">
                 Popular Combinations
               </h2>
               <p className="text-charcoal/60 mb-4">
@@ -498,7 +502,7 @@ function TemplatePreviewModal({ template, onClose }: TemplatePreviewModalProps) 
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <Card className="w-full max-w-4xl max-h-[90vh] overflow-auto">
         <div className="sticky top-0 bg-white p-4 border-b flex items-center justify-between">
-          <h2 className="text-xl font-semibold" style={{ fontFamily: 'var(--font-fraunces)' }}>
+          <h2 className="font-display text-xl font-semibold">
             Template Preview
           </h2>
           <Button variant="ghost" onClick={onClose}>×</Button>

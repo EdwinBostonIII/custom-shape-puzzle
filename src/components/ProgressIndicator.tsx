@@ -1,7 +1,7 @@
 import { Check } from '@phosphor-icons/react'
 
-// New 8-step flow for INTERLOCK platform
-type Step = 'home' | 'tier' | 'shapes' | 'image' | 'hints' | 'packaging' | 'checkout' | 'confirmation'
+// Updated flow for INTERLOCK platform with partner collaboration
+type Step = 'home' | 'tier' | 'shapes' | 'partner' | 'image' | 'hints' | 'packaging' | 'checkout' | 'confirmation'
 
 interface ProgressStep {
   id: Step[]
@@ -18,7 +18,7 @@ export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
   // Group related steps together for cleaner visual
   const steps: ProgressStep[] = [
     { id: ['tier'], label: 'Size', icon: '📐' },
-    { id: ['shapes'], label: 'Shapes', icon: '✨' },
+    { id: ['shapes', 'partner'], label: 'Shapes', icon: '✨' },
     { id: ['image', 'hints'], label: 'Design', icon: '🎨' },
     { id: ['packaging'], label: 'Package', icon: '📦' },
     { id: ['checkout', 'confirmation'], label: 'Order', icon: '💳' },
