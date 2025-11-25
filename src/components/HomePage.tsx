@@ -57,11 +57,11 @@ export function HomePage({ onStart }: HomePageProps) {
                 className="text-4xl md:text-5xl lg:text-6xl text-charcoal mb-6 leading-tight"
                 style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em', fontWeight: '600' }}
               >
-                Turn your favorite memories into a wooden puzzle you'll keep forever.
+                A puzzle that tells your story—without showing your face.
               </h1>
             </div>
             <p className="mx-auto max-w-2xl text-lg md:text-xl text-charcoal/80 leading-relaxed mb-3" style={{ fontFamily: 'var(--font-quicksand)' }}>
-              Ten custom laser-cut shapes. Handcrafted with love. Ships free.
+              Choose shapes that mean something. Add hints only you'd know. Solve it together.
             </p>
 
             {/* Estimated Delivery - Per Master List */}
@@ -132,22 +132,34 @@ export function HomePage({ onStart }: HomePageProps) {
           <div className="mb-20">
             <div className="max-w-4xl mx-auto text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em' }}>
-                Not Another Generic Puzzle
+                Not Another Photo Puzzle
               </h2>
               <p className="text-lg text-charcoal/70 max-w-2xl mx-auto">
-                While others sell mass-produced photo puzzles, we craft something personal. Each of your 10 shapes tells a piece of your story.
+                Most puzzle gifts sit in a closet. Ours become a shared experience—a conversation piece that captures what makes you, you.
               </p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               <Card className="border-2 border-stone p-6 text-center">
                 <CardContent className="pt-6 space-y-4">
-                  <div className="text-4xl">🧩</div>
+                  <div className="text-4xl">✨</div>
                   <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                    Meaningful Shapes
+                    Shapes With Meaning
                   </h3>
                   <p className="text-charcoal/70">
-                    A fox for your adventurous spirit. A moon for late-night talks. Each piece carries meaning only you know.
+                    Pick from 70+ silhouettes. A fox for adventure. A moon for late nights. Each piece holds a secret only you know.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-2 border-stone p-6 text-center">
+                <CardContent className="pt-6 space-y-4">
+                  <div className="text-4xl">💭</div>
+                  <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
+                    Hint Cards, Not Photos
+                  </h3>
+                  <p className="text-charcoal/70">
+                    Skip the reference picture. Instead, get custom hints that spark memories: "Where we first said I love you."
                   </p>
                 </CardContent>
               </Card>
@@ -156,22 +168,10 @@ export function HomePage({ onStart }: HomePageProps) {
                 <CardContent className="pt-6 space-y-4">
                   <div className="text-4xl">🪵</div>
                   <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                    Real Wood, Real Craft
+                    Heirloom Quality
                   </h3>
                   <p className="text-charcoal/70">
-                    Laser-cut from Baltic birch. Finished by hand. A keepsake that gets better with time.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-2 border-stone p-6 text-center">
-                <CardContent className="pt-6 space-y-4">
-                  <div className="text-4xl">💌</div>
-                  <h3 className="text-xl font-bold text-charcoal" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                    Story Card Included
-                  </h3>
-                  <p className="text-charcoal/70">
-                    Your notes about each shape are beautifully printed on a linen card. A puzzle with a story.
+                    3mm Baltic birch, precision laser-cut. Hand-finished with care. A keepsake that gets better with every solve.
                   </p>
                 </CardContent>
               </Card>
@@ -196,16 +196,16 @@ export function HomePage({ onStart }: HomePageProps) {
           <div className="mb-20">
             <div className="max-w-4xl mx-auto text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4" style={{ fontFamily: 'var(--font-fraunces)', letterSpacing: '-0.02em' }}>
-                Simple as 1-2-3-4
+                Four Steps to Your Perfect Puzzle
               </h2>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
               {[
-                { step: '1', title: 'Pick Shapes', desc: 'Choose 10 meaningful shapes', icon: '✨' },
-                { step: '2', title: 'Add Notes', desc: 'Tell us why each matters', icon: '📝' },
-                { step: '3', title: 'Choose Stain', desc: 'Pick your wood color', icon: '🪵' },
-                { step: '4', title: 'We Craft It', desc: 'Ships in 2 weeks', icon: '📦' },
+                { step: '1', title: 'Choose Size', desc: '50 to 250 pieces', icon: '📐' },
+                { step: '2', title: 'Pick Shapes', desc: 'Select meaningful silhouettes', icon: '✨' },
+                { step: '3', title: 'Add Hints', desc: 'Create memory prompts', icon: '💭' },
+                { step: '4', title: 'Receive', desc: 'Ships in ~2 weeks', icon: '📦' },
               ].map((item) => (
                 <div key={item.step} className="text-center space-y-3">
                   <div className="mx-auto w-16 h-16 rounded-full bg-terracotta/10 flex items-center justify-center text-2xl">

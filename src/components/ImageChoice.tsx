@@ -67,22 +67,15 @@ export function ImageChoice({
   const canContinue = imageChoice === 'photo' ? !!photoUrl : allColorsAssigned
 
   return (
-    <div className="min-h-screen bg-cream">
-      {/* Header */}
-      <header className="sticky top-0 z-10 bg-cream/95 backdrop-blur-sm border-b border-charcoal/10">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <button
-            onClick={onBack}
-            className="text-charcoal/60 hover:text-charcoal transition-colors"
-          >
-            ← Back
-          </button>
-          <h1 className="font-serif text-xl text-charcoal">Design Your Puzzle</h1>
-          <div className="w-16" />
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-cream pt-4">
       <main className="container mx-auto px-4 py-8 max-w-4xl">
+        {/* Back button */}
+        <button
+          onClick={onBack}
+          className="mb-6 text-charcoal/60 hover:text-charcoal transition-colors flex items-center gap-1"
+        >
+          ← Back to Shapes
+        </button>
         {/* Intro */}
         <div className="text-center mb-10">
           <h2 className="font-serif text-3xl md:text-4xl text-charcoal mb-4">

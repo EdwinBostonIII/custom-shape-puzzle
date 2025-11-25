@@ -389,8 +389,8 @@ export function ShapeSelection({
         </div>
       )}
 
-      {/* Sticky Category Navigation */}
-      <nav className="sticky top-0 z-40 bg-cream/95 backdrop-blur-md border-b-2 border-stone shadow-sm" aria-label="Shape categories navigation">
+      {/* Sticky Category Navigation - positioned below ProgressIndicator */}
+      <nav className="sticky top-[72px] z-40 bg-cream/95 backdrop-blur-md border-b-2 border-stone shadow-sm" aria-label="Shape categories navigation">
         <div className="px-6 py-4 overflow-x-auto">
           <div className="flex gap-2 min-w-max" role="tablist" aria-label="Shape categories">
             {categories.map((category) => (

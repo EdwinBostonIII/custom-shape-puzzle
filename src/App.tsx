@@ -202,9 +202,15 @@ function App() {
     setStep(toStep)
   }
 
+  // Show progress indicator for all steps except home and confirmation
+  const showProgress = !['home', 'confirmation'].includes(step)
+
   return (
     <>
       <Toaster position="top-center" />
+      
+      {/* Progress Indicator - sticky at top for all creation steps */}
+      {showProgress && <ProgressIndicator currentStep={step} />}
 
       <Suspense fallback={<LoadingFallback />}>
         {step === 'home' && (
