@@ -3,6 +3,7 @@ import { Toaster } from 'sonner'
 import { HomePage } from '@/components/HomePage'
 import { ProgressIndicator } from '@/components/ProgressIndicator'
 import { EmailCapturePopup } from '@/components/EmailCapture'
+import { ChatWidget } from '@/components/ChatWidget'
 import { 
   PageSkeleton, 
   TierSelectionSkeleton, 
@@ -358,6 +359,9 @@ function App() {
           />
         )}
       </Suspense>
+
+      {/* Global Chat Widget - FAQ and Support */}
+      <ChatWidget />
     </>
   )
 }

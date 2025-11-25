@@ -13,6 +13,9 @@ import {
   DeliveryCountdown
 } from './TrustSignals'
 import { OccasionCountdown } from './OccasionCountdown'
+import { UrgencyBanner, FloatingUrgency } from './UrgencyBanner'
+import { CustomerReviews } from './CustomerReviews'
+import { ReturnPolicyModal, MiniGuarantee } from './ReturnPolicyModal'
 
 interface HomePageProps {
   onStart: () => void
@@ -26,6 +29,12 @@ export function HomePage({ onStart }: HomePageProps) {
 
   return (
     <div className="min-h-screen bg-cream relative">
+      {/* Urgency Banner - Research shows urgency increases conversions by 332% */}
+      <UrgencyBanner />
+      
+      {/* Floating urgency indicator for holiday deadlines */}
+      <FloatingUrgency />
+      
       {/* Social Proof Toast - Real-time activity */}
       <RecentActivityToast />
       {/* Navigation Bar */}
@@ -247,6 +256,16 @@ export function HomePage({ onStart }: HomePageProps) {
                 <TestimonialCarousel />
               </CardContent>
             </Card>
+          </div>
+
+          {/* Full Customer Reviews Section - Research: Reviews increase conversion by 270% */}
+          <div className="mb-20">
+            <CustomerReviews />
+          </div>
+
+          {/* Return Policy Visibility - Research: 67% check policy before buying */}
+          <div className="mb-20 max-w-2xl mx-auto">
+            <ReturnPolicyModal />
           </div>
 
           {/* How It Works - Simple 4-Step Process */}

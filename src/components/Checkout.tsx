@@ -9,6 +9,8 @@ import { PUZZLE_TIERS, WOOD_STAINS, calculateTotal, getEstimatedDeliveryDate } f
 import { toast } from 'sonner'
 import { ShapeIcon } from './ShapeIcon'
 import { RiskReversal, OrderValueProgress, DeliveryCountdown, CheckoutTrustStrip } from './TrustSignals'
+import { CheckoutGuarantee, MiniGuarantee } from './ReturnPolicyModal'
+import { CheckoutUrgencyStrip } from './UrgencyBanner'
 import { cn } from '@/lib/utils'
 
 export interface CheckoutProps {
@@ -81,6 +83,9 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
 
   return (
     <div className="min-h-screen bg-cream">
+      {/* Checkout urgency strip - priority processing countdown */}
+      <CheckoutUrgencyStrip />
+      
       <div className="px-6 py-12 md:px-12 lg:px-24">
         <div className="mx-auto max-w-4xl">
           <div className="mb-8">
@@ -269,6 +274,9 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
 
               {/* Risk Reversal - Reduce purchase anxiety */}
               <RiskReversal />
+
+              {/* Checkout Guarantee with details modal - Research: 67% check policy */}
+              <CheckoutGuarantee />
 
               <Button 
                 type="submit" 
