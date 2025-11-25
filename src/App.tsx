@@ -6,6 +6,7 @@ import { EmailCapturePopup } from '@/components/EmailCapture'
 import { ChatWidget } from '@/components/ChatWidget'
 import { LiveOrderNotification } from '@/components/SocialProofNotifications'
 import { PersonalizationProvider, usePersonalization } from '@/components/Personalization'
+import { ExitIntentPopup, StickyDiscountReminder, useExitIntent } from '@/components/ExitIntent'
 import { 
   PageSkeleton, 
   TierSelectionSkeleton, 
@@ -370,6 +371,27 @@ function App() {
         enabled={step === 'home' || step === 'tier'} 
         position="bottom-left"
         interval={20000}
+      />
+      
+      {/* Exit Intent Popup - Cart Abandonment Recovery (17% conversion rate) */}
+      <ExitIntentPopup
+        cartValue={session ? getTierConfig(session.tier).price : 0}
+        hasCartItems={session !== null && step !== 'home' && step !== 'confirmation'}
+        currentStep={step}
+        isFirstTimeVisitor={!loadSession()}
+        onDiscountClaim={(code) => {
+          console.log('Discount claimed:', code)
+          // Store discount code for checkout
+        }}
+        onEmailCapture={(email) => {
+          console.log('Email captured:', email)
+          // Send to email marketing system
+        }}
+        onFeedbackSubmit={(feedback) => {
+          console.log('Feedback received:', feedback)
+          // Store feedback for analysis
+        }}
+        enabled={step !== 'confirmation'}
       />
     </>
   )
