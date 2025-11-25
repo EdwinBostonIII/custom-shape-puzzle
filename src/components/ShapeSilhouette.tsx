@@ -9,7 +9,7 @@
 
 import { memo, useMemo } from 'react'
 import { cn } from '@/lib/utils'
-import { SHAPE_DEFINITIONS } from '@/lib/shapes/shapeDefinitions'
+import { SHAPE_DEFINITIONS, getShapeById } from '@/lib/shapes/shapeDefinitions'
 import { BaseShape } from '@/lib/shapes/shapeSystem'
 import { ShapeType } from '@/lib/types'
 
@@ -42,8 +42,8 @@ export const ShapeSilhouette = memo(function ShapeSilhouette({
   scale = 1,
   onClick,
 }: ShapeSilhouetteProps) {
-  // Get shape definition
-  const shape = SHAPE_DEFINITIONS[shapeId]
+  // Get shape definition (using alias resolver)
+  const shape = getShapeById(shapeId)
   
   if (!shape) {
     // Fallback for shapes not yet defined
@@ -135,7 +135,7 @@ export const ShapeSilhouetteCard = memo(function ShapeSilhouetteCard({
   className,
   showLabel = true,
 }: ShapeSilhouetteCardProps) {
-  const shape = SHAPE_DEFINITIONS[shapeId]
+  const shape = getShapeById(shapeId)
   
   return (
     <button
@@ -329,7 +329,7 @@ export const SelectedShapeTray = memo(function SelectedShapeTray({
           <button
             onClick={() => onRemove(shapeId)}
             className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity"
-            aria-label={`Remove ${SHAPE_DEFINITIONS[shapeId]?.name || shapeId}`}
+            aria-label={`Remove ${getShapeById(shapeId)?.name || shapeId}`}
           >
             ×
           </button>
