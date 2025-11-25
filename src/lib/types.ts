@@ -31,6 +31,8 @@ export interface PuzzleSession {
   woodStain: WoodStainColor
   shippingInfo?: ShippingInfo
   orderComplete?: boolean
+  isPartnerComplete?: boolean
+  partnerShapes?: ShapeType[]
   createdAt: number
 }
 

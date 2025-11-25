@@ -111,6 +111,20 @@ export const SHAPE_CATEGORIES: Record<string, string> = {
   adventure: 'Adventures',
 }
 
+// Default color palette for shape coloring (used in design choice)
+export const DEFAULT_COLORS: string[] = [
+  '#EF4444', // red
+  '#F97316', // orange
+  '#EAB308', // yellow
+  '#22C55E', // green
+  '#14B8A6', // teal
+  '#3B82F6', // blue
+  '#8B5CF6', // purple
+  '#EC4899', // pink
+  '#78716C', // stone
+  '#1F2937', // gray-dark
+]
+
 // Production timeline constants
 export const PRODUCTION = {
   daysToShip: 14, // 2 weeks as stated in master list

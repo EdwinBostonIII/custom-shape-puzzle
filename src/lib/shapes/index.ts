@@ -40,7 +40,10 @@ export {
 export {
   SHAPE_DEFINITIONS,
   ALL_SHAPE_IDS,
+  SHAPE_ID_ALIASES,
   getShapesByCategory,
+  getShapeById,
+  isValidShapeId,
   
   // Individual shapes (if needed for direct access)
   dolphinShape,
