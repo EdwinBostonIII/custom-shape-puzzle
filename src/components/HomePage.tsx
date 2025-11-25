@@ -4,6 +4,15 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { PUZZLE_TIERS, getEstimatedDeliveryDate, PRIVACY_PROMISE, QUALITY_GUARANTEE, CAPSULE_CONFIG } from '@/lib/constants'
 import { FAQSection } from './FAQSection'
+import { 
+  RecentActivityToast, 
+  CustomerRatings, 
+  TestimonialCarousel, 
+  TrustBadges,
+  LiveViewers,
+  DeliveryCountdown
+} from './TrustSignals'
+import { OccasionCountdown } from './OccasionCountdown'
 
 interface HomePageProps {
   onStart: () => void
@@ -17,19 +26,21 @@ export function HomePage({ onStart }: HomePageProps) {
 
   return (
     <div className="min-h-screen bg-cream relative">
+      {/* Social Proof Toast - Real-time activity */}
+      <RecentActivityToast />
       {/* Navigation Bar */}
-      <nav className="sticky top-0 z-50 backdrop-blur-md bg-cream/80 border-b border-stone/50">
+      <nav className="sticky top-0 z-50 backdrop-blur-md bg-cream/80 border-b border-stone/50" aria-label="Main navigation">
         <div className="px-6 py-4 md:px-12">
           <div className="mx-auto max-w-7xl flex items-center justify-between">
             <h1 className="text-2xl font-bold text-charcoal font-display">
               Interlock
             </h1>
             <div className="flex items-center gap-4">
-              <span className="hidden sm:flex items-center gap-1.5 text-sm text-charcoal/60">
-                <Lock size={14} weight="fill" />
+              <span className="hidden sm:flex items-center gap-1.5 text-sm text-charcoal/60" aria-label="Privacy guaranteed">
+                <Lock size={14} weight="fill" aria-hidden="true" />
                 Your story stays private
               </span>
-              <Button size="sm" className="rounded-full ripple-effect" onClick={onStart}>
+              <Button size="sm" className="rounded-full ripple-effect" onClick={onStart} aria-label={`Create your puzzle, starting from $${startingPrice}`}>
                 Create Yours – From ${startingPrice}
               </Button>
             </div>
@@ -37,7 +48,7 @@ export function HomePage({ onStart }: HomePageProps) {
         </div>
       </nav>
 
-      <div className="px-6 py-16 md:px-12 lg:px-24">
+      <main className="px-6 py-16 md:px-12 lg:px-24" role="main">
         <div className="mx-auto max-w-7xl">
           {/* Hero Section with Price Transparency */}
           <div className="mb-20 text-center md:mb-28 relative">
@@ -72,6 +83,16 @@ export function HomePage({ onStart }: HomePageProps) {
               </Badge>
             </div>
 
+            {/* Customer Ratings - Social Proof */}
+            <div className="mt-6">
+              <CustomerRatings className="justify-center" />
+            </div>
+
+            {/* Live Viewers - Urgency Signal */}
+            <div className="mt-4">
+              <LiveViewers className="justify-center" />
+            </div>
+
             {/* Single CTA Button */}
             <div className="mt-10">
               <Button
@@ -87,51 +108,52 @@ export function HomePage({ onStart }: HomePageProps) {
           </div>
 
           {/* Trust Indicators - Enhanced per Master List */}
-          <div className="mb-20">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-              <div className="text-center space-y-3 p-4">
-                <div className="mx-auto w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center">
+          <section className="mb-20" aria-labelledby="trust-heading">
+            <h2 id="trust-heading" className="sr-only">Why Choose Interlock</h2>
+            <ul className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto" role="list">
+              <li className="text-center space-y-3 p-4">
+                <div className="mx-auto w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center" aria-hidden="true">
                   <Gift size={24} weight="fill" className="text-terracotta" />
                 </div>
                 <div>
                   <p className="font-bold text-charcoal font-display">Handcrafted</p>
                   <p className="text-sm text-charcoal/60">Baltic birch, laser-cut</p>
                 </div>
-              </div>
-              <div className="text-center space-y-3 p-4">
-                <div className="mx-auto w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center">
+              </li>
+              <li className="text-center space-y-3 p-4">
+                <div className="mx-auto w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center" aria-hidden="true">
                   <Truck size={24} weight="fill" className="text-sage" />
                 </div>
                 <div>
                   <p className="font-bold text-charcoal font-display">Free Shipping</p>
                   <p className="text-sm text-charcoal/60">Anywhere in the US</p>
                 </div>
-              </div>
-              <div className="text-center space-y-3 p-4">
-                <div className="mx-auto w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center">
+              </li>
+              <li className="text-center space-y-3 p-4">
+                <div className="mx-auto w-12 h-12 rounded-full bg-terracotta/10 flex items-center justify-center" aria-hidden="true">
                   <ShieldCheck size={24} weight="fill" className="text-terracotta" />
                 </div>
                 <div>
                   <p className="font-bold text-charcoal font-display">30-Day Guarantee</p>
                   <p className="text-sm text-charcoal/60">Love it or we fix it</p>
                 </div>
-              </div>
-              <div className="text-center space-y-3 p-4">
-                <div className="mx-auto w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center">
+              </li>
+              <li className="text-center space-y-3 p-4">
+                <div className="mx-auto w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center" aria-hidden="true">
                   <Timer size={24} weight="fill" className="text-sage" />
                 </div>
                 <div>
                   <p className="font-bold text-charcoal font-display">2-Week Delivery</p>
                   <p className="text-sm text-charcoal/60">Made to order</p>
                 </div>
-              </div>
-            </div>
-          </div>
+              </li>
+            </ul>
+          </section>
 
           {/* Why Interlock - Differentiation Section per Master List */}
-          <div className="mb-20">
+          <section className="mb-20" aria-labelledby="why-heading">
             <div className="max-w-4xl mx-auto text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-charcoal mb-4 font-display tracking-display">
+              <h2 id="why-heading" className="text-3xl md:text-4xl font-bold text-charcoal mb-4 font-display tracking-display">
                 Not Another Photo Puzzle
               </h2>
               <p className="text-lg text-charcoal/70 max-w-2xl mx-auto">
@@ -139,43 +161,54 @@ export function HomePage({ onStart }: HomePageProps) {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <Card className="border-2 border-stone p-6 text-center">
-                <CardContent className="pt-6 space-y-4">
-                  <div className="text-4xl">✨</div>
-                  <h3 className="text-xl font-bold text-charcoal font-display">
-                    Shapes With Meaning
-                  </h3>
-                  <p className="text-charcoal/70">
-                    Pick from 70+ silhouettes. A fox for adventure. A moon for late nights. Each piece holds a secret only you know.
-                  </p>
-                </CardContent>
-              </Card>
+            <ul className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto" role="list">
+              <li>
+                <Card className="border-2 border-stone p-6 text-center h-full">
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="text-4xl" aria-hidden="true">✨</div>
+                    <h3 className="text-xl font-bold text-charcoal font-display">
+                      Shapes With Meaning
+                    </h3>
+                    <p className="text-charcoal/70">
+                      Pick from 70+ silhouettes. A fox for adventure. A moon for late nights. Each piece holds a secret only you know.
+                    </p>
+                  </CardContent>
+                </Card>
+              </li>
 
-              <Card className="border-2 border-stone p-6 text-center">
-                <CardContent className="pt-6 space-y-4">
-                  <div className="text-4xl">💭</div>
-                  <h3 className="text-xl font-bold text-charcoal font-display">
-                    Hint Cards, Not Photos
-                  </h3>
-                  <p className="text-charcoal/70">
-                    Skip the reference picture. Instead, get custom hints that spark memories: "Where we first said I love you."
-                  </p>
-                </CardContent>
-              </Card>
+              <li>
+                <Card className="border-2 border-stone p-6 text-center h-full">
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="text-4xl" aria-hidden="true">💭</div>
+                    <h3 className="text-xl font-bold text-charcoal font-display">
+                      Hint Cards, Not Photos
+                    </h3>
+                    <p className="text-charcoal/70">
+                      Skip the reference picture. Instead, get custom hints that spark memories: "Where we first said I love you."
+                    </p>
+                  </CardContent>
+                </Card>
+              </li>
 
-              <Card className="border-2 border-stone p-6 text-center">
-                <CardContent className="pt-6 space-y-4">
-                  <div className="text-4xl">🪵</div>
-                  <h3 className="text-xl font-bold text-charcoal font-display">
-                    Heirloom Quality
-                  </h3>
-                  <p className="text-charcoal/70">
-                    3mm Baltic birch, precision laser-cut. Hand-finished with care. A keepsake that gets better with every solve.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
+              <li>
+                <Card className="border-2 border-stone p-6 text-center h-full">
+                  <CardContent className="pt-6 space-y-4">
+                    <div className="text-4xl" aria-hidden="true">🪵</div>
+                    <h3 className="text-xl font-bold text-charcoal font-display">
+                      Heirloom Quality
+                    </h3>
+                    <p className="text-charcoal/70">
+                      3mm Baltic birch, precision laser-cut. Hand-finished with care. A keepsake that gets better with every solve.
+                    </p>
+                  </CardContent>
+                </Card>
+              </li>
+            </ul>
+          </section>
+
+          {/* Occasion Countdown - Holiday/Gift Targeting */}
+          <div className="mb-20 max-w-2xl mx-auto">
+            <OccasionCountdown variant="compact" />
           </div>
 
           {/* Anniversary Capsule - New Subscription Upsell */}
@@ -207,16 +240,11 @@ export function HomePage({ onStart }: HomePageProps) {
             </Card>
           </div>
 
-          {/* Customer Quote */}
+          {/* Customer Testimonials - Carousel */}
           <div className="mb-20 max-w-3xl mx-auto">
             <Card className="border-2 border-sage/30 bg-sage/5 shadow-sage">
-              <CardContent className="p-8 md:p-10 text-center">
-                <p className="text-lg md:text-xl text-charcoal/80 leading-relaxed mb-4 italic font-display">
-                  "We gave this to my parents for their 50th anniversary. They cried when they saw the shapes we chose. It's hanging on their wall now&mdash;best gift we've ever given."
-                </p>
-                <p className="text-sm text-charcoal/50 font-medium font-handwritten text-lg">
-                  &mdash; Sarah & Michael, Boston MA
-                </p>
+              <CardContent className="p-8 md:p-10">
+                <TestimonialCarousel />
               </CardContent>
             </Card>
           </div>
@@ -249,7 +277,7 @@ export function HomePage({ onStart }: HomePageProps) {
           </div>
 
           {/* Privacy Promise - Per investor feedback on privacy risk */}
-          <div className="mb-20 max-w-3xl mx-auto">
+          <div className="mb-12 max-w-3xl mx-auto">
             <Card className="border border-charcoal/10 bg-charcoal/[0.02]">
               <CardContent className="p-6 md:p-8">
                 <div className="flex items-start gap-4">
@@ -263,6 +291,11 @@ export function HomePage({ onStart }: HomePageProps) {
                 </div>
               </CardContent>
             </Card>
+          </div>
+
+          {/* Trust Badges - Research shows 17% conversion lift */}
+          <div className="mb-20">
+            <TrustBadges className="max-w-4xl mx-auto" />
           </div>
 
           {/* Final CTA */}
@@ -283,7 +316,7 @@ export function HomePage({ onStart }: HomePageProps) {
           </div>
 
         </div>
-      </div>
+      </main>
 
       {/* FAQ Section */}
       <FAQSection />

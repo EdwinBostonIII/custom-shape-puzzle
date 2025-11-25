@@ -2,6 +2,7 @@ import { useEffect, useState, lazy, Suspense } from 'react'
 import { Toaster } from 'sonner'
 import { HomePage } from '@/components/HomePage'
 import { ProgressIndicator } from '@/components/ProgressIndicator'
+import { EmailCapturePopup } from '@/components/EmailCapture'
 import { 
   PageSkeleton, 
   TierSelectionSkeleton, 
@@ -21,6 +22,7 @@ import {
   PartnerInvitation
 } from '@/lib/types'
 import { createDefaultSession, getTierConfig } from '@/lib/constants'
+import { trackFunnelStep, trackConversion, useAnalytics } from '@/lib/analytics'
 
 // Lazy load heavy components for better initial load performance
 const TierSelection = lazy(() => import('@/components/TierSelection').then(m => ({ default: m.TierSelection })))
@@ -133,18 +135,34 @@ function App() {
   const handleStart = () => {
     const newSession = createDefaultSession(generateId())
     setSession(newSession)
+    trackFunnelStep('tier_selection', { sessionId: newSession.id })
     setStep('tier')
   }
 
   const handleTierSelect = (tier: PuzzleTier) => {
+    const tierConfig = getTierConfig(tier)
+    trackConversion('add_to_cart', { 
+      value: tierConfig.price,
+      currency: 'USD',
+      items: [{
+        id: tier,
+        name: `${tierConfig.name} Puzzle`,
+        price: tierConfig.price,
+        quantity: 1
+      }]
+    })
     setSession(prev => prev ? { ...prev, tier, updatedAt: Date.now() } : prev)
   }
 
   const handleTierContinue = () => {
+    trackFunnelStep('shape_selection', { tier: session?.tier })
     setStep('shapes')
   }
 
   const handleShapesComplete = (shapes: ShapeType[], meanings?: Partial<Record<ShapeType, string>>) => {
+    trackFunnelStep('partner_invitation', { 
+      shapeCount: shapes.length
+    })
     setSession(prev => {
       if (!prev) return prev
       return {
@@ -163,6 +181,7 @@ function App() {
   }
 
   const handleSkipPartner = () => {
+    trackFunnelStep('image_choice')
     setStep('image')
   }
 
@@ -179,6 +198,7 @@ function App() {
   }
 
   const handleImageContinue = () => {
+    trackFunnelStep('hint_cards')
     setStep('hints')
   }
 
@@ -187,6 +207,7 @@ function App() {
   }
 
   const handleHintsContinue = () => {
+    trackFunnelStep('packaging')
     setStep('packaging')
   }
 
@@ -195,12 +216,30 @@ function App() {
   }
 
   const handlePackagingContinue = () => {
+    trackFunnelStep('checkout')
     setStep('checkout')
   }
 
   const handleCheckoutComplete = (shippingInfo: ShippingInfo) => {
     const newOrderNumber = `INT-${Date.now().toString(36).toUpperCase()}`
     setOrderNumber(newOrderNumber)
+    
+    // Track conversion
+    const tierConfig = session ? getTierConfig(session.tier) : null
+    if (tierConfig) {
+      trackConversion('purchase', {
+        value: tierConfig.price,
+        currency: 'USD',
+        transactionId: newOrderNumber,
+        items: [{
+          id: session?.tier || 'classic',
+          name: `${tierConfig.name} Puzzle`,
+          price: tierConfig.price,
+          quantity: 1
+        }]
+      })
+    }
+    
     setSession(prev => {
       if (!prev) return prev
       return {

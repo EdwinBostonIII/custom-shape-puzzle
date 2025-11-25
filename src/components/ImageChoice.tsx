@@ -73,8 +73,9 @@ export function ImageChoice({
         <button
           onClick={onBack}
           className="mb-6 text-charcoal/60 hover:text-charcoal transition-colors flex items-center gap-1"
+          aria-label="Go back to shape selection"
         >
-          ← Back to Shapes
+          <span aria-hidden="true">←</span> Back to Shapes
         </button>
         {/* Intro */}
         <div className="text-center mb-10">
@@ -88,9 +89,11 @@ export function ImageChoice({
         </div>
 
         {/* Choice Tabs */}
-        <div className="flex justify-center gap-4 mb-8">
+        <div className="flex justify-center gap-4 mb-8" role="radiogroup" aria-label="Choose puzzle style">
           <button
             onClick={() => onImageChoiceChange('photo')}
+            role="radio"
+            aria-checked={imageChoice === 'photo'}
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full border-2 transition-all',
               imageChoice === 'photo'
@@ -98,11 +101,13 @@ export function ImageChoice({
                 : 'border-charcoal/20 text-charcoal/60 hover:border-charcoal/40'
             )}
           >
-            <Camera className="w-5 h-5" />
+            <Camera className="w-5 h-5" aria-hidden="true" />
             Upload Photo
           </button>
           <button
             onClick={() => onImageChoiceChange('comfy-colors')}
+            role="radio"
+            aria-checked={imageChoice === 'comfy-colors'}
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full border-2 transition-all',
               imageChoice === 'comfy-colors'
@@ -110,7 +115,7 @@ export function ImageChoice({
                 : 'border-charcoal/20 text-charcoal/60 hover:border-charcoal/40'
             )}
           >
-            <Palette className="w-5 h-5" />
+            <Palette className="w-5 h-5" aria-hidden="true" />
             Comfy Colors
           </button>
         </div>
@@ -130,6 +135,7 @@ export function ImageChoice({
                 type="file"
                 accept="image/*"
                 className="hidden"
+                aria-label="Upload puzzle photo"
                 onChange={(e) => {
                   const file = e.target.files?.[0]
                   if (file) handleFileSelect(file)
@@ -297,6 +303,7 @@ export function ImageChoice({
             whileTap={canContinue ? { scale: 0.98 } : undefined}
             onClick={onContinue}
             disabled={!canContinue}
+            aria-label={canContinue ? 'Continue to next step' : imageChoice === 'photo' ? 'Please upload a photo to continue' : 'Please assign colors to all shapes to continue'}
             className={cn(
               'px-8 py-4 rounded-full font-medium text-lg transition-all',
               canContinue

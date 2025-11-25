@@ -51,6 +51,9 @@
   --pastel-mint: #C6E8D4;
   --pastel-rose: #F4C5C5;
   --pastel-blue: #A7C5F4;
+  
+  /* Wood stain colors */
+  --burlywood: #DEB887;
 }
 
 @theme {
@@ -58,6 +61,7 @@
   --color-foreground: var(--foreground);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
+  --color-burlywood: var(--burlywood);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
@@ -144,6 +148,11 @@ html {
   
   .font-handwritten {
     font-family: var(--font-caveat), cursive;
+  }
+  
+  /* Wood stain background - default fallback color */
+  .wood-stain-bg {
+    background-color: #DEB887;
   }
   
   .tracking-display {

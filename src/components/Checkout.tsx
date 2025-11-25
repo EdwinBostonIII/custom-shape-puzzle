@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { ArrowLeft, Check, Truck, Shield, Clock } from '@phosphor-icons/react'
+import { ArrowLeft, Check, Truck, Shield, Clock, Lock, Heart, AppleLogo, GoogleLogo, CreditCard } from '@phosphor-icons/react'
 import { PuzzleSession, ShippingInfo } from '@/lib/types'
 import { PUZZLE_TIERS, WOOD_STAINS, calculateTotal, getEstimatedDeliveryDate } from '@/lib/constants'
 import { toast } from 'sonner'
 import { ShapeIcon } from './ShapeIcon'
+import { RiskReversal, OrderValueProgress, DeliveryCountdown, CheckoutTrustStrip } from './TrustSignals'
+import { cn } from '@/lib/utils'
 
 export interface CheckoutProps {
   session: PuzzleSession
@@ -18,6 +20,8 @@ export interface CheckoutProps {
 export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
   const [formData, setFormData] = useState<Partial<ShippingInfo>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showManualForm, setShowManualForm] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
 
   const tierConfig = PUZZLE_TIERS.find(t => t.id === session.tier)
   const pricing = calculateTotal(session.tier, {
@@ -28,8 +32,22 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
   const selectedStain = WOOD_STAINS.find(s => s.id === session.woodStain)
   const estimatedDelivery = getEstimatedDeliveryDate()
 
+  // Check if device supports touch for mobile optimization
+  const isTouchDevice = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+
   const handleInputChange = (field: keyof ShippingInfo, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
+  }
+
+  // Express checkout handlers (placeholders for payment integration)
+  const handleApplePay = async () => {
+    toast.info('Apple Pay integration coming soon!')
+    // In production: integrate with Stripe/Apple Pay
+  }
+
+  const handleGooglePay = async () => {
+    toast.info('Google Pay integration coming soon!')
+    // In production: integrate with Stripe/Google Pay
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -83,7 +101,61 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
 
           <div className="grid gap-8 lg:grid-cols-[1fr_380px]">
             {/* Form Section */}
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-6">
+              {/* Express Checkout - Mobile Commerce Best Practice */}
+              <Card className="border-2 border-terracotta/30 bg-terracotta/5">
+                <CardHeader className="pb-3">
+                  <CardTitle className="font-display text-lg flex items-center gap-2">
+                    <span className="text-terracotta">⚡</span> Express Checkout
+                  </CardTitle>
+                  <p className="text-sm text-charcoal/60">Complete your order in one tap</p>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleApplePay}
+                      className={cn(
+                        "h-14 bg-black text-white hover:bg-black/90 border-black flex items-center justify-center gap-2",
+                        isTouchDevice ? "min-h-[56px]" : "" // 44px+ touch target per Apple HIG
+                      )}
+                      aria-label="Pay with Apple Pay"
+                    >
+                      <AppleLogo size={24} weight="fill" aria-hidden="true" />
+                      <span className="font-medium">Pay</span>
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={handleGooglePay}
+                      className={cn(
+                        "h-14 bg-white hover:bg-gray-50 border-stone flex items-center justify-center gap-2",
+                        isTouchDevice ? "min-h-[56px]" : ""
+                      )}
+                      aria-label="Pay with Google Pay"
+                    >
+                      <GoogleLogo size={24} weight="bold" className="text-[#4285F4]" aria-hidden="true" />
+                      <span className="font-medium text-charcoal">Pay</span>
+                    </Button>
+                  </div>
+                  <p className="text-xs text-center text-charcoal/50">
+                    Shipping address saved in your wallet
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Divider */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-stone" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-cream px-4 text-charcoal/50">or continue with details</span>
+                </div>
+              </div>
+
+              <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <Card className="border-2 border-stone">
                 <CardHeader>
                   <CardTitle className="font-display">Shipping Information</CardTitle>
@@ -176,21 +248,27 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                 </CardContent>
               </Card>
 
-              {/* Trust Indicators */}
+              {/* Trust Indicators - Enhanced with research-backed elements */}
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center p-4 bg-white rounded-xl border border-stone">
-                  <Truck size={24} className="mx-auto mb-2 text-sage" weight="duotone" />
-                  <p className="text-xs font-medium text-charcoal">Free Shipping</p>
+                  <Lock size={24} className="mx-auto mb-2 text-sage" weight="duotone" />
+                  <p className="text-xs font-medium text-charcoal">Secure Checkout</p>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl border border-stone">
                   <Shield size={24} className="mx-auto mb-2 text-sage" weight="duotone" />
                   <p className="text-xs font-medium text-charcoal">30-Day Guarantee</p>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl border border-stone">
-                  <Clock size={24} className="mx-auto mb-2 text-sage" weight="duotone" />
-                  <p className="text-xs font-medium text-charcoal">Ships in 2 Weeks</p>
+                  <Truck size={24} className="mx-auto mb-2 text-sage" weight="duotone" />
+                  <p className="text-xs font-medium text-charcoal">Free Shipping</p>
                 </div>
               </div>
+
+              {/* Order Value Progress - Encourage upgrade */}
+              <OrderValueProgress currentValue={pricing.total} />
+
+              {/* Risk Reversal - Reduce purchase anxiety */}
+              <RiskReversal />
 
               <Button 
                 type="submit" 
@@ -205,7 +283,8 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                 By placing your order, you agree to our Terms of Service and Privacy Policy.
                 Your data is encrypted and never shared. <a href="/privacy" className="underline">Learn more</a>
               </p>
-            </form>
+              </form>
+            </div>
 
             {/* Order Summary Sidebar */}
             <div className="space-y-6">
@@ -215,20 +294,15 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {/* Puzzle Preview */}
-                  <div 
-                    className="grid grid-cols-5 gap-2 p-4 rounded-xl"
-                    style={{ backgroundColor: selectedStain?.hex || '#DEB887' }}
-                  >
-                    {session.selectedShapes.slice(0, 10).map((shapeId, index) => {
-                      return (
-                        <div 
-                          key={index}
-                          className="aspect-square rounded-lg bg-white/90 flex items-center justify-center shadow-sm"
-                        >
-                          <ShapeIcon shape={shapeId} className="h-6 w-6" />
-                        </div>
-                      )
-                    })}
+                  <div className="grid grid-cols-5 gap-2 p-4 rounded-xl bg-burlywood">
+                    {session.selectedShapes.slice(0, 10).map((shapeId, index) => (
+                      <div 
+                        key={index}
+                        className="aspect-square rounded-lg bg-white/90 flex items-center justify-center shadow-sm"
+                      >
+                        <ShapeIcon shape={shapeId} className="h-6 w-6" />
+                      </div>
+                    ))}
                   </div>
 
                   {/* Order Details */}

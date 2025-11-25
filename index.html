@@ -11,7 +11,21 @@
     <meta name="description" content="Transform your favorite memories into handcrafted wooden puzzles. Choose from 100+ meaningful shapes. Perfect for couples, anniversaries, and milestone moments. Ships free in 2 weeks." />
     <meta name="keywords" content="custom puzzle, wooden puzzle, anniversary gift, couple puzzle, personalized keepsake, handcrafted gift, heirloom puzzle, laser engraved, custom wooden gift" />
     <meta name="author" content="Interlock" />
-    <meta name="theme-color" content="#E07A5F" />
+    <meta name="theme-color" content="#D97757" />
+
+    <!-- PWA & Mobile Optimization -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Interlock" />
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+    
+    <!-- iOS Splash Screens -->
+    <link rel="apple-touch-startup-image" href="/splash/splash-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)" />
+    <link rel="apple-touch-startup-image" href="/splash/splash-750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" />
+    <link rel="apple-touch-startup-image" href="/splash/splash-1242x2208.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" />
+    <link rel="apple-touch-startup-image" href="/splash/splash-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -64,6 +78,21 @@
 <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('[App] Service Worker registered:', registration.scope);
+            })
+            .catch((error) => {
+              console.log('[App] Service Worker registration failed:', error);
+            });
+        });
+      }
+    </script>
 </body>
 
 </html>

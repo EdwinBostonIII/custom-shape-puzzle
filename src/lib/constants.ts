@@ -4,13 +4,19 @@ import { Shape, OccasionPack, WoodStainColor, ShapeCategory, TierConfig, PuzzleT
 // PUZZLE TIERS - Premium positioning per investor feedback ($149-199 flagship)
 // ============================================================================
 
+// Pricing validated against competitors:
+// - Jigsaw2order: $35-46 (photo puzzles, cardboard)
+// - PuzzleYOU: $29-49 standard, $59-69 premium
+// - INTERLOCK: Premium tier justified by Baltic birch, custom shapes, hint cards
+// Hero tier ($99) positioned for accessible entry while maintaining premium positioning
+
 export const PUZZLE_TIERS: TierConfig[] = [
   {
     id: 'essential',
     name: 'Essential',
     pieces: 100,
     shapes: 5,
-    price: 79,
+    price: 89,
     hintCards: 3,
     description: 'A meaningful gesture that tells your story',
   },
@@ -19,7 +25,7 @@ export const PUZZLE_TIERS: TierConfig[] = [
     name: 'Classic',
     pieces: 250,
     shapes: 7,
-    price: 129,
+    price: 99,
     hintCards: 4,
     description: 'Our most popular—perfect balance of depth and discovery',
     isHero: true,
@@ -29,7 +35,7 @@ export const PUZZLE_TIERS: TierConfig[] = [
     name: 'Grand',
     pieces: 500,
     shapes: 10,
-    price: 179,
+    price: 149,
     hintCards: 5,
     description: 'For relationships that deserve a bigger canvas',
   },
@@ -38,7 +44,7 @@ export const PUZZLE_TIERS: TierConfig[] = [
     name: 'Heirloom',
     pieces: 1000,
     shapes: 15,
-    price: 249,
+    price: 199,
     hintCards: 6,
     description: 'A legacy piece—museum quality, generational keepsake',
   },

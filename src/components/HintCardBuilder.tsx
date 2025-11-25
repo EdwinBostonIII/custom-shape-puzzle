@@ -177,8 +177,9 @@ export function HintCardBuilder({
         <button
           onClick={onBack}
           className="mb-6 text-charcoal/60 hover:text-charcoal transition-colors flex items-center gap-1"
+          aria-label="Go back to design step"
         >
-          ← Back to Design
+          <span aria-hidden="true">←</span> Back to Design
         </button>
         {/* Intro */}
         <div className="text-center mb-10">
@@ -205,6 +206,8 @@ export function HintCardBuilder({
               <button
                 onClick={() => setExpandedCard(expandedCard === card.id ? null : card.id)}
                 className="w-full flex items-center justify-between p-4 hover:bg-cream/50 transition-colors"
+                aria-expanded={expandedCard === card.id}
+                aria-controls={`card-content-${card.id}`}
               >
                 <div className="flex items-center gap-3">
                   <span className="w-8 h-8 rounded-full bg-terracotta/10 text-terracotta flex items-center justify-center text-sm font-medium">
@@ -217,6 +220,7 @@ export function HintCardBuilder({
                     onClick={(e) => e.stopPropagation()}
                     className="font-medium text-charcoal bg-transparent border-none focus:outline-none focus:ring-0"
                     placeholder="Card title..."
+                    aria-label={`Title for hint card ${cardIndex + 1}`}
                   />
                 </div>
                 <div className="flex items-center gap-2">
@@ -244,10 +248,13 @@ export function HintCardBuilder({
               <AnimatePresence>
                 {expandedCard === card.id && (
                   <motion.div
+                    id={`card-content-${card.id}`}
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
                     className="border-t border-charcoal/10"
+                    role="region"
+                    aria-labelledby={`card-header-${card.id}`}
                   >
                     <div className="p-4 space-y-4">
                       {card.prompts.map((prompt, promptIndex) => (
@@ -301,8 +308,14 @@ export function HintCardBuilder({
                               placeholder="Your answer..."
                               className="w-full px-4 py-2 rounded-lg border border-charcoal/20 focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-transparent"
                               maxLength={prompt.characterLimit}
+                              aria-label={`Answer for ${prompt.type} prompt: ${prompt.template}`}
+                              aria-describedby={`char-limit-${prompt.id}`}
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-charcoal/40">
+                            <span 
+                              id={`char-limit-${prompt.id}`}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-charcoal/40"
+                              aria-live="polite"
+                            >
                               {prompt.userInput.length}/{prompt.characterLimit}
                             </span>
                           </div>
@@ -364,6 +377,7 @@ export function HintCardBuilder({
             whileTap={{ scale: 0.98 }}
             onClick={onContinue}
             className="bg-terracotta text-white px-8 py-4 rounded-full font-medium text-lg shadow-lg hover:shadow-xl transition-shadow"
+            aria-label={`Continue with ${filledPromptCount} of ${totalPromptCount} prompts filled`}
           >
             Continue
           </motion.button>

@@ -17,20 +17,21 @@ export function TierSelection({ selectedTier, onSelectTier, onContinue, onBack }
 
   return (
     <div className="min-h-screen bg-cream pt-4">
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
+      <main className="container mx-auto px-4 py-8 max-w-4xl" role="main">
         {/* Back button */}
         <button
           onClick={onBack}
           className="mb-6 text-charcoal/60 hover:text-charcoal transition-colors flex items-center gap-1"
+          aria-label="Go back to home page"
         >
           ← Start Over
         </button>
         
         {/* Intro text */}
         <div className="text-center mb-10">
-          <h2 className="font-display text-3xl md:text-4xl text-charcoal mb-4 tracking-display">
+          <h1 id="tier-selection-heading" className="font-display text-3xl md:text-4xl text-charcoal mb-4 tracking-display">
             How much of your story will you tell?
-          </h2>
+          </h1>
           <p className="text-charcoal/70 max-w-xl mx-auto">
             Each tier lets you select more shapes, creating a richer puzzle that captures 
             more of what makes your relationship unique.
@@ -38,7 +39,15 @@ export function TierSelection({ selectedTier, onSelectTier, onContinue, onBack }
         </div>
 
         {/* Tier Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
+        <div 
+          className="grid md:grid-cols-2 gap-6 mb-8"
+          role="radiogroup"
+          aria-labelledby="tier-selection-heading"
+          aria-describedby="tier-description"
+        >
+          <span id="tier-description" className="sr-only">
+            Select a puzzle tier. Use arrow keys to navigate between options.
+          </span>
           {PUZZLE_TIERS.map((tier, index) => (
             <TierCard
               key={tier.id}
@@ -89,6 +98,7 @@ export function TierSelection({ selectedTier, onSelectTier, onContinue, onBack }
             whileTap={{ scale: 0.98 }}
             onClick={onContinue}
             className="bg-terracotta text-white px-8 py-4 rounded-full font-medium text-lg shadow-lg hover:shadow-xl transition-shadow"
+            aria-label={`Continue with ${selectedTierConfig?.name} tier at $${selectedTierConfig?.price}`}
           >
             Continue with {selectedTierConfig?.name} →
           </motion.button>
@@ -114,9 +124,12 @@ function TierCard({ tier, isSelected, onSelect, index }: TierCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
       onClick={onSelect}
+      role="radio"
+      aria-checked={isSelected}
+      aria-label={`${tier.name}: $${tier.price}, ${tier.pieces} pieces, ${tier.shapes} shapes${tier.isHero ? ', Most Popular' : ''}${qualifiesForFreeCapsule ? ', includes free Anniversary Capsule' : ''}`}
       className={cn(
         'relative p-6 rounded-2xl border-2 text-left transition-all',
-        'hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-terracotta/50',
+        'hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-terracotta/50 focus:ring-offset-2',
         isSelected
           ? 'border-terracotta bg-terracotta/5 shadow-md'
           : 'border-charcoal/10 bg-white hover:border-charcoal/20'
