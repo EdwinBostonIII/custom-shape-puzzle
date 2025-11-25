@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
 import { Check, ArrowLeft, X, Sparkle } from '@phosphor-icons/react'
-import { ShapeIcon } from './ShapeIcon'
+import { ShapeSilhouette } from './ShapeSilhouette'
 import { MotifPreview } from './PuzzlePieceRenderer'
 import { FloatingPuzzlePreview } from './LivePuzzleAssembly'
 import { ShapeType } from '@/lib/types'
@@ -269,8 +269,8 @@ export function ShapeSelection({
                 <Card key={shapeId} className="p-6 border-2 border-stone">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">
-                      <div className="w-20 h-20 bg-white rounded-xl border-2 border-stone flex items-center justify-center">
-                        <ShapeIcon shape={shapeId} className="h-12 w-12" />
+                      <div className="w-20 h-20 bg-white rounded-xl border-2 border-stone flex items-center justify-center p-2">
+                        <ShapeSilhouette shapeId={shapeId} className="w-14 h-14 text-terracotta" />
                       </div>
                     </div>
                     <div className="flex-1 space-y-3">
@@ -464,7 +464,12 @@ export function ShapeSelection({
                       onClick={() => handleShapeClick(shape.id)}
                     >
                       <div className="flex aspect-square flex-col items-center justify-center p-3 bg-white wood-texture-hover">
-                        <ShapeIcon shape={shape.id} className="h-10 w-10 md:h-12 md:w-12 transition-transform duration-300 group-hover:scale-110 relative z-10" />
+                        <div className={cn(
+                          "h-10 w-10 md:h-12 md:w-12 transition-transform duration-300 group-hover:scale-110 relative z-10",
+                          isSelected ? "text-terracotta" : "text-charcoal/80 group-hover:text-terracotta"
+                        )}>
+                          <ShapeSilhouette shapeId={shape.id} />
+                        </div>
                         <p className="mt-2 text-center text-xs font-medium leading-tight text-charcoal relative z-10">{shape.name}</p>
                         <p className="mt-1 text-center text-[10px] text-charcoal/60 leading-tight px-1 relative z-10">{shape.description}</p>
                       </div>

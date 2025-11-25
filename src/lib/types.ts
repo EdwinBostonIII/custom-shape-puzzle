@@ -2,27 +2,35 @@
 // Based on Validated Improvements Master List recommendations
 
 export type ShapeType = 
-  // Flora (5 shapes - curated)
-  | 'rose' | 'sunflower' | 'lotus' | 'tree' | 'leaf-simple'
-  // Fauna (12 shapes - curated)
-  | 'butterfly' | 'fox' | 'dog' | 'cat' | 'owl' | 'whale' | 'turtle' | 'penguin' | 'deer' | 'rabbit' | 'bear' | 'elephant'
-  // Celestial (6 shapes - curated)
-  | 'moon' | 'sun' | 'star' | 'cloud' | 'mountain' | 'wave'
-  // Symbols (6 shapes - curated)
+  // Flora (8 shapes - expanded)
+  | 'rose' | 'sunflower' | 'lotus' | 'tree' | 'leaf-simple' | 'tulip' | 'daisy' | 'cactus'
+  // Fauna (16 shapes - expanded)
+  | 'butterfly' | 'fox' | 'dog' | 'cat' | 'owl' | 'whale' | 'turtle' | 'penguin' 
+  | 'deer' | 'rabbit' | 'bear' | 'elephant' | 'lion' | 'giraffe' | 'panda' | 'koala'
+  // Celestial (8 shapes - expanded)
+  | 'moon' | 'sun' | 'star' | 'cloud' | 'mountain' | 'wave' | 'rainbow' | 'snowflake'
+  // Symbols (10 shapes - expanded)
   | 'heart' | 'infinity' | 'diamond' | 'key' | 'anchor' | 'compass'
-  // Creative & Adventure (11 shapes - curated)
+  | 'crown' | 'clover' | 'peace' | 'yin-yang'
+  // Celebration (8 shapes - NEW category)
+  | 'gift' | 'balloon' | 'cake' | 'champagne' | 'ribbon' | 'confetti' | 'candle' | 'party-hat'
+  // Family & Life (8 shapes - NEW category)  
+  | 'baby' | 'paw-print' | 'handprint' | 'family-tree' | 'home-heart' | 'cradle' | 'stroller' | 'rattle'
+  // Creative & Adventure (14 shapes - expanded)
   | 'camera' | 'music-note' | 'book' | 'coffee' | 'airplane' | 'hot-air-balloon'
-  | 'house' | 'lighthouse' | 'bicycle' | 'feather' | 'ring'
+  | 'house' | 'lighthouse' | 'bicycle' | 'feather' | 'ring' | 'guitar' | 'palette' | 'globe'
+
+export type ShapeCategory = 'flora' | 'fauna' | 'celestial' | 'symbols' | 'celebration' | 'family' | 'adventure'
 
 export interface Shape {
   id: ShapeType
   name: string
-  category: 'flora' | 'fauna' | 'celestial' | 'symbols' | 'adventure'
+  category: ShapeCategory
   description: string
   occasionTags?: OccasionTag[]
 }
 
-export type OccasionTag = 'anniversary' | 'friendship' | 'family' | 'travel' | 'nature' | 'milestone'
+export type OccasionTag = 'anniversary' | 'friendship' | 'family' | 'travel' | 'nature' | 'milestone' | 'baby' | 'wedding' | 'birthday' | 'graduation'
 
 export interface PuzzleSession {
   id: string
