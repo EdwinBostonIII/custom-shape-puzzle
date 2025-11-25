@@ -1,156 +1,375 @@
-# Planning Guide
+# INTERLOCK - Product Requirements Document
 
-Create a one-of-a-kind wooden puzzle using shapes that hold special meaning. Each piece represents a memory, a milestone, or something you love. Together, they form something beautiful to treasure forever.
+## Vision Statement
 
-**Experience Qualities**: 
-1. **Comforting** - The design should feel warm and inviting, like wrapping yourself in a cozy blanket. Every interaction should feel safe, friendly, and thoughtful.
-2. **Meaningful** - Each shape carries emotional weight. The experience of selecting pieces should feel personal and reflective, helping users tell their unique story.
-3. **Effortless** - Despite the deep customization, the flow should feel natural and intuitive, gently guiding users through each decision without overwhelming them.
+INTERLOCK is a relationship intelligence platform that helps couples and best friends architect and express the story of their connection through premium physical artifacts. Our flagship product is the **Narrative Puzzle** — a custom wooden jigsaw where each of the 5-15 chosen shapes repeats throughout the puzzle, and hint cards replace the reference photo to make assembly an emotional journey.
 
-**Complexity Level**: Light Application (multiple features with basic state)
-  - Multi-step workflow with different paths, shared links for collaborative creation, state management across steps, but no user accounts or complex backend requirements.
+---
 
-## Essential Features
+## Product Tiers
 
-### Feature: Puzzle Type Selection
-- **Functionality**: User selects from three puzzle types: For Couples & Friends ($65), Just for You ($65), or For Little Ones ($85)
-- **Purpose**: Helps users choose the right creation path with clear, friendly language that emphasizes meaning over transaction
-- **Trigger**: Landing on homepage
-- **Progression**: Read welcoming hero text → View three beautifully presented options → Click puzzle type card → Navigate to shape selection
-- **Success criteria**: Clear emotional appeal, pricing feels secondary to meaning, smooth animated navigation to next step
+| Tier | Pieces | Shapes | Price | Target Margin |
+|------|--------|--------|-------|---------------|
+| **Essential** | 50 | 5 | $45 | 72% |
+| **Classic** (Hero) | 100 | 7 | $69 | 75% |
+| **Grand** | 150 | 10 | $99 | 77% |
+| **Heirloom** | 250 | 15 | $159 | 78% |
 
-### Feature: Collaborative Shape Selection (Couples/Friends)
-- **Functionality**: Primary user selects 5 shapes (each with meaningful descriptions), generates shareable link, partner selects 5 shapes, both selections merge
-- **Purpose**: Creates shared creation experience where each person contributes shapes that represent their perspective on the relationship
-- **Trigger**: Selecting "For Couples & Friends" option
-- **Progression**: View shape gallery with descriptions → Select 5 pieces → Generate/copy share link → Send to partner → Partner opens link and selects 5 → Primary user sees completion → Continue to template
-- **Success criteria**: Descriptions clearly visible, link copies successfully, real-time update when partner completes, visual feedback for selection progress (5/5 shapes), all pieces solid and able to interlock
+Each shape repeats proportionally across the puzzle (e.g., Essential = 10 pieces per shape, Classic ≈ 14 pieces per shape).
 
-### Feature: Solo Shape Selection
-- **Functionality**: User independently selects all 10 puzzle piece shapes, each with a meaningful description (romantic, friendship, or childhood meaning)
-- **Purpose**: Personal customization that helps users reflect on what matters most in their life
-- **Trigger**: Selecting "Just for You" option
-- **Progression**: View shape gallery organized by category → Read descriptions under each shape → Select 10 pieces (progress indicator) → Continue to template
-- **Success criteria**: Descriptions visible under each piece, clear count of selected shapes, prevents continuing until 10 selected, pieces displayed in pastel colors
+---
 
-### Feature: Children's Shape Selection
-- **Functionality**: Similar to solo but with child-friendly shape options (larger, simpler), each with playful descriptions
-- **Purpose**: Age-appropriate puzzle creation that captures childhood wonder with safety features
-- **Trigger**: Selecting "For Little Ones" option  
-- **Progression**: View child-themed shape gallery with descriptions → Select 10 pieces → Continue to template
-- **Success criteria**: Distinct visual presentation, child-appropriate shapes visible with playful descriptions, all pieces solid with no disconnected parts
+## Core User Flows
 
-### Feature: Template Preview
-- **Functionality**: Displays custom puzzle template using selected shapes arranged attractively
-- **Purpose**: Validates shape choices before committing to design phase
-- **Trigger**: Completing shape selection
-- **Progression**: View generated template → Verify satisfaction → Continue or go back to modify → Proceed to design
-- **Success criteria**: Template clearly shows all selected shapes, back button allows modification
+### Flow 1: Solo Creation
+1. **Tier Selection** → Choose puzzle size (Essential/Classic/Grand/Heirloom)
+2. **Shape Selection** → Pick shapes based on tier limit
+3. **Memory Engine** → Add milestones, inside jokes, symbols (optional)
+4. **Image Choice** → Photo upload OR Comfy Colors
+5. **Hint Card Builder** → Create prompts that replace reference photo
+6. **Preview & Checkout** → Review puzzle, add packaging upgrades
+7. **Confirmation** → Order summary with production timeline
 
-### Feature: Design Choice (Photo vs. Colors)
-- **Functionality**: Toggle between uploading reference photo or choosing colors per-piece
-- **Purpose**: Provides creative flexibility for different use cases
-- **Trigger**: Continuing from template preview
-- **Progression**: Choose photo/color mode → [Photo: upload image + preview] OR [Color: select color for each shape] → Continue to checkout
-- **Success criteria**: Clear mode switching, photo upload with preview, color picker for each piece, visual representation of final design
+### Flow 2: Couples/BFFs Collaboration
+1. **Person A**: Selects tier → picks HALF the shapes → adds meanings → generates shareable link
+2. **Person B**: Opens link → sees remaining shapes (A's choices removed) → picks their half → adds meanings
+3. **Merge**: System combines both selections → both can contribute to Memory Engine
+4. **Continue**: Photo/Colors → Hint Cards → Checkout
 
-### Feature: Checkout & Order Confirmation
-- **Functionality**: Collect shipping/billing info, process $65 or $85 payment, confirm order
-- **Purpose**: Complete transaction and set delivery expectations
-- **Trigger**: Finalizing design
-- **Progression**: Enter shipping address → Enter payment details → Review order summary → Submit → View confirmation with order number
-- **Success criteria**: Form validation, clear pricing display, confirmation page with next steps
+---
 
-## Edge Case Handling
+## Memory Engine (Layer 1)
 
-- **Partner never completes selection**: Display "waiting for partner" state with option to send reminder or switch to solo mode
-- **Invalid share link**: Show friendly error message with option to start new puzzle
-- **Photo upload fails**: Display error with retry option and file size/format requirements
-- **Incomplete shape selection**: Disable continue button until required number reached
-- **Browser refresh mid-creation**: Persist state using KV storage so users don't lose progress
-- **No shapes available**: Show "coming soon" or contact support message
-- **Payment fails**: Return to payment form with clear error message
+The Memory Engine stores relationship data that powers hint card suggestions and future product personalization.
 
-## Design Direction
+### Data Categories
 
-The design should feel warm, comforting, and genuine. Like receiving a handwritten letter from someone you love. It should balance whimsy (celebrating creativity and connection) with sincerity (this is a treasured keepsake). The interface should be spacious and gentle, with soft colors and rounded edges that invite touch. Every element should feel handcrafted and considered, never corporate or transactional. The experience should wrap users in emotional warmth while making the technical process feel effortless.
+#### Milestones Registry
+```typescript
+interface Milestone {
+  id: string
+  date: string           // "2019-06-15"
+  title: string          // "First Date"
+  description?: string   // "Coffee at Blue Bottle"
+  category: 'first' | 'anniversary' | 'travel' | 'home' | 'achievement' | 'other'
+}
+```
 
-## Color Selection
+#### Inside Jokes Registry
+```typescript
+interface InsideJoke {
+  id: string
+  phrase: string         // "That's so fetch"
+  origin?: string        // "Movie night, March 2020"
+  tags?: string[]        // ["movies", "humor"]
+}
+```
 
-**Triadic color scheme** - Using three equally-spaced colors to create vibrancy and energy while maintaining balance. The palette celebrates creativity and joy with a mature, premium feel.
+#### Shared Symbols Library
+```typescript
+interface SharedSymbol {
+  id: string
+  shapeId: ShapeType     // Links to puzzle shape
+  meaning: string        // "The turtle = our slow morning walks"
+  dateAdded: string
+}
+```
 
-- **Primary Color**: Warm Coral `oklch(0.72 0.15 25)` - Communicates warmth, affection, and creativity; perfect for a gift-centered product
-- **Secondary Colors**: 
-  - Soft Sage Green `oklch(0.75 0.08 145)` - Provides calm, natural grounding
-  - Muted Lavender `oklch(0.70 0.10 285)` - Adds sophistication and playfulness
-- **Accent Color**: Vibrant Amber `oklch(0.75 0.18 65)` - High-energy call-to-action color for important buttons and highlights
-- **Foreground/Background Pairings**:
-  - Background (Cream White `oklch(0.97 0.01 85)`): Warm Coral text `oklch(0.35 0.12 25)` - Ratio 7.2:1 ✓
-  - Card (Pure White `oklch(0.99 0 0)`): Deep Charcoal `oklch(0.25 0.01 260)` - Ratio 14.8:1 ✓
-  - Primary (Warm Coral `oklch(0.72 0.15 25)`): White text `oklch(0.99 0 0)` - Ratio 5.1:1 ✓
-  - Secondary (Soft Sage `oklch(0.75 0.08 145)`): Deep Charcoal `oklch(0.25 0.01 260)` - Ratio 7.8:1 ✓
-  - Accent (Vibrant Amber `oklch(0.75 0.18 65)`): Deep Charcoal `oklch(0.25 0.01 260)` - Ratio 7.5:1 ✓
-  - Muted (Pale Lavender `oklch(0.92 0.03 285)`): Medium Gray `oklch(0.45 0.01 260)` - Ratio 6.1:1 ✓
+---
 
-## Font Selection
+## Hint Card System
 
-Typefaces should feel friendly yet refined—approachable without being childish. A rounded sans-serif for headings conveys warmth, while a clean geometric sans for body text ensures readability.
+Hint cards replace the reference photo, transforming puzzle assembly into an emotional scavenger hunt.
 
-- **Typographic Hierarchy**: 
-  - H1 (Hero/Page Titles): Outfit Bold / 48px / -0.02em letter spacing / 1.1 line height
-  - H2 (Section Headers): Outfit Semibold / 32px / -0.01em letter spacing / 1.2 line height
-  - H3 (Card Titles): Outfit Medium / 24px / 0 letter spacing / 1.3 line height
-  - Body (Primary Text): Inter Regular / 16px / 0 letter spacing / 1.6 line height
-  - Button Labels: Inter Semibold / 14px / 0.01em letter spacing / 1.4 line height
-  - Captions: Inter Regular / 14px / 0 letter spacing / 1.5 line height
+### Card Structure
+- **3-6 cards** per puzzle (based on tier)
+- Each card has **multiple prompts** that describe a section
+- Prompts are emotional, not spatial ("pieces that remind you of our first apartment")
 
-## Animations
+### Builder Interface
+```typescript
+interface HintCard {
+  id: string
+  title: string                    // "Our Beginning"
+  prompts: HintPrompt[]
+  shapesReferenced?: ShapeType[]   // Which shapes this card hints at
+}
 
-Animations should feel organic and delightful—like puzzle pieces sliding into place. Use motion to guide attention through the multi-step flow and celebrate completions. Balance should lean toward subtle functionality with occasional "wow" moments (partner completing their selection, template generation).
+interface HintPrompt {
+  type: 'fill-in-blank' | 'memory' | 'emotion' | 'location'
+  template: string                 // "The place where we ____"
+  userInput: string                // "first said I love you"
+  characterLimit: number           // 50-100 chars
+}
+```
 
-- **Purposeful Meaning**: Transitions between steps feel like forward progress; shape selections have satisfying "snap" feedback; collaborative completion triggers celebratory animation
-- **Hierarchy of Movement**: 
-  - High priority: Shape selection feedback, step transitions, partner completion notification
-  - Medium priority: Button hovers, card reveals, progress indicators
-  - Low priority: Decorative background elements, subtle micro-interactions
+### Streaming Examples (Live in Builder)
+When user focuses a prompt field, stream example completions:
+- "first met" → "had our first fight" → "realized we were meant to be"
+- "you make me feel ____" → "safe" → "understood" → "home"
 
-## Component Selection
+---
 
-- **Components**: 
-  - Cards (shadcn) - For puzzle type selection with hover effects and gradient borders
-  - Button (shadcn) - Primary CTAs with custom coral/amber styling
-  - Progress indicator (shadcn) - Step navigation showing user's position in flow
-  - Dialog (shadcn) - Share link modal with copy functionality
-  - Tabs (shadcn) - Photo vs. Color design choice
-  - Input (shadcn) - Shipping and payment forms
-  - Badge (shadcn) - Shape selection count, price labels
-  - Tooltip (shadcn) - Shape name/description on hover
-  - Toast (sonner) - Link copied, partner completion, order success notifications
+## Image Options
+
+### Option A: Photo Upload
+- Accept JPG/PNG/WEBP, max 20MB
+- AI face detection for quality warnings
+- Crop/zoom interface
+- Preview on puzzle shape
+
+### Option B: Comfy Colors
+Curated muted/earthy palette where each shape type gets ONE consistent color.
+
+```typescript
+const COMFY_PALETTE = [
+  { name: 'Sage', hex: '#9CAF88' },
+  { name: 'Terracotta', hex: '#C67B5C' },
+  { name: 'Dusty Blue', hex: '#8BA5B5' },
+  { name: 'Warm Sand', hex: '#D4C4A8' },
+  { name: 'Soft Plum', hex: '#9B8AA3' },
+  { name: 'Forest', hex: '#4A5D4A' },
+  { name: 'Clay', hex: '#B5846B' },
+  { name: 'Mist', hex: '#B8C4C4' },
+  { name: 'Honey', hex: '#D4A854' },
+  { name: 'Charcoal', hex: '#4A4A4A' },
+  // 15 total for Heirloom tier
+]
+```
+
+### Premium Upgrade: Wood Stains (+$15)
+- Natural Birch
+- Honey Oak  
+- Walnut
+- Ebony
+- Gray Wash
+- White Wash
+
+---
+
+## Packaging Options
+
+### Standard (Included)
+- Kraft box with sleeve
+- Protective tissue
+- Care instructions
+
+### Premium Box (+$12)
+- Magnetic closure rigid box
+- Velvet-touch lining
+- Puzzle assembly mat
+
+### Wax Seal (+$5)
+- Hand-stamped wax seal on ribbon
+- Color options: Gold, Burgundy, Forest, Navy
+
+### Box Patterns (Free Choice)
+- Solid (default)
+- Constellation
+- Botanical line art
+- Geometric minimal
+- Custom initials (coming soon)
+
+---
+
+## Technical Architecture
+
+### State Management
+```typescript
+interface PuzzleSession {
+  id: string
   
-- **Customizations**: 
-  - Shape selector grid (custom) - Interactive gallery with multi-select capability
-  - Puzzle template visualizer (custom) - SVG-based preview of selected shapes arranged
-  - Color picker per shape (custom) - Touch-friendly color selection UI
-  - Collaborative state indicator (custom) - Real-time "waiting for partner" status
+  // Tier & Shapes
+  tier: 'essential' | 'classic' | 'grand' | 'heirloom'
+  selectedShapes: ShapeType[]
+  shapeMeanings?: Record<ShapeType, string>
   
-- **States**: 
-  - Buttons: Default coral with white text → Hover deeper coral with subtle scale → Active pressed down → Disabled pale coral
-  - Shape tiles: Default white border → Hover sage border with lift → Selected amber border with checkmark → Disabled (when count reached) pale gray
-  - Progress steps: Completed sage checkmark → Current coral dot → Upcoming gray outline
+  // Collaboration
+  isCollaborative: boolean
+  collaboratorId?: string
+  personAShapes?: ShapeType[]
+  personBShapes?: ShapeType[]
+  shareLink?: string
   
-- **Icon Selection**: 
-  - Heart (love/couples), Users (friends), Baby (children's), Shapes (shape selection), Image (photo upload), Palette (color choice), ShoppingCart (checkout), Check (completion), Link (share), ArrowRight (navigation)
+  // Memory Engine
+  milestones: Milestone[]
+  insideJokes: InsideJoke[]
+  sharedSymbols: SharedSymbol[]
   
-- **Spacing**: 
-  - Container padding: px-6 md:px-12 lg:px-24
-  - Section gaps: gap-16 md:gap-24
-  - Card padding: p-6 md:p-8
-  - Element gaps: gap-4 (small), gap-6 (medium), gap-8 (large)
-  - Button padding: px-6 py-3 (primary), px-4 py-2 (secondary)
+  // Image
+  imageChoice: 'photo' | 'comfy-colors'
+  photoUrl?: string
+  colorAssignments?: Record<ShapeType, string>
   
-- **Mobile**: 
-  - Hero stacks vertically on mobile with full-width cards
-  - Shape grid: 2 columns mobile → 4 columns tablet → 6 columns desktop
-  - Progress indicator: Compact horizontal scroll mobile → Full horizontal layout desktop
-  - Form fields: Single column mobile → Two column (when appropriate) desktop
-  - Sticky CTA buttons on mobile for easy access to "Continue"
+  // Hint Cards
+  hintCards: HintCard[]
+  
+  // Packaging
+  packaging: {
+    box: 'standard' | 'premium'
+    waxSeal: boolean
+    waxColor?: string
+    pattern: string
+  }
+  
+  // Pricing
+  basePrice: number
+  upgrades: number
+  total: number
+  
+  // Meta
+  createdAt: number
+  updatedAt: number
+}
+```
+
+### Component Hierarchy
+```
+App.tsx
+├── TierSelection.tsx          # NEW: Choose puzzle size
+├── ShapeSelection.tsx         # UPDATED: Tier-aware limits
+├── CollaborationFlow.tsx      # NEW: A→B handoff
+├── MemoryEngine.tsx           # NEW: Milestones/jokes/symbols
+├── ImageChoice.tsx            # UPDATED: Photo or ComfyColors
+├── HintCardBuilder.tsx        # NEW: Prompt builder with streaming
+├── PackagingSelection.tsx     # NEW: Box/seal/pattern
+├── PuzzlePreview.tsx          # UPDATED: 3D-ish wooden render
+├── Checkout.tsx               # UPDATED: Tiered pricing
+└── OrderConfirmation.tsx
+```
+
+---
+
+## API Endpoints (Future)
+
+```
+POST /api/session              # Create new session
+GET  /api/session/:id          # Get session (for collaboration)
+PUT  /api/session/:id          # Update session
+POST /api/session/:id/share    # Generate share link
+POST /api/upload               # Photo upload
+POST /api/checkout             # Stripe checkout
+POST /api/hints/suggest        # AI hint suggestions (future)
+```
+
+---
+
+## Production Specifications
+
+### Materials
+- 3mm Baltic Birch plywood
+- Laser-cut precision
+- Food-safe finish (for stains)
+- Traditional interlocking tabs (not magnetic)
+
+### Timeline
+- Production: 10-14 business days
+- Shipping: 2-5 business days (US)
+- International: 7-14 business days
+
+### Quality Checks
+- Piece fit tolerance: ±0.2mm
+- Finish inspection
+- Packaging integrity
+- Photo reproduction accuracy
+
+---
+
+## Success Metrics
+
+| Metric | Target |
+|--------|--------|
+| Conversion Rate | 3.5% |
+| Average Order Value | $85 |
+| Cart Abandonment | <60% |
+| NPS | >70 |
+| Repeat Purchase | 25% within 12mo |
+| LTV:CAC | 10:1 |
+
+---
+
+## Phase 1 Scope (MVP)
+
+### Included
+- [x] All 4 puzzle tiers with dynamic pricing
+- [x] Shape selection with tier-based limits
+- [x] Solo and Couples/BFFs collaboration flows
+- [x] Full Memory Engine (milestones, jokes, symbols)
+- [x] Photo upload with cropping
+- [x] Comfy Colors palette
+- [x] Hint Card Builder with prompts
+- [x] Packaging selection (box, seal, pattern)
+- [x] Stripe checkout integration
+- [x] Order confirmation with timeline
+- [x] Session persistence (localStorage)
+- [x] Mobile-responsive design
+
+### Deferred
+- [ ] AI hint suggestions (streaming)
+- [ ] Anniversary/occasion reminders
+- [ ] User accounts & order history
+- [ ] Memory Book product
+- [ ] Coordinates Collection
+- [ ] Sound Artifacts
+- [ ] Custom initials on packaging
+- [ ] International shipping calculator
+- [ ] Admin dashboard for orders
+
+---
+
+## Design System
+
+### Colors
+```css
+--cream: #FAF7F2
+--charcoal: #2C2C2C
+--terracotta: #C67B5C
+--sage: #9CAF88
+--dusty-blue: #8BA5B5
+--warm-sand: #D4C4A8
+```
+
+### Typography
+- Headings: Playfair Display (serif)
+- Body: Inter (sans-serif)
+- Accent: Caveat (handwritten, for quotes)
+
+### Principles
+- Premium feel on small-business budget
+- Warm, not cold luxury
+- Personal, not corporate
+- Tactile references (wood grain, paper texture)
+- Emotional copy over functional
+
+---
+
+## Target Audience
+
+### Primary
+- **Romantic Partners** (25-45)
+  - Anniversaries, Valentine's Day, "just because"
+  - Long-distance couples
+  - Newly engaged/married
+
+### Secondary  
+- **Best Friends** (20-35)
+  - Friendship anniversaries
+  - Going-away gifts
+  - Birthday milestones
+
+### NOT Targeting (Phase 1)
+- Children (legal complexity with photo uploads)
+- Corporate/team gifts (future expansion)
+
+---
+
+## Competitive Positioning
+
+| Competitor | Gap We Fill |
+|------------|-------------|
+| Generic photo puzzles | No personalization beyond image |
+| Etsy handmade | Inconsistent quality, long lead times |
+| Shutterfly/Snapfish | Mass-market, no emotional depth |
+| Jiggy | Art-focused, not relationship-focused |
+
+**Our Moat**: Memory Engine + Hint Card system creates emotional depth no competitor offers.

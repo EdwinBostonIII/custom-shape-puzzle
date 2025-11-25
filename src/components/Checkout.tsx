@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ArrowLeft, Check, Truck, Shield, Clock } from '@phosphor-icons/react'
 import { PuzzleSession, ShippingInfo } from '@/lib/types'
-import { PRICING, PUZZLE_SHAPES, WOOD_STAINS, getEstimatedDeliveryDate } from '@/lib/constants'
+import { PUZZLE_TIERS, WOOD_STAINS, calculateTotal, getEstimatedDeliveryDate } from '@/lib/constants'
 import { toast } from 'sonner'
 import { ShapeIcon } from './ShapeIcon'
 
@@ -19,7 +19,12 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
   const [formData, setFormData] = useState<Partial<ShippingInfo>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const price = PRICING.base
+  const tierConfig = PUZZLE_TIERS.find(t => t.id === session.tier)
+  const pricing = calculateTotal(session.tier, {
+    hasWoodStain: session.hasWoodStain,
+    premiumBox: session.packaging?.box === 'premium',
+    waxSeal: session.packaging?.waxSeal
+  })
   const selectedStain = WOOD_STAINS.find(s => s.id === session.woodStain)
   const estimatedDelivery = getEstimatedDeliveryDate()
 
@@ -193,7 +198,7 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                 disabled={isSubmitting}
                 className="w-full px-8 py-6 text-lg"
               >
-                {isSubmitting ? 'Processing...' : `Complete Order — $${price}`}
+                {isSubmitting ? 'Processing...' : `Complete Order — $${pricing.total}`}
               </Button>
 
               <p className="text-xs text-center text-charcoal/50">
@@ -228,13 +233,27 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                   {/* Order Details */}
                   <div className="space-y-3 text-sm">
                     <div className="flex justify-between text-charcoal">
-                      <span>Custom 10-Piece Puzzle</span>
-                      <span className="font-medium">${price}</span>
+                      <span>{tierConfig?.name || 'Classic'} Puzzle ({tierConfig?.pieces || 100} pieces)</span>
+                      <span className="font-medium">${pricing.base}</span>
                     </div>
-                    <div className="flex justify-between text-charcoal/70">
-                      <span>Wood Stain</span>
-                      <span>{selectedStain?.name || 'Natural'}</span>
-                    </div>
+                    {pricing.premiumBox > 0 && (
+                      <div className="flex justify-between text-charcoal/70">
+                        <span>Premium Box</span>
+                        <span>+${pricing.premiumBox}</span>
+                      </div>
+                    )}
+                    {pricing.waxSeal > 0 && (
+                      <div className="flex justify-between text-charcoal/70">
+                        <span>Wax Seal</span>
+                        <span>+${pricing.waxSeal}</span>
+                      </div>
+                    )}
+                    {pricing.woodStain > 0 && (
+                      <div className="flex justify-between text-charcoal/70">
+                        <span>Wood Stain: {selectedStain?.name || 'Natural'}</span>
+                        <span>+${pricing.woodStain}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between text-charcoal/70">
                       <span>Shipping</span>
                       <span className="text-sage font-medium">Free</span>
@@ -242,7 +261,7 @@ export function Checkout({ session, onBack, onComplete }: CheckoutProps) {
                     <hr className="border-stone" />
                     <div className="flex justify-between text-lg font-bold text-charcoal">
                       <span>Total</span>
-                      <span>${price}</span>
+                      <span>${pricing.total}</span>
                     </div>
                   </div>
 

@@ -2,11 +2,24 @@ import { useEffect, useState, lazy, Suspense } from 'react'
 import { Toaster } from 'sonner'
 import { HomePage } from '@/components/HomePage'
 import { ProgressIndicator } from '@/components/ProgressIndicator'
-import { PuzzleSession, ShapeType, ShippingInfo, WoodStainColor } from '@/lib/types'
+import { 
+  PuzzleSession, 
+  ShapeType, 
+  ShippingInfo, 
+  PuzzleTier,
+  ImageChoice as ImageChoiceType,
+  HintCard,
+  PackagingOptions,
+  WoodStainColor
+} from '@/lib/types'
+import { createDefaultSession, getTierConfig } from '@/lib/constants'
 
 // Lazy load heavy components for better initial load performance
+const TierSelection = lazy(() => import('@/components/TierSelection').then(m => ({ default: m.TierSelection })))
 const ShapeSelection = lazy(() => import('@/components/ShapeSelection').then(m => ({ default: m.ShapeSelection })))
-const ColorSelection = lazy(() => import('@/components/ColorSelection').then(m => ({ default: m.ColorSelection })))
+const ImageChoice = lazy(() => import('@/components/ImageChoice').then(m => ({ default: m.ImageChoice })))
+const HintCardBuilder = lazy(() => import('@/components/HintCardBuilder').then(m => ({ default: m.HintCardBuilder })))
+const PackagingSelection = lazy(() => import('@/components/PackagingSelection').then(m => ({ default: m.PackagingSelection })))
 const Checkout = lazy(() => import('@/components/Checkout').then(m => ({ default: m.Checkout })))
 const OrderConfirmation = lazy(() => import('@/components/OrderConfirmation').then(m => ({ default: m.OrderConfirmation })))
 
@@ -15,15 +28,15 @@ function LoadingFallback() {
   return (
     <div className="min-h-screen bg-cream flex items-center justify-center">
       <div className="text-center space-y-4">
-        <div className="spinner" style={{ width: '48px', height: '48px', borderWidth: '4px', color: 'var(--terracotta)' }} />
+        <div className="w-12 h-12 border-4 border-terracotta/30 border-t-terracotta rounded-full animate-spin mx-auto" />
         <p className="text-charcoal/60 font-light">Loading...</p>
       </div>
     </div>
   )
 }
 
-// Simplified 4-step flow per master list: Shapes → Stain → Checkout → Confirmation
-type Step = 'home' | 'shapes' | 'stain' | 'checkout' | 'confirmation'
+// New flow: Home → Tier → Shapes → Image → HintCards → Packaging → Checkout → Confirmation
+type Step = 'home' | 'tier' | 'shapes' | 'image' | 'hints' | 'packaging' | 'checkout' | 'confirmation'
 
 function generateId() {
   const array = new Uint32Array(2)
@@ -78,13 +91,21 @@ function App() {
     const savedSession = loadSession()
     if (savedSession && savedSession.selectedShapes.length > 0) {
       setSession(savedSession)
-      // Resume where user left off
-      if (savedSession.woodStain) {
+      // Resume where user left off based on progress
+      if (savedSession.orderComplete) {
+        setStep('confirmation')
+      } else if (savedSession.shippingInfo) {
         setStep('checkout')
-      } else if (savedSession.selectedShapes.length === 10) {
-        setStep('stain')
-      } else {
+      } else if (savedSession.hintCards.length > 0) {
+        setStep('packaging')
+      } else if (savedSession.imageChoice && (savedSession.photoUrl || savedSession.colorAssignments)) {
+        setStep('hints')
+      } else if (savedSession.selectedShapes.length >= getTierConfig(savedSession.tier).shapes) {
+        setStep('image')
+      } else if (savedSession.tier) {
         setStep('shapes')
+      } else {
+        setStep('tier')
       }
     }
   }, [])
@@ -97,13 +118,16 @@ function App() {
   }, [session])
 
   const handleStart = () => {
-    const newSession: PuzzleSession = {
-      id: generateId(),
-      selectedShapes: [],
-      woodStain: 'natural',
-      createdAt: Date.now(),
-    }
+    const newSession = createDefaultSession(generateId())
     setSession(newSession)
+    setStep('tier')
+  }
+
+  const handleTierSelect = (tier: PuzzleTier) => {
+    setSession(prev => prev ? { ...prev, tier, updatedAt: Date.now() } : prev)
+  }
+
+  const handleTierContinue = () => {
     setStep('shapes')
   }
 
@@ -114,24 +138,46 @@ function App() {
         ...prev,
         selectedShapes: shapes,
         shapeMeanings: meanings,
+        updatedAt: Date.now(),
       }
     })
-    setStep('stain')
+    setStep('image')
   }
 
-  const handleStainComplete = (stain: WoodStainColor) => {
-    setSession(prev => {
-      if (!prev) return prev
-      return {
-        ...prev,
-        woodStain: stain,
-      }
-    })
+  const handleImageChoiceChange = (choice: ImageChoiceType) => {
+    setSession(prev => prev ? { ...prev, imageChoice: choice, updatedAt: Date.now() } : prev)
+  }
+
+  const handlePhotoUpload = (url: string) => {
+    setSession(prev => prev ? { ...prev, photoUrl: url, updatedAt: Date.now() } : prev)
+  }
+
+  const handleColorAssign = (assignments: Partial<Record<ShapeType, string>>) => {
+    setSession(prev => prev ? { ...prev, colorAssignments: assignments, updatedAt: Date.now() } : prev)
+  }
+
+  const handleImageContinue = () => {
+    setStep('hints')
+  }
+
+  const handleHintCardsChange = (hintCards: HintCard[]) => {
+    setSession(prev => prev ? { ...prev, hintCards, updatedAt: Date.now() } : prev)
+  }
+
+  const handleHintsContinue = () => {
+    setStep('packaging')
+  }
+
+  const handlePackagingChange = (packaging: PackagingOptions) => {
+    setSession(prev => prev ? { ...prev, packaging, updatedAt: Date.now() } : prev)
+  }
+
+  const handlePackagingContinue = () => {
     setStep('checkout')
   }
 
   const handleCheckoutComplete = (shippingInfo: ShippingInfo) => {
-    const newOrderNumber = `PZ-${Date.now().toString(36).toUpperCase()}`
+    const newOrderNumber = `INT-${Date.now().toString(36).toUpperCase()}`
     setOrderNumber(newOrderNumber)
     setSession(prev => {
       if (!prev) return prev
@@ -139,6 +185,7 @@ function App() {
         ...prev,
         shippingInfo,
         orderComplete: true,
+        updatedAt: Date.now(),
       }
     })
     clearSession()
@@ -159,39 +206,71 @@ function App() {
     <>
       <Toaster position="top-center" />
 
-      {/* Show progress indicator on all steps except home and confirmation */}
-      {step !== 'home' && step !== 'confirmation' && (
-        <ProgressIndicator currentStep={step} />
-      )}
-
       <Suspense fallback={<LoadingFallback />}>
         {step === 'home' && (
           <HomePage onStart={handleStart} />
+        )}
+
+        {step === 'tier' && session && (
+          <TierSelection
+            selectedTier={session.tier}
+            onSelectTier={handleTierSelect}
+            onContinue={handleTierContinue}
+            onBack={handleCreateAnother}
+          />
         )}
 
         {step === 'shapes' && session && (
           <ShapeSelection
             selectedShapes={session.selectedShapes}
             shapeMeanings={session.shapeMeanings}
+            tier={session.tier}
             onComplete={handleShapesComplete}
-            onBack={handleCreateAnother}
+            onBack={() => handleBack('tier')}
           />
         )}
 
-        {step === 'stain' && session && (
-          <ColorSelection
-            selectedColor={session.woodStain}
+        {step === 'image' && session && (
+          <ImageChoice
+            imageChoice={session.imageChoice}
             selectedShapes={session.selectedShapes}
-            shapeMeanings={session.shapeMeanings}
-            onComplete={handleStainComplete}
+            colorAssignments={session.colorAssignments}
+            photoUrl={session.photoUrl}
+            tier={session.tier}
+            onImageChoiceChange={handleImageChoiceChange}
+            onPhotoUpload={handlePhotoUpload}
+            onColorAssign={handleColorAssign}
+            onContinue={handleImageContinue}
             onBack={() => handleBack('shapes')}
+          />
+        )}
+
+        {step === 'hints' && session && (
+          <HintCardBuilder
+            hintCards={session.hintCards}
+            selectedShapes={session.selectedShapes}
+            tier={session.tier}
+            onHintCardsChange={handleHintCardsChange}
+            onContinue={handleHintsContinue}
+            onBack={() => handleBack('image')}
+          />
+        )}
+
+        {step === 'packaging' && session && (
+          <PackagingSelection
+            packaging={session.packaging}
+            tier={session.tier}
+            hasWoodStain={session.hasWoodStain}
+            onPackagingChange={handlePackagingChange}
+            onContinue={handlePackagingContinue}
+            onBack={() => handleBack('hints')}
           />
         )}
 
         {step === 'checkout' && session && (
           <Checkout
             session={session}
-            onBack={() => handleBack('stain')}
+            onBack={() => handleBack('packaging')}
             onComplete={handleCheckoutComplete}
           />
         )}

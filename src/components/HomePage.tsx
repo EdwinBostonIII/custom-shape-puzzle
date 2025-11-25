@@ -2,12 +2,15 @@ import { Gift, ShieldCheck, Truck, Timer, Sparkle } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { PRICING, getEstimatedDeliveryDate } from '@/lib/constants'
+import { PUZZLE_TIERS, getEstimatedDeliveryDate } from '@/lib/constants'
 import { FAQSection } from './FAQSection'
 
 interface HomePageProps {
   onStart: () => void
 }
+
+// Get the minimum price for "From $X" display
+const startingPrice = Math.min(...PUZZLE_TIERS.map(t => t.price))
 
 export function HomePage({ onStart }: HomePageProps) {
   const estimatedDelivery = getEstimatedDeliveryDate()
@@ -26,7 +29,7 @@ export function HomePage({ onStart }: HomePageProps) {
                 Free US Shipping
               </span>
               <Button size="sm" className="rounded-full ripple-effect" onClick={onStart}>
-                Create Yours – ${PRICING.base}
+                Create Yours – From ${startingPrice}
               </Button>
             </div>
           </div>
@@ -47,7 +50,7 @@ export function HomePage({ onStart }: HomePageProps) {
             <div className="mb-6 relative z-10">
               {/* Price Badge - Prominent */}
               <Badge className="mb-6 text-lg px-6 py-2 bg-terracotta text-white border-0 shadow-lg" style={{ fontFamily: 'var(--font-fraunces)' }}>
-                ${PRICING.base} · Free Shipping
+                From ${startingPrice} · Free Shipping
               </Badge>
 
               <h1
@@ -222,7 +225,7 @@ export function HomePage({ onStart }: HomePageProps) {
               Ready to create something meaningful?
             </h2>
             <p className="text-charcoal/70 mb-6">
-              ${PRICING.base} · Free shipping · Arrives by {estimatedDelivery}
+              From ${startingPrice} · Free shipping · Arrives by {estimatedDelivery}
             </p>
             <Button
               size="lg"

@@ -1,7 +1,122 @@
-import { Shape, OccasionPack, WoodStainColor, ShapeCategory } from './types'
+import { Shape, OccasionPack, WoodStainColor, ShapeCategory, TierConfig, PuzzleTier, ComfyColor, PackagingOptions } from './types'
 
-// Expanded 72-shape library for custom puzzle creation
-// Focus on meaningful, gift-worthy, laser-cuttable shapes
+// ============================================================================
+// PUZZLE TIERS
+// ============================================================================
+
+export const PUZZLE_TIERS: TierConfig[] = [
+  {
+    id: 'essential',
+    name: 'Essential',
+    pieces: 50,
+    shapes: 5,
+    price: 45,
+    hintCards: 3,
+    description: 'Perfect for a meaningful gesture',
+  },
+  {
+    id: 'classic',
+    name: 'Classic',
+    pieces: 100,
+    shapes: 7,
+    price: 69,
+    hintCards: 4,
+    description: 'Our most popular size',
+    isHero: true,
+  },
+  {
+    id: 'grand',
+    name: 'Grand',
+    pieces: 150,
+    shapes: 10,
+    price: 99,
+    hintCards: 5,
+    description: 'For stories that deserve more space',
+  },
+  {
+    id: 'heirloom',
+    name: 'Heirloom',
+    pieces: 250,
+    shapes: 15,
+    price: 159,
+    hintCards: 6,
+    description: 'A legacy piece to treasure forever',
+  },
+]
+
+export function getTierConfig(tier: PuzzleTier): TierConfig {
+  return PUZZLE_TIERS.find(t => t.id === tier) || PUZZLE_TIERS[1] // Default to Classic
+}
+
+export function getShapesForTier(tier: PuzzleTier): number {
+  return getTierConfig(tier).shapes
+}
+
+export function getCollaboratorShapeCount(tier: PuzzleTier): { personA: number; personB: number } {
+  const total = getShapesForTier(tier)
+  const half = Math.floor(total / 2)
+  return {
+    personA: half,
+    personB: total - half, // Person B gets the remainder if odd
+  }
+}
+
+// ============================================================================
+// COMFY COLORS PALETTE
+// ============================================================================
+
+export const COMFY_PALETTE: ComfyColor[] = [
+  { id: 'sage', name: 'Sage', hex: '#9CAF88' },
+  { id: 'terracotta', name: 'Terracotta', hex: '#C67B5C' },
+  { id: 'dusty-blue', name: 'Dusty Blue', hex: '#8BA5B5' },
+  { id: 'warm-sand', name: 'Warm Sand', hex: '#D4C4A8' },
+  { id: 'soft-plum', name: 'Soft Plum', hex: '#9B8AA3' },
+  { id: 'forest', name: 'Forest', hex: '#4A5D4A' },
+  { id: 'clay', name: 'Clay', hex: '#B5846B' },
+  { id: 'mist', name: 'Mist', hex: '#B8C4C4' },
+  { id: 'honey', name: 'Honey', hex: '#D4A854' },
+  { id: 'charcoal', name: 'Charcoal', hex: '#4A4A4A' },
+  { id: 'blush', name: 'Blush', hex: '#D4A5A5' },
+  { id: 'olive', name: 'Olive', hex: '#7A8B5C' },
+  { id: 'slate', name: 'Slate', hex: '#6B7B8C' },
+  { id: 'rust', name: 'Rust', hex: '#A65D3F' },
+  { id: 'cream', name: 'Cream', hex: '#E8DFD0' },
+]
+
+// ============================================================================
+// PRICING
+// ============================================================================
+
+export const PRICING = {
+  woodStain: 15,      // Premium wood stain upgrade
+  premiumBox: 12,     // Magnetic closure box
+  waxSeal: 5,         // Hand-stamped wax seal
+  shipping: 0,        // Free shipping (US)
+}
+
+export function calculateTotal(
+  tier: PuzzleTier,
+  options: {
+    hasWoodStain?: boolean
+    premiumBox?: boolean
+    waxSeal?: boolean
+  } = {}
+): { base: number; woodStain: number; premiumBox: number; waxSeal: number; subtotal: number; shipping: number; total: number } {
+  const base = getTierConfig(tier).price
+  const woodStain = options.hasWoodStain ? PRICING.woodStain : 0
+  const premiumBox = options.premiumBox ? PRICING.premiumBox : 0
+  const waxSeal = options.waxSeal ? PRICING.waxSeal : 0
+  const subtotal = base + woodStain + premiumBox + waxSeal
+  const shipping = PRICING.shipping
+  const total = subtotal + shipping
+  
+  return { base, woodStain, premiumBox, waxSeal, subtotal, shipping, total }
+}
+
+// ============================================================================
+// SHAPE LIBRARY (72 shapes)
+// ============================================================================
+
 export const PUZZLE_SHAPES: Shape[] = [
   // Flora (8 shapes)
   { id: 'rose', name: 'Rose', category: 'flora', description: 'Love blooms eternal', occasionTags: ['anniversary', 'milestone', 'wedding'] },
@@ -11,7 +126,7 @@ export const PUZZLE_SHAPES: Shape[] = [
   { id: 'leaf-simple', name: 'Leaf', category: 'flora', description: 'Nature walks together', occasionTags: ['nature', 'travel'] },
   { id: 'tulip', name: 'Tulip', category: 'flora', description: 'Spring renewal', occasionTags: ['nature', 'friendship'] },
   { id: 'daisy', name: 'Daisy', category: 'flora', description: 'Simple joys', occasionTags: ['friendship', 'family'] },
-  { id: 'cactus', name: 'Cactus', category: 'flora', description: 'Resilient love', occasionTags: ['friendship', 'milestone'] },
+  { id: 'succulent', name: 'Succulent', category: 'flora', description: 'Resilient love', occasionTags: ['friendship', 'milestone'] },
 
   // Fauna (16 shapes)
   { id: 'butterfly', name: 'Butterfly', category: 'fauna', description: 'Beautiful transformation', occasionTags: ['milestone', 'nature'] },
@@ -53,7 +168,7 @@ export const PUZZLE_SHAPES: Shape[] = [
   { id: 'peace', name: 'Peace', category: 'symbols', description: 'Peaceful hearts', occasionTags: ['friendship', 'family'] },
   { id: 'yin-yang', name: 'Yin Yang', category: 'symbols', description: 'Perfect balance', occasionTags: ['anniversary', 'friendship'] },
 
-  // Celebration (8 shapes - NEW)
+  // Celebration (8 shapes)
   { id: 'gift', name: 'Gift', category: 'celebration', description: 'The joy of giving', occasionTags: ['birthday', 'milestone'] },
   { id: 'balloon', name: 'Balloon', category: 'celebration', description: 'Rising spirits', occasionTags: ['birthday', 'baby'] },
   { id: 'cake', name: 'Cake', category: 'celebration', description: 'Sweet celebrations', occasionTags: ['birthday', 'wedding', 'milestone'] },
@@ -63,7 +178,7 @@ export const PUZZLE_SHAPES: Shape[] = [
   { id: 'candle', name: 'Candle', category: 'celebration', description: 'Make a wish', occasionTags: ['birthday', 'milestone'] },
   { id: 'party-hat', name: 'Party Hat', category: 'celebration', description: 'Celebration mode', occasionTags: ['birthday'] },
 
-  // Family & Life (8 shapes - NEW)
+  // Family & Life (8 shapes)
   { id: 'baby', name: 'Baby', category: 'family', description: 'Precious little one', occasionTags: ['baby', 'family'] },
   { id: 'paw-print', name: 'Paw Print', category: 'family', description: 'Fur family', occasionTags: ['family', 'friendship'] },
   { id: 'handprint', name: 'Handprint', category: 'family', description: 'Small hands, big love', occasionTags: ['family', 'baby'] },
@@ -150,12 +265,6 @@ export const OCCASION_PACKS: OccasionPack[] = [
   },
 ]
 
-// Single price point (no couple/solo distinction per master list)
-export const PRICING = {
-  base: 65,
-  shipping: 0, // Free shipping
-}
-
 // Wood stain options with visual colors for preview
 export const WOOD_STAINS: { id: WoodStainColor; name: string; hex: string; description: string }[] = [
   { id: 'natural', name: 'Natural', hex: '#DEB887', description: 'Light natural birch' },
@@ -177,23 +286,9 @@ export const SHAPE_CATEGORIES: Record<string, string> = {
   adventure: 'Adventures',
 }
 
-// Default color palette for shape coloring (used in design choice)
-export const DEFAULT_COLORS: string[] = [
-  '#EF4444', // red
-  '#F97316', // orange
-  '#EAB308', // yellow
-  '#22C55E', // green
-  '#14B8A6', // teal
-  '#3B82F6', // blue
-  '#8B5CF6', // purple
-  '#EC4899', // pink
-  '#78716C', // stone
-  '#1F2937', // gray-dark
-]
-
 // Production timeline constants
 export const PRODUCTION = {
-  daysToShip: 14, // 2 weeks as stated in master list
+  daysToShip: 14, // 2 weeks
   shippingDays: { min: 2, max: 5 },
 }
 
@@ -207,4 +302,32 @@ export function getEstimatedDeliveryDate(): string {
     month: 'long', 
     day: 'numeric' 
   })
+}
+
+// ============================================================================
+// DEFAULT SESSION
+// ============================================================================
+
+export const DEFAULT_PACKAGING: PackagingOptions = {
+  box: 'standard',
+  waxSeal: false,
+  pattern: 'solid',
+}
+
+export function createDefaultSession(id: string): import('./types').PuzzleSession {
+  return {
+    id,
+    tier: 'classic',
+    selectedShapes: [],
+    isCollaborative: false,
+    milestones: [],
+    insideJokes: [],
+    sharedSymbols: [],
+    imageChoice: 'photo',
+    hasWoodStain: false,
+    hintCards: [],
+    packaging: { ...DEFAULT_PACKAGING },
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
+  }
 }

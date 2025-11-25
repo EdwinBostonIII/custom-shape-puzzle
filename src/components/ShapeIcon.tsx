@@ -36,7 +36,7 @@ export function ShapeIcon({ shape, className = "w-12 h-12", color, style }: Shap
     'leaf-simple': <path d="M20 12c0 5-4 10-8 10-2 0-4-1-5-3 3-1 5-3 6-6 1-2 2-5 2-8 5 1 5 4 5 7z" />,
     'tulip': <><path d="M12 3c-2 0-4 3-4 6 0 2 2 4 4 4s4-2 4-4c0-3-2-6-4-6z"/><path d="M12 13v8m-2-4l2-2 2 2" stroke="currentColor" strokeWidth="1.5" fill="none"/></>,
     'daisy': <><circle cx="12" cy="12" r="3"/>{[0,45,90,135,180,225,270,315].map(a => <ellipse key={a} cx={12 + 5*Math.cos(a*Math.PI/180)} cy={12 + 5*Math.sin(a*Math.PI/180)} rx="2" ry="3" transform={`rotate(${a} ${12 + 5*Math.cos(a*Math.PI/180)} ${12 + 5*Math.sin(a*Math.PI/180)})`}/>)}</>,
-    'cactus': <><path d="M10 21V10c0-3 1-5 2-5s2 2 2 5v11"/><path d="M6 15c0-2 2-3 4-3m8 3c0-2-2-3-4-3" stroke="currentColor" strokeWidth="2" fill="none"/></>,
+    'succulent': <><path d="M12 4c1.5 2 2.5 4 2 7-1.5-1-3-1-4 0-.5-3 .5-5 2-7z"/><path d="M8 9c0 3 1 5 4 6-2 0-4-1-5-3-.5 1.5.5 3 1 3.5C6 15 5 14 5 12c0-1 1.5-2.5 3-3z"/><path d="M16 9c0 3-1 5-4 6 2 0 4-1 5-3 .5 1.5-.5 3-1 3.5 2-.5 3-1.5 3-3.5 0-1-1.5-2.5-3-3z"/><path d="M9 17c1-1 2-1 3-1s2 0 3 1c-1 2-2 3-3 3s-2-1-3-3z"/></>,
     
     // Fauna
     'butterfly': <><path d="M12 12c-2-2-4-3-6-3-2 0-3 2-3 4s1 4 3 4c2 0 4-1 6-3zm0 0c2-2 4-3 6-3 2 0 3 2 3 4s-1 4-3 4c-2 0-4-1-6-3z"/><path d="M12 12v8m0-8V6" stroke="currentColor" strokeWidth="1.5"/><circle cx="12" cy="6" r="1.5"/></>,

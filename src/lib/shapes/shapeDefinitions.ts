@@ -2003,42 +2003,34 @@ export const cherryBlossomShape: BaseShape = {
   area: 2600
 }
 
-export const cactusShape: BaseShape = {
-  id: 'cactus',
-  name: 'Cactus',
+export const succulentShape: BaseShape = {
+  id: 'succulent',
+  name: 'Succulent',
   category: 'flora',
   outlinePath: `
-    M 42 90
-    L 42 55
-    Q 42 50, 35 48
-    L 20 48
-    Q 15 48, 15 42
-    Q 15 35, 20 35
-    L 35 35
-    Q 42 35, 42 28
-    L 42 15
-    Q 42 10, 50 10
-    Q 58 10, 58 15
-    L 58 28
-    Q 58 35, 65 35
-    L 80 35
-    Q 85 35, 85 42
-    Q 85 50, 80 50
-    L 65 50
-    Q 58 50, 58 55
-    L 58 90
-    Q 58 95, 50 95
-    Q 42 95, 42 90
+    M 50 10
+    Q 65 15, 72 28
+    Q 78 38, 75 50
+    Q 80 55, 85 65
+    Q 88 75, 80 82
+    Q 70 88, 60 85
+    Q 55 90, 50 92
+    Q 45 90, 40 85
+    Q 30 88, 20 82
+    Q 12 75, 15 65
+    Q 20 55, 25 50
+    Q 22 38, 28 28
+    Q 35 15, 50 10
     Z
   `,
   anchors: createAnchors([
     { id: 'top', x: 50, y: 10, angle: 270, edge: 'top' },
-    { id: 'left-arm', x: 15, y: 42, angle: 180, edge: 'left' },
-    { id: 'right-arm', x: 85, y: 42, angle: 0, edge: 'right' },
-    { id: 'bottom', x: 50, y: 95, angle: 90, edge: 'base' },
+    { id: 'left', x: 15, y: 65, angle: 180, edge: 'left' },
+    { id: 'right', x: 85, y: 65, angle: 0, edge: 'right' },
+    { id: 'bottom', x: 50, y: 92, angle: 90, edge: 'base' },
   ]),
-  boundingBox: { width: 70, height: 85, offsetX: 15, offsetY: 10 },
-  area: 1800
+  boundingBox: { width: 76, height: 82, offsetX: 12, offsetY: 10 },
+  area: 2200
 }
 
 export const mushroomShape: BaseShape = {
@@ -3613,7 +3605,7 @@ export const SHAPE_DEFINITIONS: Record<string, BaseShape> = {
   lotus: lotusShape,
   sunflower: sunflowerShape,
   cherryBlossom: cherryBlossomShape,
-  cactus: cactusShape,
+  succulent: succulentShape,
   mushroom: mushroomShape,
   
   // Celestial

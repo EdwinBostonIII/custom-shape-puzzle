@@ -1,7 +1,7 @@
 import { Check } from '@phosphor-icons/react'
 
-// Simplified 4-step flow per Validated Improvements Master List
-type Step = 'home' | 'shapes' | 'stain' | 'checkout' | 'confirmation'
+// New 8-step flow for INTERLOCK platform
+type Step = 'home' | 'tier' | 'shapes' | 'image' | 'hints' | 'packaging' | 'checkout' | 'confirmation'
 
 interface ProgressStep {
   id: Step[]
@@ -14,12 +14,14 @@ interface ProgressIndicatorProps {
 }
 
 export function ProgressIndicator({ currentStep }: ProgressIndicatorProps) {
-  // Simplified to 4 visible steps per master list recommendations
+  // Condensed visual progress - show 5 main steps, hide home/confirmation from dots
+  // Group related steps together for cleaner visual
   const steps: ProgressStep[] = [
-    { id: ['shapes'], label: 'Pick Shapes', icon: '✨' },
-    { id: ['stain'], label: 'Choose Stain', icon: '🪵' },
-    { id: ['checkout'], label: 'Checkout', icon: '💳' },
-    { id: ['confirmation'], label: 'Done!', icon: '✓' },
+    { id: ['tier'], label: 'Size', icon: '📐' },
+    { id: ['shapes'], label: 'Shapes', icon: '✨' },
+    { id: ['image', 'hints'], label: 'Design', icon: '🎨' },
+    { id: ['packaging'], label: 'Package', icon: '📦' },
+    { id: ['checkout', 'confirmation'], label: 'Order', icon: '💳' },
   ]
 
   const getCurrentStepIndex = () => {

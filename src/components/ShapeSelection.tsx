@@ -7,8 +7,8 @@ import { Check, ArrowLeft, X, Sparkle } from '@phosphor-icons/react'
 import { ShapeSilhouette } from './ShapeSilhouette'
 import { MotifPreview } from './PuzzlePieceRenderer'
 import { FloatingPuzzlePreview } from './LivePuzzleAssembly'
-import { ShapeType } from '@/lib/types'
-import { PUZZLE_SHAPES, OCCASION_PACKS, SHAPE_CATEGORIES } from '@/lib/constants'
+import { ShapeType, PuzzleTier } from '@/lib/types'
+import { PUZZLE_SHAPES, OCCASION_PACKS, SHAPE_CATEGORIES, getTierConfig } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import confetti from 'canvas-confetti'
@@ -16,18 +16,21 @@ import confetti from 'canvas-confetti'
 interface ShapeSelectionProps {
   selectedShapes: ShapeType[]
   shapeMeanings?: Partial<Record<ShapeType, string>>
+  tier?: PuzzleTier
   onComplete: (shapes: ShapeType[], meanings?: Partial<Record<ShapeType, string>>) => void
   onBack: () => void
 }
 
-const REQUIRED_COUNT = 10
-
 export function ShapeSelection({
   selectedShapes,
   shapeMeanings = {},
+  tier = 'classic',
   onComplete,
   onBack,
 }: ShapeSelectionProps) {
+  const tierConfig = getTierConfig(tier)
+  const REQUIRED_COUNT = tierConfig.shapes
+
   const [selected, setSelected] = useState<ShapeType[]>(selectedShapes)
   const [meanings, setMeanings] = useState<Partial<Record<ShapeType, string>>>(shapeMeanings)
   const [showNotesPhase, setShowNotesPhase] = useState(false)
