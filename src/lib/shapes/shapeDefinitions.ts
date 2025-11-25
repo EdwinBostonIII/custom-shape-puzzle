@@ -2034,11 +2034,13 @@ export function getShapesByCategory(category: string): BaseShape[] {
 }
 
 // Alias mappings for constants.ts shape IDs to actual shape definitions
-// Some IDs in constants.ts use different naming conventions
+// Some IDs in constants.ts use different naming conventions (hyphenated vs camelCase)
 export const SHAPE_ID_ALIASES: Record<string, string> = {
   'leaf-simple': 'leaf',
   'music-note': 'musicNote',
   'hot-air-balloon': 'hotAirBalloon',
+  'gray-wash': 'grayWash',
+  'white-wash': 'whiteWash',
 }
 
 /**
