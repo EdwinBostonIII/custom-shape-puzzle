@@ -1957,6 +1957,801 @@ export const ringShape: BaseShape = {
 }
 
 // ============================================================================
+// NEW FLORA SHAPES
+// ============================================================================
+
+export const cherryBlossomShape: BaseShape = {
+  id: 'cherry-blossom',
+  name: 'Cherry Blossom',
+  category: 'flora',
+  outlinePath: `
+    M 50 15
+    Q 60 10, 68 18
+    Q 75 25, 70 35
+    Q 78 32, 85 38
+    Q 92 45, 88 55
+    Q 84 65, 75 68
+    Q 80 75, 78 85
+    Q 72 92, 62 88
+    Q 55 85, 50 78
+    Q 45 85, 38 88
+    Q 28 92, 22 85
+    Q 20 75, 25 68
+    Q 16 65, 12 55
+    Q 8 45, 15 38
+    Q 22 32, 30 35
+    Q 25 25, 32 18
+    Q 40 10, 50 15
+    Z
+    M 50 35
+    Q 55 40, 55 50
+    Q 55 60, 50 65
+    Q 45 60, 45 50
+    Q 45 40, 50 35
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 12, angle: 270, edge: 'petal' },
+    { id: 'top-right', x: 72, y: 25, angle: 315, edge: 'petal' },
+    { id: 'right', x: 90, y: 50, angle: 0, edge: 'petal' },
+    { id: 'bottom-right', x: 72, y: 85, angle: 45, edge: 'petal' },
+    { id: 'bottom-left', x: 28, y: 85, angle: 135, edge: 'petal' },
+    { id: 'left', x: 10, y: 50, angle: 180, edge: 'petal' },
+    { id: 'top-left', x: 28, y: 25, angle: 225, edge: 'petal' },
+  ]),
+  boundingBox: { width: 84, height: 82, offsetX: 8, offsetY: 9 },
+  area: 2600
+}
+
+export const cactusShape: BaseShape = {
+  id: 'cactus',
+  name: 'Cactus',
+  category: 'flora',
+  outlinePath: `
+    M 42 90
+    L 42 55
+    Q 42 50, 35 48
+    L 20 48
+    Q 15 48, 15 42
+    Q 15 35, 20 35
+    L 35 35
+    Q 42 35, 42 28
+    L 42 15
+    Q 42 10, 50 10
+    Q 58 10, 58 15
+    L 58 28
+    Q 58 35, 65 35
+    L 80 35
+    Q 85 35, 85 42
+    Q 85 50, 80 50
+    L 65 50
+    Q 58 50, 58 55
+    L 58 90
+    Q 58 95, 50 95
+    Q 42 95, 42 90
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 10, angle: 270, edge: 'top' },
+    { id: 'left-arm', x: 15, y: 42, angle: 180, edge: 'left' },
+    { id: 'right-arm', x: 85, y: 42, angle: 0, edge: 'right' },
+    { id: 'bottom', x: 50, y: 95, angle: 90, edge: 'base' },
+  ]),
+  boundingBox: { width: 70, height: 85, offsetX: 15, offsetY: 10 },
+  area: 1800
+}
+
+export const mushroomShape: BaseShape = {
+  id: 'mushroom',
+  name: 'Mushroom',
+  category: 'flora',
+  outlinePath: `
+    M 50 10
+    Q 75 10, 88 25
+    Q 95 38, 90 52
+    Q 82 62, 65 65
+    L 60 65
+    L 60 88
+    Q 60 95, 50 95
+    Q 40 95, 40 88
+    L 40 65
+    L 35 65
+    Q 18 62, 10 52
+    Q 5 38, 12 25
+    Q 25 10, 50 10
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 10, angle: 270, edge: 'cap' },
+    { id: 'right', x: 92, y: 40, angle: 0, edge: 'cap' },
+    { id: 'bottom', x: 50, y: 95, angle: 90, edge: 'stem' },
+    { id: 'left', x: 8, y: 40, angle: 180, edge: 'cap' },
+  ]),
+  boundingBox: { width: 87, height: 85, offsetX: 7, offsetY: 10 },
+  area: 2200
+}
+
+// ============================================================================
+// NEW CELESTIAL SHAPES
+// ============================================================================
+
+export const rainbowShape: BaseShape = {
+  id: 'rainbow',
+  name: 'Rainbow',
+  category: 'celestial',
+  outlinePath: `
+    M 5 80
+    Q 5 30, 50 20
+    Q 95 30, 95 80
+    L 85 80
+    Q 85 42, 50 35
+    Q 15 42, 15 80
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 20, angle: 270, edge: 'arc' },
+    { id: 'right-outer', x: 95, y: 60, angle: 0, edge: 'arc' },
+    { id: 'right-base', x: 90, y: 80, angle: 90, edge: 'base' },
+    { id: 'left-base', x: 10, y: 80, angle: 90, edge: 'base' },
+    { id: 'left-outer', x: 5, y: 60, angle: 180, edge: 'arc' },
+  ]),
+  boundingBox: { width: 90, height: 60, offsetX: 5, offsetY: 20 },
+  area: 2000
+}
+
+export const snowflakeShape: BaseShape = {
+  id: 'snowflake',
+  name: 'Snowflake',
+  category: 'celestial',
+  outlinePath: `
+    M 50 5
+    L 53 25
+    L 65 15
+    L 60 30
+    L 75 25
+    L 65 38
+    L 85 35
+    L 70 45
+    L 90 50
+    L 70 55
+    L 85 65
+    L 65 62
+    L 75 75
+    L 60 70
+    L 65 85
+    L 53 75
+    L 50 95
+    L 47 75
+    L 35 85
+    L 40 70
+    L 25 75
+    L 35 62
+    L 15 65
+    L 30 55
+    L 10 50
+    L 30 45
+    L 15 35
+    L 35 38
+    L 25 25
+    L 40 30
+    L 35 15
+    L 47 25
+    L 50 5
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 5, angle: 270, edge: 'arm' },
+    { id: 'top-right', x: 85, y: 35, angle: 315, edge: 'arm' },
+    { id: 'right', x: 90, y: 50, angle: 0, edge: 'arm' },
+    { id: 'bottom-right', x: 85, y: 65, angle: 45, edge: 'arm' },
+    { id: 'bottom', x: 50, y: 95, angle: 90, edge: 'arm' },
+    { id: 'bottom-left', x: 15, y: 65, angle: 135, edge: 'arm' },
+    { id: 'left', x: 10, y: 50, angle: 180, edge: 'arm' },
+    { id: 'top-left', x: 15, y: 35, angle: 225, edge: 'arm' },
+  ]),
+  boundingBox: { width: 80, height: 90, offsetX: 10, offsetY: 5 },
+  area: 1500
+}
+
+// ============================================================================
+// NEW SYMBOL SHAPES
+// ============================================================================
+
+export const crownShape: BaseShape = {
+  id: 'crown',
+  name: 'Crown',
+  category: 'symbols',
+  outlinePath: `
+    M 10 75
+    L 10 40
+    L 25 55
+    L 40 30
+    L 50 50
+    L 60 30
+    L 75 55
+    L 90 40
+    L 90 75
+    Q 90 85, 50 85
+    Q 10 85, 10 75
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'left-peak', x: 10, y: 40, angle: 225, edge: 'peak' },
+    { id: 'center-left-peak', x: 40, y: 30, angle: 270, edge: 'peak' },
+    { id: 'center-peak', x: 50, y: 50, angle: 270, edge: 'peak' },
+    { id: 'center-right-peak', x: 60, y: 30, angle: 270, edge: 'peak' },
+    { id: 'right-peak', x: 90, y: 40, angle: 315, edge: 'peak' },
+    { id: 'bottom', x: 50, y: 85, angle: 90, edge: 'base' },
+  ]),
+  boundingBox: { width: 80, height: 55, offsetX: 10, offsetY: 30 },
+  area: 2200
+}
+
+export const cloverShape: BaseShape = {
+  id: 'clover',
+  name: 'Four-Leaf Clover',
+  category: 'symbols',
+  outlinePath: `
+    M 50 48
+    Q 55 35, 65 28
+    Q 80 20, 85 35
+    Q 88 50, 75 55
+    Q 62 58, 52 52
+    Q 58 62, 55 75
+    Q 50 88, 35 85
+    Q 20 80, 25 65
+    Q 30 52, 48 52
+    Q 38 58, 25 55
+    Q 12 50, 15 35
+    Q 20 20, 35 28
+    Q 45 35, 50 48
+    Z
+    M 50 52
+    L 50 95
+    Q 48 95, 48 90
+    L 48 55
+    Q 50 52, 52 55
+    L 52 90
+    Q 52 95, 50 95
+    L 50 52
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 20, angle: 270, edge: 'leaf' },
+    { id: 'right', x: 88, y: 45, angle: 0, edge: 'leaf' },
+    { id: 'bottom-leaf', x: 50, y: 88, angle: 90, edge: 'leaf' },
+    { id: 'left', x: 12, y: 45, angle: 180, edge: 'leaf' },
+    { id: 'stem', x: 50, y: 95, angle: 90, edge: 'stem' },
+  ]),
+  boundingBox: { width: 78, height: 77, offsetX: 11, offsetY: 18 },
+  area: 2000
+}
+
+// ============================================================================
+// NEW ADVENTURE SHAPES
+// ============================================================================
+
+export const globeShape: BaseShape = {
+  id: 'globe',
+  name: 'Globe',
+  category: 'adventure',
+  outlinePath: `
+    M 50 5
+    Q 85 5, 95 50
+    Q 95 95, 50 95
+    Q 5 95, 5 50
+    Q 5 5, 50 5
+    Z
+    M 50 5
+    Q 65 25, 65 50
+    Q 65 75, 50 95
+    M 50 5
+    Q 35 25, 35 50
+    Q 35 75, 50 95
+    M 8 35
+    Q 50 35, 92 35
+    M 8 65
+    Q 50 65, 92 65
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 5, angle: 270, edge: 'meridian' },
+    { id: 'right', x: 95, y: 50, angle: 0, edge: 'equator' },
+    { id: 'bottom', x: 50, y: 95, angle: 90, edge: 'meridian' },
+    { id: 'left', x: 5, y: 50, angle: 180, edge: 'equator' },
+  ]),
+  boundingBox: { width: 90, height: 90, offsetX: 5, offsetY: 5 },
+  area: 6400
+}
+
+export const tentShape: BaseShape = {
+  id: 'tent',
+  name: 'Tent',
+  category: 'adventure',
+  outlinePath: `
+    M 50 10
+    L 95 85
+    L 5 85
+    Z
+    M 50 10
+    L 50 5
+    L 52 5
+    L 55 8
+    Q 52 10, 50 10
+    Z
+    M 40 85
+    L 40 60
+    Q 42 55, 50 55
+    Q 58 55, 60 60
+    L 60 85
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'peak', x: 50, y: 5, angle: 270, edge: 'peak' },
+    { id: 'left-slope', x: 28, y: 48, angle: 245, edge: 'slope' },
+    { id: 'right-slope', x: 72, y: 48, angle: 295, edge: 'slope' },
+    { id: 'bottom-left', x: 5, y: 85, angle: 180, edge: 'base' },
+    { id: 'bottom-right', x: 95, y: 85, angle: 0, edge: 'base' },
+  ]),
+  boundingBox: { width: 90, height: 80, offsetX: 5, offsetY: 5 },
+  area: 3000
+}
+
+// ============================================================================
+// BABY CATEGORY - NEW
+// ============================================================================
+
+export const babyBottleShape: BaseShape = {
+  id: 'baby-bottle',
+  name: 'Baby Bottle',
+  category: 'baby',
+  outlinePath: `
+    M 40 10
+    Q 40 5, 50 5
+    Q 60 5, 60 10
+    L 60 15
+    Q 68 18, 68 28
+    L 68 75
+    Q 68 90, 50 90
+    Q 32 90, 32 75
+    L 32 28
+    Q 32 18, 40 15
+    L 40 10
+    Z
+    M 38 30
+    L 62 30
+    M 38 45
+    L 62 45
+    M 38 60
+    L 62 60
+  `,
+  anchors: createAnchors([
+    { id: 'nipple', x: 50, y: 5, angle: 270, edge: 'nipple' },
+    { id: 'right', x: 68, y: 50, angle: 0, edge: 'body' },
+    { id: 'bottom', x: 50, y: 90, angle: 90, edge: 'base' },
+    { id: 'left', x: 32, y: 50, angle: 180, edge: 'body' },
+  ]),
+  boundingBox: { width: 36, height: 85, offsetX: 32, offsetY: 5 },
+  area: 2100
+}
+
+export const pacifierShape: BaseShape = {
+  id: 'pacifier',
+  name: 'Pacifier',
+  category: 'baby',
+  outlinePath: `
+    M 50 20
+    Q 70 20, 78 35
+    Q 85 50, 78 65
+    Q 70 80, 50 80
+    Q 30 80, 22 65
+    Q 15 50, 22 35
+    Q 30 20, 50 20
+    Z
+    M 50 35
+    Q 60 35, 65 45
+    Q 68 55, 65 62
+    Q 58 70, 50 70
+    Q 42 70, 35 62
+    Q 32 55, 35 45
+    Q 40 35, 50 35
+    Z
+    M 78 50
+    L 95 50
+    Q 98 50, 98 55
+    Q 98 60, 95 60
+    L 78 60
+    Q 78 55, 78 50
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 20, angle: 270, edge: 'shield' },
+    { id: 'handle', x: 98, y: 55, angle: 0, edge: 'handle' },
+    { id: 'bottom', x: 50, y: 80, angle: 90, edge: 'shield' },
+    { id: 'left', x: 15, y: 50, angle: 180, edge: 'shield' },
+  ]),
+  boundingBox: { width: 85, height: 60, offsetX: 13, offsetY: 20 },
+  area: 2200
+}
+
+export const strollerShape: BaseShape = {
+  id: 'stroller',
+  name: 'Stroller',
+  category: 'baby',
+  outlinePath: `
+    M 20 25
+    L 25 25
+    Q 30 25, 30 30
+    L 30 55
+    L 75 55
+    L 80 30
+    Q 82 25, 88 25
+    L 90 25
+    Q 92 25, 92 28
+    L 85 60
+    L 85 70
+    Q 85 75, 80 75
+    L 35 75
+    Q 30 75, 30 70
+    L 30 60
+    L 20 60
+    Q 15 60, 15 55
+    L 15 30
+    Q 15 25, 20 25
+    Z
+    M 30 80
+    Q 30 92, 20 92
+    Q 10 92, 10 82
+    Q 10 72, 20 72
+    Q 30 72, 30 80
+    Z
+    M 80 80
+    Q 80 92, 70 92
+    Q 60 92, 60 82
+    Q 60 72, 70 72
+    Q 80 72, 80 80
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'handle', x: 90, y: 25, angle: 270, edge: 'handle' },
+    { id: 'canopy', x: 20, y: 25, angle: 270, edge: 'canopy' },
+    { id: 'front-wheel', x: 20, y: 92, angle: 90, edge: 'wheel' },
+    { id: 'back-wheel', x: 70, y: 92, angle: 90, edge: 'wheel' },
+  ]),
+  boundingBox: { width: 82, height: 67, offsetX: 10, offsetY: 25 },
+  area: 2500
+}
+
+export const rattleShape: BaseShape = {
+  id: 'rattle',
+  name: 'Baby Rattle',
+  category: 'baby',
+  outlinePath: `
+    M 50 15
+    Q 72 15, 80 35
+    Q 85 55, 75 72
+    Q 62 85, 50 80
+    L 50 95
+    Q 45 95, 45 90
+    L 45 80
+    Q 38 85, 25 72
+    Q 15 55, 20 35
+    Q 28 15, 50 15
+    Z
+    M 40 35
+    Q 35 35, 35 40
+    Q 35 45, 40 45
+    Q 45 45, 45 40
+    Q 45 35, 40 35
+    Z
+    M 60 35
+    Q 55 35, 55 40
+    Q 55 45, 60 45
+    Q 65 45, 65 40
+    Q 65 35, 60 35
+    Z
+    M 50 55
+    Q 45 55, 45 60
+    Q 45 65, 50 65
+    Q 55 65, 55 60
+    Q 55 55, 50 55
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top', x: 50, y: 15, angle: 270, edge: 'head' },
+    { id: 'right', x: 82, y: 45, angle: 0, edge: 'head' },
+    { id: 'handle', x: 48, y: 95, angle: 90, edge: 'handle' },
+    { id: 'left', x: 18, y: 45, angle: 180, edge: 'head' },
+  ]),
+  boundingBox: { width: 67, height: 80, offsetX: 15, offsetY: 15 },
+  area: 2400
+}
+
+export const onesieShape: BaseShape = {
+  id: 'onesie',
+  name: 'Baby Onesie',
+  category: 'baby',
+  outlinePath: `
+    M 35 10
+    Q 42 5, 50 5
+    Q 58 5, 65 10
+    L 80 20
+    Q 85 22, 85 28
+    L 85 35
+    Q 85 40, 80 40
+    L 70 38
+    L 70 75
+    Q 70 85, 60 88
+    L 55 90
+    L 55 85
+    Q 55 80, 50 80
+    Q 45 80, 45 85
+    L 45 90
+    L 40 88
+    Q 30 85, 30 75
+    L 30 38
+    L 20 40
+    Q 15 40, 15 35
+    L 15 28
+    Q 15 22, 20 20
+    L 35 10
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'collar', x: 50, y: 5, angle: 270, edge: 'collar' },
+    { id: 'left-sleeve', x: 15, y: 32, angle: 180, edge: 'sleeve' },
+    { id: 'right-sleeve', x: 85, y: 32, angle: 0, edge: 'sleeve' },
+    { id: 'left-leg', x: 45, y: 90, angle: 90, edge: 'leg' },
+    { id: 'right-leg', x: 55, y: 90, angle: 90, edge: 'leg' },
+  ]),
+  boundingBox: { width: 70, height: 85, offsetX: 15, offsetY: 5 },
+  area: 2600
+}
+
+export const teddyBearShape: BaseShape = {
+  id: 'teddy-bear',
+  name: 'Teddy Bear',
+  category: 'baby',
+  outlinePath: `
+    M 25 25
+    Q 20 15, 28 10
+    Q 38 8, 40 18
+    Q 42 25, 50 28
+    Q 58 25, 60 18
+    Q 62 8, 72 10
+    Q 80 15, 75 25
+    Q 72 32, 75 42
+    Q 85 50, 82 62
+    Q 78 72, 70 75
+    L 70 82
+    Q 70 90, 65 92
+    L 55 92
+    Q 52 92, 52 88
+    L 52 82
+    Q 50 82, 48 82
+    L 48 88
+    Q 48 92, 45 92
+    L 35 92
+    Q 30 90, 30 82
+    L 30 75
+    Q 22 72, 18 62
+    Q 15 50, 25 42
+    Q 28 32, 25 25
+    Z
+    M 40 45
+    Q 38 45, 38 48
+    Q 38 52, 42 52
+    Q 45 52, 45 48
+    Q 45 45, 40 45
+    Z
+    M 60 45
+    Q 58 45, 58 48
+    Q 58 52, 62 52
+    Q 65 52, 65 48
+    Q 65 45, 60 45
+    Z
+    M 50 58
+    Q 48 58, 48 62
+    Q 48 65, 52 65
+    Q 55 65, 55 62
+    Q 55 58, 50 58
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'left-ear', x: 25, y: 12, angle: 225, edge: 'ear' },
+    { id: 'right-ear', x: 75, y: 12, angle: 315, edge: 'ear' },
+    { id: 'left-arm', x: 18, y: 55, angle: 180, edge: 'arm' },
+    { id: 'right-arm', x: 82, y: 55, angle: 0, edge: 'arm' },
+    { id: 'left-leg', x: 35, y: 92, angle: 90, edge: 'leg' },
+    { id: 'right-leg', x: 65, y: 92, angle: 90, edge: 'leg' },
+  ]),
+  boundingBox: { width: 67, height: 84, offsetX: 15, offsetY: 8 },
+  area: 3200
+}
+
+// ============================================================================
+// CELEBRATION CATEGORY - NEW
+// ============================================================================
+
+export const cakeShape: BaseShape = {
+  id: 'cake',
+  name: 'Birthday Cake',
+  category: 'celebration',
+  outlinePath: `
+    M 50 5
+    L 52 5
+    Q 54 8, 54 12
+    Q 54 18, 50 22
+    Q 46 18, 46 12
+    Q 46 8, 48 5
+    L 50 5
+    Z
+    M 48 22
+    L 52 22
+    L 52 30
+    L 48 30
+    Z
+    M 20 30
+    L 80 30
+    Q 88 30, 88 40
+    L 88 50
+    L 12 50
+    L 12 40
+    Q 12 30, 20 30
+    Z
+    M 10 50
+    L 90 50
+    Q 95 50, 95 58
+    L 95 80
+    Q 95 88, 88 88
+    L 12 88
+    Q 5 88, 5 80
+    L 5 58
+    Q 5 50, 10 50
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'candle', x: 50, y: 5, angle: 270, edge: 'candle' },
+    { id: 'top-layer-right', x: 88, y: 40, angle: 0, edge: 'layer' },
+    { id: 'bottom-right', x: 95, y: 70, angle: 0, edge: 'layer' },
+    { id: 'bottom', x: 50, y: 88, angle: 90, edge: 'base' },
+    { id: 'bottom-left', x: 5, y: 70, angle: 180, edge: 'layer' },
+    { id: 'top-layer-left', x: 12, y: 40, angle: 180, edge: 'layer' },
+  ]),
+  boundingBox: { width: 90, height: 83, offsetX: 5, offsetY: 5 },
+  area: 3800
+}
+
+export const confettiShape: BaseShape = {
+  id: 'confetti',
+  name: 'Confetti',
+  category: 'celebration',
+  outlinePath: `
+    M 15 20
+    L 25 15
+    L 28 25
+    L 18 30
+    Z
+    M 45 10
+    L 55 12
+    L 52 22
+    L 42 20
+    Z
+    M 75 18
+    L 85 22
+    L 82 32
+    L 72 28
+    Z
+    M 50 40
+    Q 65 35, 75 50
+    Q 80 65, 70 78
+    Q 55 88, 40 82
+    Q 25 75, 28 58
+    Q 30 42, 50 40
+    Z
+    M 20 55
+    L 28 50
+    L 32 60
+    L 24 65
+    Z
+    M 80 60
+    L 90 58
+    L 88 68
+    L 78 70
+    Z
+    M 35 85
+    L 42 90
+    L 38 95
+    L 30 92
+    Z
+    M 65 88
+    L 75 92
+    L 70 98
+    L 60 95
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'top-left', x: 20, y: 15, angle: 270, edge: 'piece' },
+    { id: 'top-center', x: 50, y: 10, angle: 270, edge: 'piece' },
+    { id: 'top-right', x: 80, y: 20, angle: 270, edge: 'piece' },
+    { id: 'center', x: 55, y: 60, angle: 0, edge: 'burst' },
+    { id: 'bottom', x: 50, y: 95, angle: 90, edge: 'piece' },
+  ]),
+  boundingBox: { width: 78, height: 86, offsetX: 12, offsetY: 8 },
+  area: 1800
+}
+
+export const partyHatShape: BaseShape = {
+  id: 'party-hat',
+  name: 'Party Hat',
+  category: 'celebration',
+  outlinePath: `
+    M 50 5
+    L 50 8
+    Q 55 10, 55 15
+    Q 55 20, 50 22
+    Q 45 20, 45 15
+    Q 45 10, 50 8
+    L 50 5
+    Z
+    M 50 22
+    L 85 85
+    Q 88 90, 82 92
+    L 18 92
+    Q 12 90, 15 85
+    L 50 22
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'pom-pom', x: 50, y: 5, angle: 270, edge: 'top' },
+    { id: 'right-edge', x: 70, y: 55, angle: 330, edge: 'cone' },
+    { id: 'bottom-right', x: 82, y: 92, angle: 45, edge: 'brim' },
+    { id: 'bottom', x: 50, y: 92, angle: 90, edge: 'brim' },
+    { id: 'bottom-left', x: 18, y: 92, angle: 135, edge: 'brim' },
+    { id: 'left-edge', x: 30, y: 55, angle: 210, edge: 'cone' },
+  ]),
+  boundingBox: { width: 76, height: 87, offsetX: 12, offsetY: 5 },
+  area: 2200
+}
+
+export const candleShape: BaseShape = {
+  id: 'candle',
+  name: 'Candle',
+  category: 'celebration',
+  outlinePath: `
+    M 50 5
+    Q 55 8, 55 15
+    Q 58 22, 55 28
+    Q 52 32, 50 28
+    Q 48 32, 45 28
+    Q 42 22, 45 15
+    Q 45 8, 50 5
+    Z
+    M 48 28
+    L 48 35
+    L 52 35
+    L 52 28
+    Z
+    M 35 35
+    L 65 35
+    Q 70 35, 70 42
+    L 70 88
+    Q 70 95, 50 95
+    Q 30 95, 30 88
+    L 30 42
+    Q 30 35, 35 35
+    Z
+  `,
+  anchors: createAnchors([
+    { id: 'flame', x: 50, y: 5, angle: 270, edge: 'flame' },
+    { id: 'right', x: 70, y: 65, angle: 0, edge: 'body' },
+    { id: 'bottom', x: 50, y: 95, angle: 90, edge: 'base' },
+    { id: 'left', x: 30, y: 65, angle: 180, edge: 'body' },
+  ]),
+  boundingBox: { width: 40, height: 90, offsetX: 30, offsetY: 5 },
+  area: 2000
+}
+
+// ============================================================================
 // SHAPE REGISTRY - All shapes indexed by ID
 // ============================================================================
 
@@ -1993,11 +2788,16 @@ export const SHAPE_DEFINITIONS: Record<string, BaseShape> = {
   rose: roseShape,
   lotus: lotusShape,
   sunflower: sunflowerShape,
+  cherryBlossom: cherryBlossomShape,
+  cactus: cactusShape,
+  mushroom: mushroomShape,
   
   // Celestial
   moon: moonShape,
   cloud: cloudShape,
   wave: waveShape,
+  rainbow: rainbowShape,
+  snowflake: snowflakeShape,
   
   // Symbols
   infinity: infinityShape,
@@ -2005,6 +2805,8 @@ export const SHAPE_DEFINITIONS: Record<string, BaseShape> = {
   key: keyShape,
   anchor: anchorShape,
   compass: compassShape,
+  crown: crownShape,
+  clover: cloverShape,
   
   // Hobbies
   musicNote: musicNoteShape,
@@ -2023,6 +2825,22 @@ export const SHAPE_DEFINITIONS: Record<string, BaseShape> = {
   bicycle: bicycleShape,
   feather: featherShape,
   ring: ringShape,
+  globe: globeShape,
+  tent: tentShape,
+  
+  // Baby
+  babyBottle: babyBottleShape,
+  pacifier: pacifierShape,
+  stroller: strollerShape,
+  rattle: rattleShape,
+  onesie: onesieShape,
+  teddyBear: teddyBearShape,
+  
+  // Celebration
+  cake: cakeShape,
+  confetti: confettiShape,
+  partyHat: partyHatShape,
+  candle: candleShape,
 }
 
 // Helper to get all shape IDs
@@ -2039,6 +2857,10 @@ export const SHAPE_ID_ALIASES: Record<string, string> = {
   'leaf-simple': 'leaf',
   'music-note': 'musicNote',
   'hot-air-balloon': 'hotAirBalloon',
+  'cherry-blossom': 'cherryBlossom',
+  'baby-bottle': 'babyBottle',
+  'teddy-bear': 'teddyBear',
+  'party-hat': 'partyHat',
   'gray-wash': 'grayWash',
   'white-wash': 'whiteWash',
 }

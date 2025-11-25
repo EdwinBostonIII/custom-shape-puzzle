@@ -28,8 +28,11 @@ interface MotifDefinition {
  * 1. Be a single connected shape (no fragments)
  * 2. Have clean curves suitable for laser cutting
  * 3. Look good when engraved on wood grain
+ * 
+ * Note: Not all ShapeTypes have motifs defined. The getMotifPath function
+ * returns a fallback circle for undefined shapes.
  */
-export const MOTIF_PATHS: Record<ShapeType, MotifDefinition> = {
+export const MOTIF_PATHS: Partial<Record<ShapeType, MotifDefinition>> = {
   // ═══════════════════════════════════════════════════════════════
   // FLORA - Nature & Plants
   // ═══════════════════════════════════════════════════════════════
