@@ -7,6 +7,7 @@ import { ChatWidget } from '@/components/ChatWidget'
 import { LiveOrderNotification } from '@/components/SocialProofNotifications'
 import { PersonalizationProvider, usePersonalization } from '@/components/Personalization'
 import { ExitIntentPopup, StickyDiscountReminder, useExitIntent } from '@/components/ExitIntent'
+import { CookieConsent } from '@/components/CookieConsent'
 import { 
   PageSkeleton, 
   TierSelectionSkeleton, 
@@ -392,6 +393,17 @@ function App() {
           // Store feedback for analysis
         }}
         enabled={step !== 'confirmation'}
+      />
+      
+      {/* GDPR-compliant Cookie Consent Banner */}
+      <CookieConsent
+        privacyPolicyUrl="/privacy-policy"
+        onAccept={(prefs) => {
+          console.log('Cookie preferences accepted:', prefs)
+        }}
+        onDecline={() => {
+          console.log('Cookies declined')
+        }}
       />
     </>
   )

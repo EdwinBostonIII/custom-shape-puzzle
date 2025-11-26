@@ -17,4 +17,35 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src')
     }
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          // Vendor chunks - separate large dependencies
+          if (id.includes('node_modules')) {
+            // React core
+            if (id.includes('react-dom') || id.includes('/react/')) {
+              return 'vendor-react'
+            }
+            // Framer Motion (large animation library)
+            if (id.includes('framer-motion')) {
+              return 'vendor-framer'
+            }
+            // Radix UI components
+            if (id.includes('@radix-ui')) {
+              return 'vendor-radix'
+            }
+            // Phosphor icons (large icon set)
+            if (id.includes('@phosphor-icons')) {
+              return 'vendor-icons'
+            }
+            // Other vendor code
+            return 'vendor'
+          }
+        }
+      }
+    },
+    // Increase warning threshold slightly
+    chunkSizeWarningLimit: 550
+  }
 });
